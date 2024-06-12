@@ -421,17 +421,19 @@
 
                     </div>
                     <div class="row pb-2">
-                        <div class="col-md-4">
-                            <label for="inputCity" class="form-label">City</label>
-                            <input type="text" class="form-control" name="city" id="inputCity">
+                        <div class="form-floating col-md-4">
+                            <input type="text" class="form-control" name="city" id="city" placeholder="city">
+                            <label for="city" class="form-label">City</label>
                         </div>
-                        <div class="col-md-4">
-                            <label for="inputProvince" class="form-label">Province</label>
-                            <input type="text" class="form-control" name="province" id="inputProvince">
+                        <div class="form-floating col-md-4">
+
+                            <input type="text" class="form-control" name="province" id="province" placeholder="province">
+                            <label for="province" class="form-label">Province</label>
                         </div>
-                        <div class="col-md-4">
-                            <label for="inputZip" class="form-label">Zip</label>
-                            <input type="text" class="form-control" name="zip" id="inputZip">
+                        <div class="form-floating col-md-4">
+
+                            <input type="text" class="form-control" name="zip" id="zip" placeholder="zip">
+                            <label for="zip" class="form-label">Zip</label>
                         </div>
                     </div>
                     <div class="mb-2 d-flex flex-row justify-content-between align-items-center">
