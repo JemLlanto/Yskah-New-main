@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Setting</title>
-    <link rel="stylesheet" href="css\user_settings9.css" />
+    <link rel="stylesheet" href="css\user_settings8.css" />
 </head>
 
 <body>
@@ -33,6 +33,7 @@
             $zip = $_POST['zip'];
             $email = $_POST['email'];
             $password = $_POST['password'];
+            $image_file = $_POST['image_file'];
 
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -47,6 +48,7 @@
             zip='$zip',
             username='$username',
             email='$email',
+            image_file='$image_file',
             password='$hashed_password' WHERE user_id='" . $_POST['user_id'] . "'");
             echo "<script>
           alert('Record Successfully modified');
@@ -54,6 +56,30 @@
           </script>";
         }
         ?>
+        <!-- Modal -->
+        <div class="modal fade" id="change_profile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <form action="update_photo.php" method="post" enctype="multipart/form-data">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Change Profile Picture</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control" id="image_file" name="image_file"
+                                    accept=".jpg, .jpeg, .png">
+                                <label class="input-group-text" for="image_file">Upload</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" name="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
             <div
@@ -159,7 +185,7 @@
                                 aria-expanded="false">
                                 <div class="user-off">
                                     <div class="photo ms-2 me-1">
-                                        <img src="img/default-profile.jpg" alt="">
+                                        <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                                     </div>
                                     <div class="name ms-1 mt-1">
                                         <p><?php echo $_SESSION['username'] ?></p>
@@ -314,7 +340,7 @@
                                     <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
                                 </div>
                                 <div class="photo">
-                                    <img src="img/default-profile.jpg" alt="">
+                                    <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                                 </div>
                             </div>
                         </button>
@@ -346,10 +372,16 @@
                     <p class="card-text">ID: <?php echo $row['user_id']; ?></p>
                 </div>
 
-                <div class="row g-0 p-2 mb-2 border-bottom ">
+                <div class="row g-0 p-2 mb-2 border-bottom border-2">
                     <div id="user_image"
-                        class="col-md-4 d-flex flex-column align-items-center justify-content-center pt-3 pb-3">
-                        <img class="w-100" src="img/default-profile.jpg" alt="">
+                        class="col-md-4 d-flex flex-column align-items-center justify-content-center pt-3 pb-3 px-2 ">
+                        <div class="profile_image m-0 p-0">
+                            <img class="w-100 m-0" src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
+                            <button type="button" class="btn btn-primary p-0" data-bs-toggle="modal"
+                                data-bs-target="#change_profile">
+                                <h1 class="mt-2">+</h1>
+                        </div>
+
                     </div>
 
                     <div class="col-md-8 wrapper ">
@@ -392,73 +424,93 @@
 
                             <div class="mb-2 d-flex flex-row justify-content-between align-items-center">
                                 <div class="w-100  d-flex justify-content-end align-items-center">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary w-100">Submit</button>
                                 </div>
 
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="wrapper p-2 w-100">
+                <div class="wrapper p-2 pt-2 w-100 border-bottom border-2">
                     <h5 class="fw-bolder">Delivery Address</h5>
-                    <div class="row pb-2">
-                        <div class="form-floating col-md-6">
-                            <input type="text" class="form-control" id="blockLot" name="blockLot" placeholder="blockLot"
-                                value="<?php echo $row['first_name']; ?>" />
-                            <label for="firstName" class="form-label text-secondary  ps-4">Block/Lot/Phase/House No.
-                            </label>
+                    <form action="setting_update_delivery_details.php" method="POST">
+                        <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
+                        <div class="row pb-2">
+                            <div class="form-floating col-md-6 mb-2">
+                                <input type="text" class="form-control" id="blockLot" name="blockLot" placeholder="blockLot"
+                                    value="<?php echo $row['blockLot']; ?>" />
+                                <label for="firstName" class="form-label text-secondary  ps-4">House
+                                    No./Block/Lot/Phase/Street
+                                </label>
+                            </div>
+                            <div class="form-floating col-md-3 mb-2">
+                                <input type="text" class="form-control" id="subdivision" name="subdivision"
+                                    placeholder="Subdivision" value="<?php echo $row['subdivision']; ?>" />
+                                <label for="firstName" class="form-label text-secondary ps-4 ">Subdivision</label>
+                            </div>
+                            <div class="form-floating col-md-3 mb-2">
+                                <input type="text" class="form-control" id="barangay" name="barangay" placeholder="barangay"
+                                    value="<?php echo $row['barangay']; ?>" />
+                                <label for="firstName" class="form-label text-secondary ps-4 ">Barangay</label>
+                            </div>
+
                         </div>
-                        <div class="form-floating col-md-3">
-                            <input type="text" class="form-control" id="subdivision" name="subdivision"
-                                placeholder="Subdivision" value="<?php echo $row['first_name']; ?>" />
-                            <label for="firstName" class="form-label text-secondary ps-4 ">Subdivision</label>
-                        </div>
-                        <div class="form-floating col-md-3">
-                            <input type="text" class="form-control" id="barangay" name="barangay" placeholder="barangay"
-                                value="<?php echo $row['first_name']; ?>" />
-                            <label for="firstName" class="form-label text-secondary ps-4 ">Barangay</label>
+                        <div class="row pb-2">
+                            <div class="form-floating col-md-4 mb-2">
+                                <input type="text" class="form-control" id="city" name="city" placeholder="city"
+                                    value="<?php echo $row['city']; ?>" />
+                                <label for="firstName" class="form-label text-secondary ps-4 ">City</label>
+                            </div>
+                            <div class="form-floating col-md-4 mb-2">
+                                <input type="text" class="form-control" id="province" name="province" placeholder="province"
+                                    value="<?php echo $row['province']; ?>" />
+                                <label for="firstName" class="form-label text-secondary ps-4 ">Province</label>
+                            </div>
+                            <div class="form-floating col-md-4 mb-2">
+                                <input type="text" class="form-control" id="zip" name="zip" placeholder="zip"
+                                    value="<?php echo $row['zip']; ?>" />
+                                <label for="firstName" class="form-label text-secondary ps-4 ">Zip</label>
+                            </div>
+
                         </div>
 
-                    </div>
-                    <div class="row pb-2">
-                        <div class="form-floating col-md-4">
-                            <input type="text" class="form-control" name="city" id="city" placeholder="city">
-                            <label for="city" class="form-label">City</label>
-                        </div>
-                        <div class="form-floating col-md-4">
 
-                            <input type="text" class="form-control" name="province" id="province" placeholder="province">
-                            <label for="province" class="form-label">Province</label>
+                        <div class="my-2 d-flex flex-row justify-content-between align-items-center">
+                            <div class="w-100  d-flex justify-content-end align-items-center">
+                                <button type="submit" class="btn btn-primary w-100">Submit</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+            <div class="wrapper px-2 pt-3 w-100">
+                <h5 class="fw-bolder">Username and Password</h5>
+                <form action="setting_update_account_details.php" method="POST">
+                    <div class="row ">
+                        <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
+                        <div class="form-floating col-md-6 mb-3 ">
+                            <input type="text" class="form-control" id="username" placeholder="username" name="username"
+                                value="<?php echo $row['username']; ?>" />
+                            <label for="username" class="form-label text-secondary ps-4">Username</label>
                         </div>
-                        <div class="form-floating col-md-4">
-
-                            <input type="text" class="form-control" name="zip" id="zip" placeholder="zip">
-                            <label for="zip" class="form-label">Zip</label>
+                        <div class="form-floating col-md-3 mb-3 ">
+                            <input type="password" class="form-control" id="password" placeholder="password"
+                                name="password" />
+                            <label for="password" class="form-label text-secondary ps-4">Password</label>
+                        </div>
+                        <div class="form-floating col-md-3 mb-3 ">
+                            <input type="password" class="form-control" id="confirm_password" placeholder="confirm_password"
+                                name="confirm_password" />
+                            <label for="confirm_password" class="form-label text-secondary ps-4">Confirm Password</label>
                         </div>
                     </div>
                     <div class="mb-2 d-flex flex-row justify-content-between align-items-center">
                         <div class="w-100  d-flex justify-content-end align-items-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-
-                    </div>
-                    <div class="d-flex gap-1">
-                        <div class="form-floating mb-3 w-50">
-                            <input type="text" class="form-control" id="username" placeholder="username" name="username"
-                                value="<?php echo $row['username']; ?>" />
-                            <label for="username" class="form-label text-secondary">Username</label>
-                        </div>
-                        <div class="form-floating mb-3 w-50">
-                            <input type="password" class="form-control" id="password" placeholder="password" name="password"
-                                value="<?php echo $row['password']; ?>" />
-                            <label for="password" class="form-label text-secondary">Password</label>
+                            <button type="submit" class="btn btn-primary w-100">Submit</button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-
-
 
         <?php
     } else {

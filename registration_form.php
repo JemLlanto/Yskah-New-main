@@ -63,25 +63,25 @@ include ("connection.php");
                         <input type="text" class="form-control" id="barangay" name="barangay" placeholder="barangay" />
                         <label for="barangay" class="form-label text-secondary ps-4 ">Barangay</label>
                     </div>
+                </div>
 
-                    <div class="row pb-2">
-                        <div class="form-floating col-md-4">
-                            <input type="text" class="form-control" name="city" id="city" placeholder="city">
-                            <label for="city" class="form-label">City</label>
-                        </div>
-                        <div class="form-floating col-md-4">
+                <div class="row gy-2">
+                    <div class="form-floating col-md-4">
+                        <input type="text" class="form-control" name="city" id="city" placeholder="city">
+                        <label for="city" class="form-label text-secondary ps-4 ">City</label>
+                    </div>
+                    <div class="form-floating col-md-4">
 
-                            <input type="text" class="form-control" name="province" id="province"
-                                placeholder="province">
-                            <label for="province" class="form-label">Province</label>
-                        </div>
-                        <div class="form-floating col-md-4">
+                        <input type="text" class="form-control" name="province" id="province" placeholder="province">
+                        <label for="province" class="form-label text-secondary ps-4 ">Province</label>
+                    </div>
+                    <div class="form-floating col-md-4">
 
-                            <input type="text" class="form-control" name="zip" id="zip" placeholder="zip">
-                            <label for="zip" class="form-label">Zip</label>
-                        </div>
+                        <input type="text" class="form-control" name="zip" id="zip" placeholder="zip">
+                        <label for="zip" class="form-label text-secondary ps-4 ">Zip</label>
                     </div>
                 </div>
+
 
                 <div class="d-flex flex-wrap flex-md-nowrap gap-1">
                     <div class="form-floating mb-md-3 mb-1 w-50">

@@ -1,0 +1,57 @@
+@import url("head.php");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#container button:focus {
+  box-shadow: none;
+}
+body {
+  background-color: var(--body_color) !important;
+}
+#container {
+  /* background-color: white; */
+}
+.profile_image {
+  /* background-color: gray; */
+  position: relative;
+  max-height: 300px;
+  max-width: 300px;
+  border-radius: 50%;
+  border: 2px solid gray;
+  /* overflow: hidden; */
+}
+.profile_image button {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 20px;
+  bottom: 20px;
+  border: 3px solid white;
+}
+.change_profile {
+}
+#user_image img {
+  /* max-height: 300px; */
+  border-radius: 50%;
+
+  max-width: 300px;
+}
+.btn {
+}
+body
+  > div.container-fluid.d-flex.align-items-center.justify-content-center
+  > div {
+  width: clamp(200px, 80%, 840px);
+}
+
+#accordionExample {
+  width: clamp(200px, 80%, 840px);
+}
