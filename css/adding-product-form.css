@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  /* display: flex;
+              justify-content: center; */
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* NAVIGATION BAR */
+.navi-bar {
+  padding-top: 10px;
+  height: 60px;
+  width: 100%;
+  /* background-color: yellow; */
+  display: flex;
+  margin-bottom: 15px;
+  align-items: center;
+  justify-content: space-between;
+}
+/* LOGO AND SEARCH DIV */
+.logo_search {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.navi-items .logo {
+  /* background: gray; */
+  font-size: 30px;
+  margin-top: 20px;
+  /* margin-right: 410px;
+                margin-left: 15px; */
+  padding: 5px;
+}
+.navi-items .search {
+  /* position: absolute; */
+  height: 40px;
+  width: 300px;
+  /* background: white; */
+  margin-left: 5px;
+  /* margin-right: 5px; */
+  border-radius: 10px;
+  border: 3px solid rgb(99, 99, 99);
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  padding-left: 10px;
+}
+.navi-items .logo img {
+  /* background: gray; */
+  height: 140px;
+}
+.navi-items .logo a {
+  text-decoration: none;
+  color: rgb(24, 24, 24);
+}
+.user {
+  /* position: absolute; */
+  height: 65px;
+  width: 180px;
+  background: white;
+  margin-right: 10px;
+  /* right: 0; */
+  /* margin-top: 5px; */
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  border-radius: 20px;
+  padding-right: 20px;
+  transition: 0.2s;
+}
+.user:hover {
+  background: rgb(255, 255, 163);
+}
+.user .photo {
+  height: 45px;
+  width: 45px;
+  background: url(img\User.jpg);
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  margin-left: 0;
+  overflow: hidden;
+}
+.user .photo img {
+  height: 45px;
+  width: 45px;
+}
+.user .name {
+  display: flex;
+  justify-content: end;
+  align-items: center; /* Use 'center' for vertical alignment */
+  padding: 0;
+  height: 45px;
+  width: 50px;
+  margin-right: 15px;
+  /* background: gray; */
+  padding-right: 0;
+}
+
+.user .name p {
+  font-size: 17px;
+  margin: 0;
+  color: black;
+  text-align: right; /* This aligns the text within the paragraph to the right */
+}
+
+body > div.navi-bar > div > div.btn-group > button {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  padding: 0;
+  margin-top: 5px;
+  box-shadow: none;
+  border-radius: 20px;
+  outline: rgb(255, 255, 255);
+  height: 65px;
+  width: 180px;
+}
+.dropdown-menu {
+  height: 100px;
+  width: 180px;
+  /* background: black; */
+  text-align: right; /* This aligns the text in the dropdown menu to the right */
+}
+
+.dropdown-menu a {
+  display: block; /* Make the anchor tags block elements so they fill the width of the dropdown menu */
+}
+
+.btn-group {
+  margin-right: 10px;
+}
+.navi-items {
+  /* position: absolute; */
+  height: 35px;
+  width: 100dvw;
+  background: white;
+  margin-left: 15px;
+  /* padding-left: 500px; */
+  border-radius: 10px;
+  /* border: 3px solid black;      */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navi-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navi-items input {
+  padding: 5px 10px 5px 10px;
+  margin-left: 15px;
+  /* margin-top: 5px; */
+  border: none;
+  outline: none;
+  font-size: 15px;
+  /* padding-top: 10px; */
+  /* background: gray; */
+  align-items: center;
+}
+.navi-btn .buttons i {
+  display: none;
+}
+.navi-btn .buttons {
+  /* position: absolute; */
+  height: 30px;
+  width: 70px;
+  background: white;
+  margin-left: 15px;
+  /* border-radius: 5px; */
+  /* border: 3px solid black; */
+  /* border: 3px solid rgb(59, 53, 3); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+
+  /* transition: .2s ease-in-out; */
+}
+.navi-btn .buttons a {
+  text-decoration: none;
+  color: black;
+}
+.navi-btn .buttons:hover {
+  border-bottom: 2px solid black;
+  /* background: rgb(255, 255, 163); */
+}
+.navi-btn .buttons.active {
+  /* text-decoration: underline; */
+  border-bottom: 2px solid black;
+  /* background: rgb(255, 255, 163); */
+}

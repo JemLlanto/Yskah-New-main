@@ -1,0 +1,26 @@
+body {
+  background-image: url(/img/nyanv.gif);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.wrapper {
+  width: 500px;
+  border-style: solid;
+  border-width: 3px;
+  border-color: rgb(45, 40, 40);
+  padding: 50px;
+  border-radius: 10px;
+}

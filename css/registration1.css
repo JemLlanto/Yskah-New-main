@@ -1,0 +1,40 @@
+body {
+  background: var(--main_color);
+}
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 125dvh;
+}
+
+.wrapper {
+  width: 75%;
+  padding: 50px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 425px) and (min-width: 320px) {
+  .container {
+    margin: 0%;
+    padding: 0%;
+    height: auto;
+    width: 100%;
+  }
+
+  .wrapper {
+    width: 100%;
+    padding: 10px;
+  }
+
+  #username,
+  #password {
+    width: 100%;
+  }
+}

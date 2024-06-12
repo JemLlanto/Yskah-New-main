@@ -1,0 +1,89 @@
+@import url("head.php");
+body {
+  background-color: var(--body_color);
+}
+#container a {
+  text-decoration: none;
+  color: black;
+}
+#shipping_information {
+  background-color: white;
+}
+#shipping_information_text {
+  color: rgb(0, 208, 139);
+}
+#payment_details_text,
+#address_details {
+  color: gray;
+}
+#address {
+  background-color: white;
+}
+#address_head {
+  /* background-color: gray; */
+}
+#order_nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* flex-direction: column; */
+  background-color: white;
+}
+#order_nav a {
+  text-decoration: none;
+  color: black;
+  width: 100%;
+}
+.order_nav_a:hover,
+.order_nav_a.active {
+  background-color: var(--main_color);
+}
+
+.order_nav_a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  transition: 0.2s;
+}
+
+#order_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: white;
+}
+#order_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: gray; */
+}
+#product_details {
+  /* background-color: gray; */
+}
+.product_image img {
+  width: 100px;
+}
+#product_description {
+  margin-top: 65px;
+  /* width: 100%; */
+  /* display: flex;
+  align-items: center;
+  justify-content: space-between; */
+  /* background-color: rgb(104, 104, 104); */
+}
+#price {
+  color: var(--ter_color);
+}
+#payment_details {
+  background-color: white;
+}
+#total_payment {
+  color: var(--ter_color);
+}

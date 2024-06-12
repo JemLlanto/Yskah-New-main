@@ -1,0 +1,53 @@
+@import url("head.php");
+
+body {
+  overflow-x: hidden;
+  background-color: var(--body_color);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@media only screen and (max-width: 425px) and (min-width: 320px) {
+  #login-link {
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  #login-link p {
+    font-size: 14px;
+  }
+
+  #carouselExampleInterval {
+    margin-top: 0px;
+    margin-left: -250px;
+  }
+
+  #introText {
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .card-body h5 {
+    margin-top: -11px;
+    margin-left: -5px;
+    font-size: 14px;
+  }
+  .card-body p {
+    font-size: 11px;
+    margin-top: -17px;
+    margin-left: -5px;
+  }
+  .card-body a {
+    font-size: 12px;
+    margin-top: 0px;
+    margin-left: -5px;
+    width: 150px;
+    padding: 3px;
+  }
+}

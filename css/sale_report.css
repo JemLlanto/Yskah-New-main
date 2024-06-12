@@ -1,0 +1,74 @@
+@import url("head.php");
+body {
+  background-color: var(--body_color);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* a {
+  height: 100%;
+} */
+#container {
+  /* height: 80dvh; */
+  /* width: 90%; */
+  /* background: white; */
+  border-radius: 10px;
+  /* display: flex;
+  justify-content: space-between; */
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+#graph {
+  /* background-color: white; */
+}
+#graph img {
+  width: 100%;
+}
+#pie_chart,
+#bar_graph {
+  background-color: white;
+}
+#report {
+  background-color: white;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+#timeline {
+  /* background-color: gray; */
+  display: flex;
+  justify-content: center;
+}
+#timeline a {
+  width: 100%;
+  text-decoration: none;
+  color: black;
+  /* background-color: gray; */
+  display: flex;
+  justify-content: center;
+}
+#timeline a:hover,
+#timeline a.active {
+  transition: 0.3s;
+  background-color: var(--main_color);
+}
+#table {
+  /* background-color: gray; */
+  width: 100%;
+}
+#total_sale {
+  display: flex;
+  align-items: end;
+  flex-direction: column;
+}
+#price {
+  color: var(--ter_color);
+}

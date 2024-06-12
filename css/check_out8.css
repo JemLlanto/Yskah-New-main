@@ -1,0 +1,68 @@
+@import url("head.php");
+body {
+  background-color: var(--body_color);
+}
+#container {
+  background-color: white;
+}
+#address {
+  background-color: var(--body_color);
+}
+#address_head {
+  width: 100%;
+}
+#address_details {
+  /* background-color: gray; */
+}
+#change_address {
+  border: none;
+  background-color: transparent;
+}
+#change_address_button {
+  background-color: white;
+}
+#location_icon {
+  width: 20px;
+}
+#cart_item {
+  /* background-color: var(--body_color); */
+}
+#product_description {
+  /* background-color: gray; */
+  /* width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; */
+}
+.product_image img {
+  width: 70px;
+}
+#product_details {
+  /* background-color: gray; */
+}
+#payment_details {
+  background-color: var(--body_color);
+}
+#total_payment {
+  color: var(--ter_color);
+}
+#place_order_button {
+  color: white;
+  background-color: var(--ter_color);
+  font-size: 20px;
+}
+#payment_details_text {
+  color: gray;
+}
+#price {
+  color: var(--ter_color);
+}
+#done_button {
+  background-color: var(--ter_color);
+  color: white;
+  border: none;
+}
+
+#payment img {
+  width: 300px;
+}

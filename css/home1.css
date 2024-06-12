@@ -1,0 +1,327 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  /* display: flex;
+  justify-content: center; */
+  overflow-x: hidden;
+}
+
+/* NAVIGATION BAR */
+.navi-bar {
+  padding-top: 10px;
+  height: 60px;
+  width: 100%;
+  /* background-color: yellow; */
+  display: flex;
+  margin-bottom: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+/* LOGO AND SEARCH DIV */
+.logo_search {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.navi-items .logo {
+  /* background: gray; */
+  font-size: 30px;
+  margin-top: 20px;
+  /* margin-right: 410px;
+    margin-left: 15px; */
+  padding: 5px;
+}
+.navi-items .search {
+  /* position: absolute; */
+  height: 40px;
+  width: 300px;
+  /* background: white; */
+  margin-left: 5px;
+  /* margin-right: 5px; */
+  border-radius: 10px;
+  border: 3px solid rgb(99, 99, 99);
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  padding-left: 10px;
+}
+.navi-items .logo img {
+  /* background: gray; */
+  height: 140px;
+}
+.navi-items .logo a {
+  text-decoration: none;
+  color: rgb(24, 24, 24);
+}
+.user {
+  /* position: absolute; */
+  height: 65px;
+  width: 180px;
+  background: white;
+  margin-right: 10px;
+  /* right: 0; */
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  border-radius: 20px;
+  padding-right: 20px;
+  transition: 0.2s;
+}
+.user:hover {
+  background: rgb(255, 255, 163);
+}
+.user .photo {
+  height: 45px;
+  width: 45px;
+  background: url(img\User.jpg);
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  margin-left: 0;
+}
+.user .name {
+  display: flex;
+  justify-content: end;
+  align-items: center; /* Use 'center' for vertical alignment */
+  padding: 0;
+  height: 45px;
+  width: 50px;
+  margin-right: 15px;
+  /* background: gray; */
+  padding-right: 0;
+}
+
+.user .name p {
+  font-size: 17px;
+  margin: 0;
+  color: black;
+  text-align: right; /* This aligns the text within the paragraph to the right */
+}
+
+.navi-items {
+  /* position: absolute; */
+  height: 35px;
+  width: 100dvw;
+  background: white;
+  margin-left: 15px;
+  /* padding-left: 500px; */
+  border-radius: 10px;
+  /* border: 3px solid black;      */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navi-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navi-items input {
+  padding: 5px 10px 5px 10px;
+  margin-left: 15px;
+  /* margin-top: 5px; */
+  border: none;
+  outline: none;
+  font-size: 15px;
+  /* padding-top: 10px; */
+  /* background: gray; */
+  align-items: center;
+}
+.navi-btn .buttons i {
+  display: none;
+}
+.navi-btn .buttons {
+  /* position: absolute; */
+  height: 30px;
+  width: 70px;
+  background: white;
+  margin-left: 15px;
+  /* border-radius: 5px; */
+  /* border: 3px solid black; */
+  /* border: 3px solid rgb(59, 53, 3); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+
+  /* transition: .2s ease-in-out; */
+}
+.navi-btn .buttons a {
+  text-decoration: none;
+  color: black;
+}
+.navi-btn .buttons:hover {
+  border-bottom: 2px solid black;
+  /* background: rgb(255, 255, 163); */
+}
+.navi-btn .buttons.active {
+  /* text-decoration: underline; */
+  border-bottom: 2px solid black;
+  /* background: rgb(255, 255, 163); */
+}
+
+/* BODY */
+.main-body {
+  height: 60dvh;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: rgb(255, 255, 0);
+  margin-top: 15px;
+  /* transform: translateX(-50%); */
+  /* border-radius: 20px; */
+  /* background: rgb(255, 255, 186); */
+  display: flex;
+  justify-content: center;
+}
+.categ {
+  position: absolute;
+  left: 150px;
+  top: 20px;
+  font-size: 20px;
+  /* margin-left: 20px; */
+}
+.hot-product {
+  height: 55%;
+  width: 90%;
+  /* background: gray; */
+  top: 40px;
+  /* margin-top: 40px; */
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+}
+.product {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 20px;
+}
+.grade {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60dvh;
+  width: 100dvw;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1;
+  padding-bottom: 50px;
+  /* margin-top: 10px; */
+  background: rgb(255, 255, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 0, 0.05) 0%,
+    rgb(255, 255, 0) 80%,
+    rgb(255, 255, 0) 100%
+  );
+}
+.grade .intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center child elements horizontally */
+  justify-content: center; /* Center child elements vertically */
+  text-align: end;
+  position: relative;
+  top: 20px;
+  left: 465px;
+  height: 300px;
+  width: 500px;
+  /* margin-top: 20px; */
+  /* padding: 50px; */
+  /* background: rgb(255, 140, 0); */
+}
+
+.grade .intro h1 {
+  right: 0;
+  margin-right: 0;
+  margin-left: 300px;
+  text-align: right; /* Aligns text within the h1 to the right */
+}
+
+.grade .intro h3 {
+  font-size: 20px;
+}
+.grade .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: -35px;
+  left: 450px;
+  height: 150px;
+  width: 650px;
+  margin-top: 5px;
+  /* padding: 50px; */
+  /* background: rgb(255, 140, 0); */
+}
+.btn button a {
+  text-decoration: none;
+  color: rgb(63, 41, 10);
+}
+.grade .btn button {
+  border-radius: 30px;
+  /* margin-top: 100px; */
+
+  margin-left: 90px;
+  height: 100px;
+  width: 450px;
+  border: 3px solid rgb(63, 41, 10);
+  font-size: 22px;
+  /* font-style:; */
+  transition: 0.2s;
+}
+.grade .btn button:hover {
+  background: rgb(206, 206, 206);
+}
+#carouselExampleInterval {
+  width: 100dvw;
+  margin-top: -800px;
+  margin-left: -250px;
+}
+
+/* .product .hot-prod-photo{
+    width: 200px;
+    aspect-ratio: 3/4;
+    background: yellow;
+    display: flex;
+    border-radius: 20px;
+    padding: 5px;
+    border: 2px solid black;
+  }
+  .hot-prod-photo .picture{
+    height: 100%;
+    width: 100%;
+    background: white;
+    background-size: cover;
+    background-position: center;
+    object-fit: fill;
+    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  
+  }
+  .picture img{
+    height: 100%;
+    width: 100%;
+    background: white;
+    background-size: cover;
+    background-position: center;
+    object-fit: fill;
+    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  
+  } */
+/* .home_photo img {
+    background-size: cover;
+    background-position: center;
+  } */
