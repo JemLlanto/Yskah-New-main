@@ -28,6 +28,12 @@ $_SESSION['cart'] = $cart_items;
 </head>
 
 <body>
+    <?php 
+    $sql = "SELECT * FROM user_table WHERE username='" . $_SESSION['username'] . "'";
+    $result = $conn->query($sql);
+
+    while ($row = $result->fetch_assoc()) {
+    ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
         <div
             class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
@@ -132,7 +138,7 @@ $_SESSION['cart'] = $cart_items;
                             aria-expanded="false">
                             <div class="user-off">
                                 <div class="photo ms-2 me-1">
-                                    <img src="img/default-profile.jpg" alt="">
+                                    <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                                 </div>
                                 <div class="name ms-1 mt-1">
                                     <p><?php echo $_SESSION['username'] ?></p>
@@ -287,7 +293,7 @@ $_SESSION['cart'] = $cart_items;
                                 <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
                             </div>
                             <div class="photo">
-                                <img src="img/default-profile.jpg" alt="">
+                                <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                             </div>
                         </div>
                     </button>
@@ -310,6 +316,9 @@ $_SESSION['cart'] = $cart_items;
             </div>
         </div>
     </nav>
+
+    <?php } ?>
+
     <div class="chat">
         <a href="user/chatroom.php?id=3">
             <button value=" <?php echo $row['chatroomid']; ?>" type="button" class="btn  border-0"
@@ -359,20 +368,20 @@ $_SESSION['cart'] = $cart_items;
             $res = mysqli_query($conn, "SELECT * FROM products");
             while ($row = mysqli_fetch_assoc($res)) {
                 ?>
-                <div class="col">
-                    <div class="card w-100">
-                        <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $row['product_name'] ?></h5>
-                            <p class="card-text">
-                            <p>Php <?php echo $row['price'] ?>.00</p>
-                            </p>
-                            <a href="user_product_preview.php?product_id=<?php echo $row['product_id']; ?>"
-                                class="btn btn-primary">View
-                                Product</a>
-                        </div>
+            <div class="col">
+                <div class="card w-100">
+                    <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $row['product_name'] ?></h5>
+                        <p class="card-text">
+                        <p>Php <?php echo $row['price'] ?>.00</p>
+                        </p>
+                        <a href="user_product_preview.php?product_id=<?php echo $row['product_id']; ?>"
+                            class="btn btn-primary">View
+                            Product</a>
                     </div>
                 </div>
+            </div>
             <?php } ?>
         </div>
     </div>

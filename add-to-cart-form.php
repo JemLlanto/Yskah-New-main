@@ -3,7 +3,7 @@ include ("sessionchecker.php");
 include ("connection.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_SESSION['id'];
+    $id = $_SESSION['user_id'];
     $product_id = intval($_POST['product_id']);
     $product_name = trim($_POST['product_name']);
     $image_file = trim($_POST['image_file']);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['cart'][] = $new_item;
         $message = "Successfully added to cart.";
 
-        $stmt = $conn->prepare("INSERT INTO order_table (id, product_id, product_name, image_file, price, quantity) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO order_table (user_id, product_id, product_name, image_file, price, quantity) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("iisssi", $id, $product_id, $product_name, $image_file, $price, $quantity);
         $stmt->execute();
         $stmt->close();

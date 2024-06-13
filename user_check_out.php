@@ -2,6 +2,38 @@
 include ("sessionchecker.php");
 include ("connection.php");
 include ("head.php");
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
+    $selectedItems = json_decode($_POST['selected_items'], true);
+    $order_id = $_POST['order_id'];
+    $user_id = $_SESSION['user_id'];
+    $total_price = 0;
+    $order_date = date("Y-m-d H:i:s");
+
+    foreach ($selectedItems as $index) {
+        if (isset($_SESSION['cart'][$index])) {
+            $item = $_SESSION['cart'][$index];
+            $total_price += $item['price'] * $item['quantity'];
+        }
+    }
+
+    $stmt = $conn->prepare("INSERT INTO orders (order_id, user_id, total_price, status, order_date) VALUES (?, ?, ?, 'Pending', ?)");
+    $stmt->bind_param("iids", $order_id, $user_id, $total_price, $order_date);
+    $_SESSION['cart'] = []; 
+    if ($stmt->execute()) {
+        header("Location: user_order.php");
+        exit();
+    } else {
+        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+    }
+} else {
+    echo "No selected items found.";
+    
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +46,13 @@ include ("head.php");
 </head>
 
 <body>
+    <?php 
+        $sql = "SELECT * FROM user_table WHERE username='" . $_SESSION['username'] . "'";
+        $result = $conn->query($sql);
+
+        while ($row = $result->fetch_assoc()) {
+    ?>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
         <div
             class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
@@ -301,82 +340,83 @@ include ("head.php");
         <div id="address" class="container rounded d-flex justify-content-start align-items-start flex-column mb-2 p-2">
             <div id="address_head" class="d-flex align-items-center justify-content-between">
                 <div>
-                    <h5><img id="location_icon" class="mb-1 me-1" src="img\location.png" alt="">Delivery Address</h5>
+                    <h5><img id="location_icon" class="mb-1 me-1" src="img/location.png" alt="">Delivery Address</h5>
                 </div>
-
-                <div id="change_address_button" class=" rounded"><a href=""><button id="change_address"
-                            class="border rounded p-2">Edit delivery details</button></a></div>
+                <div id="change_address_button" class="rounded">
+                    <a href=""><button id="change_address" class="border rounded p-2">Edit delivery details</button></a>
+                </div>
             </div>
             <div id="address_details" class="d-flex flex-column align-items-start ms-4 mt-2">
-                <p id="payment_details_text" class="m-0 mb-1 ms-2">Customer Name | 09(Customer Number)</p>
-                <p id="payment_details_text" class="ms-2 me-2 ">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Aut nam molestias iste voluptatum, consequatur neque! Illum odit quasi consequuntur exercitationem.
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi ipsum, fugit blanditiis natus
-                    accusamus animi rem non delectus repudiandae quibusdam!</p>
-
+                <p id="payment_details_text" class="m-0 mb-1 ms-2">
+                    <?php echo $row['first_name'] . ' ' . $row['last_name']; ?> | <?php echo $row['phone']; ?>
+                </p>
+                <p id="payment_details_text" class="ms-2 me-2">
+                    <?php echo $row['blockLot'] . ' ' . $row['subdivision'] . ', ' . $row['barangay'] . ', ' . $row['province'] . ', ' . $row['city'] . ' ' . $row['zip']; ?>
+                </p>
             </div>
         </div>
+        <?php } ?>
+        <?php
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
+            $selectedItems = json_decode($_POST['selected_items'], true);
+            $totalPrice = 0;
+        ?>
+
+        <?php foreach ($selectedItems as $index): ?>
+        <?php if (isset($_SESSION['cart'][$index])): ?>
+        <?php $item = $_SESSION['cart'][$index]; ?>
         <div id="product_details" class="w-100 rounded border d-flex justify-content-between align-items-end mb-2 p-2">
             <div class="product_image d-flex justify-content-center align-items-center">
-                <img src="img\homepic1.jpg" alt="" class="rounded me-2">
+                <img src="product-images/<?php echo $item['image_file']; ?>" alt="" class="rounded me-2">
                 <div class="m-0">
-                    <h5>Product asd asdasd</h5>
-                    <p>variation x 00</p>
+                    <h5><?php echo $item['product_name']; ?></h5>
+                    <p>variation x <?php echo number_format($item['price'], 2); ?></p>
                 </div>
             </div>
             <div id="product_description">
                 <div class="container p-0">
-                    <p id="price" class="me-2 mt-2 mb-0 text-end">₱ 00.00</p>
+                    <p id="price" class="me-2 mt-2 mb-0 text-end">₱
+                        <?php echo number_format($item['price'] * $item['quantity'], 2); ?></p>
                 </div>
             </div>
-
         </div>
-        <div id="product_details" class="w-100 rounded border d-flex justify-content-between align-items-end mb-2 p-2">
-            <div class="product_image d-flex justify-content-center align-items-center">
-                <img src="img\homepic1.jpg" alt="" class="rounded me-2">
-                <div class="m-0">
-                    <h5>Product asd asdasd</h5>
-                    <p>variation x 00</p>
-                </div>
-            </div>
-            <div id="product_description">
-                <div class="container p-0">
-                    <p id="price" class="me-2 mt-2 mb-0 text-end">₱ 00.00</p>
-                </div>
-            </div>
-
-        </div>
+        <?php $totalPrice += $item['price'] * $item['quantity']; ?>
+        <?php endif; ?>
+        <?php endforeach; ?>
 
         <div id="payment_details"
             class="container rounded d-flex justify-content-start align-items-start flex-column mb-2 p-3">
             <div class="mb-3">
                 <h5>Payment Details</h5>
             </div>
-            <div class="w-100 d-flex align-items-center justify-content-between ">
-                <p id="payment_details_text" class=" m-0 ms-2">Merchandise Subtotal</p>
-                <p id="payment_details_text" class="m-0 me-2">₱ 00.00</p>
+            <div class="w-100 d-flex align-items-center justify-content-between">
+                <p id="payment_details_text" class="m-0 ms-2">Merchandise Subtotal</p>
+                <p id="payment_details_text" class="m-0 me-2">₱ <?php echo number_format($totalPrice, 2); ?></p>
             </div>
             <div class="w-100 d-flex align-items-center justify-content-between">
-                <p id="payment_details_text" class="m-0 ms-2 ">Shipping Subtotal (Luzon/Visayas/Mindanao)</p>
+                <p id="payment_details_text" class="m-0 ms-2">Shipping Subtotal (Luzon/Visayas/Mindanao)</p>
                 <p id="payment_details_text" class="m-0 me-2">₱ 00.00</p>
             </div>
             <div class="w-100 d-flex align-items-center justify-content-between mt-3">
                 <h5 class="ms-2">Total Payment</h5>
-                <h5 id="total_payment" class="me-2">₱ 00.00</h5>
+                <h5 id="total_payment" class="me-2">₱ <?php echo number_format($totalPrice, 2); ?></h5>
             </div>
         </div>
+
         <div id="place_order" class="w-100 rounded d-flex align-items-center justify-content-end">
             <div>
                 <p class="m-0">Total Payment</p>
-                <h5 id="price" class="m-0">₱ 00.00</h5>
+                <h5 id="price" class="m-0">₱ <?php echo number_format($totalPrice, 2); ?></h5>
             </div>
-            <!-- Button trigger modal -->
             <button id="place_order_button" type="button" class="btn py-3 px-4 ms-2" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
                 Place Order
             </button>
 
-            <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -391,25 +431,25 @@ include ("head.php");
                                     <p>Scan the QR code to pay</p>
                                 </div>
                                 <div>
-                                    <img src="img\Gcash-BMA-QRcode-768x1024.jpg" alt="">
+                                    <img src="img/Gcash-BMA-QRcode-768x1024.jpg" alt="">
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <a href="user_order.php">
-                                <button id="done_button" type="button" class="btn btn-primary">Done</button>
-                            </a>
-
+                            <form action="user-order-form.php" method="post">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button id="done_button" type="submit" class="btn btn-primary">Done</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <?php } ?>
     </div>
 
     <footer>
-        <div class="footer_content flex-wrap">
+        <div class="footer_content flex-wrap flex-md-nowrap">
             <div class="footer_logo">
                 <img id="footer-logo" src="img\LOGO.png" alt="">
             </div>

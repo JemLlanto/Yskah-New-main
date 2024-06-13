@@ -2,6 +2,11 @@
 include ("sessionchecker.php");
 include ("connection.php");
 include ("head.php");
+
+if (isset($_POST['selected_items'])) {
+
+    $_SESSION['cart'] = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -305,21 +310,32 @@ include ("head.php");
             <a class="order_nav_a" href="user_order_shipped.php">Shipped</a>
             <a class="order_nav_a" href="user_order_delivered.php">Delivered</a>
         </div>
+        <?php 
+    $sql = "SELECT * FROM orders WHERE user_id= '" . $_SESSION['user_id'] . "'";
+    $result = $conn->query($sql);
 
+    while ($row = $result->fetch_assoc()) {
+    ?>
         <a href="user_order_status.php">
             <div id="order_item" class="rounded mt-3 p-2">
                 <div id="order_head" class="container w-100  mb-2 p-2 me-0">
-                    <h5 class="m-0 ">Order ID: 00000</h5>
+                    <h5 class="m-0 ">Order ID: <?php echo $row['orders_id'] ?></h5>
                     <p id="shipping_information_text" class="m-0 text-end">Waiting for seller's confirmation.</p>
                 </div>
+                <?php } ?>
 
+                <?php 
+            $sql = "SELECT * FROM order_table WHERE user_id= '" . $_SESSION['user_id'] . "'";
+            $result = $conn->query($sql);
 
+            while ($row = $result->fetch_assoc()) {
+    ?>
                 <div id="product_details"
                     class="w-100 rounded border d-flex justify-content-between align-items-center p-2">
                     <div class="product_image d-flex justify-content-center align-items-center">
-                        <img src="img\homepic1.jpg" alt="" class="rounded me-2">
+                        <img src="product-images/<?php echo $row['image_file']; ?>" alt="" class="rounded me-2">
                         <div class="product_variation">
-                            <h5>Product asd asdasd</h5>
+                            <h5><?php echo $row['product_name'] ?></h5>
                             <p>variation x 00</p>
                         </div>
                     </div>
@@ -329,7 +345,7 @@ include ("head.php");
                             <p id="price" class="me-2 mt-2 mb-0">₱ 00.00</p>
                         </div>
                     </div>
-
+                    <?php } ?>
                 </div>
                 <div class="container d-flex align-items-center justify-content-end p-2 pt-3 pe-3">
                     <p class="m-0">Total: </p>
@@ -337,10 +353,10 @@ include ("head.php");
                 </div>
             </div>
         </a>
-
     </div>
+
     <footer>
-        <div class="footer_content flex-wrap">
+        <div class="footer_content flex-wrap flex-lg-nowrap">
             <div class="footer_logo">
                 <img id="footer-logo" src="img\LOGO.png" alt="">
             </div>
