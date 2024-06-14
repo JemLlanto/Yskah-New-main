@@ -10,7 +10,7 @@ include ("head.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css\sale_report.css" />
+    <link rel="stylesheet" href="css\admin_product_preview6.css" />
 </head>
 
 <body>
@@ -23,7 +23,7 @@ include ("head.php");
                     <span class="navbar-toggler-icon" style="width:15px"></span>
                 </a>
 
-                <a id="img" class="navbar-brand" href="admin.php">
+                <a id="img" class="navbar-brand" href="user_landing_page.php">
                     <img src="img/LOGOO.png" alt="YsakaLogo" class="d-inline-block" style="width: 110px">
                 </a>
             </div>
@@ -128,7 +128,7 @@ include ("head.php");
                         <ul class="dropdown-menu p-2">
                             <li>
                                 <div class="drop_items ">
-                                    <a class="ms-2 mt-3" href="admin_setting.php">Account</a>
+                                    <a class="ms-2 mt-3" href="user_setting.php">Account</a>
                                 </div>
                             </li>
                             <li>
@@ -149,16 +149,16 @@ include ("head.php");
             <div class="offcanvas-body">
                 <ul class="navbar-nav nav-fill gap-2 p-0">
                     <li class="nav-item ps-3 ">
-                        <a class="nav-link text-dark text-start" href="admin.php">Home</a>
-                    </li>
-                    <li class="nav-item ps-3">
-                        <a class="nav-link text-dark text-start" href="admin_products.php">Product</a>
-                    </li>
-                    <li class="nav-item ps-3 ">
-                        <a class="nav-link text-dark text-start" href="admin_order.php">Orders</a>
+                        <a class="nav-link text-dark text-start" href="user_landing_page.php">Home</a>
                     </li>
                     <li class="nav-item ps-3 active">
-                        <a class="nav-link text-dark text-start" href="admin_sale_report.php">Sale Report</a>
+                        <a class="nav-link text-dark text-start" href="user_products.php">Product</a>
+                    </li>
+                    <li class="nav-item ps-3">
+                        <a class="nav-link text-dark text-start" href="user_cart.php">Cart</a>
+                    </li>
+                    <li class="nav-item ps-3">
+                        <a class="nav-link text-dark text-start" href="user_landing_page.php">Orders</a>
                     </li>
                 </ul>
             </div>
@@ -166,7 +166,7 @@ include ("head.php");
 
         <div
             class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
-            <a id="img" class="navbar-brand" href="admin.php">
+            <a id="img" class="navbar-brand" href="user_landing_page.php">
                 <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none"
                     style="width: 110px">
             </a>
@@ -174,16 +174,16 @@ include ("head.php");
             <div class="container navbar-collapse d-flex d-md-none" id="navbarNav">
                 <ul class="navbar-nav nav-fill gap-2 p-0">
                     <li class="nav-item">
-                        <a class="nav-link text-dark " href="admin.php">Home</a>
+                        <a class="nav-link text-dark " href="user_landing_page.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="admin-products.php">Product</a>
+                        <a class="nav-link text-dark active" href="user_products.php">Product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark " href="admin_order.php">Orders</a>
+                        <a class="nav-link text-dark" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark active" href="admin_sale_report.php">Sale Report</a>
+                        <a class="nav-link text-dark" href="user_landing_page.php">Orders</a>
                     </li>
 
                 </ul>
@@ -280,12 +280,7 @@ include ("head.php");
                     <ul class="dropdown-menu p-2">
                         <li>
                             <div class="drop_items ">
-                                <a class="me-2" href="admin_setting.php">Account</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="drop_items ">
-                                <a class="w-100 me-2 text-end" href="add_admin_form.php">Add Admin</a>
+                                <a class="me-2" href="user_setting.php">Account</a>
                             </div>
                         </li>
                         <li>
@@ -302,79 +297,130 @@ include ("head.php");
         </div>
     </nav>
 
-    <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-1 p-3">
-        <div class="row">
-            <div id="graph" class="col-3 p-2 rounded">
+    <?php
+    if (isset($_GET['product_id'])) {
+        $product_id = intval($_GET['product_id']);
 
-                <div id="pie_chart" class="rounded p-2 mb-2">
-                    <img class="rounded" src="img\pie_chart.png" alt="">
-                </div>
-                <div id="bar_graph" class="rounded p-2 mt-2">
-                    <img class="rounded" src="img\bar_graph.png" alt="">
+        $result = mysqli_query($conn, "SELECT * FROM products WHERE product_id = $product_id");
+        $row = mysqli_fetch_assoc($result);
+
+        if ($row) {
+            ?>
+
+            <div id="container" class="container-fluid rounded d-flex mb-3 mt-3 py-2">
+                <div class="row row-cols-1 row-cols-md-2 gx-1 gy-4 gy-md-0">
+                    <div class="col">
+                        <div id="carouselExampleInterval" class="carousel slide " data-bs-ride="carousel" data-interval="false">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active " data-bs-interval="3000">
+                                    <img src="product-images/<?php echo $row['image_file'] ?>" class="d-block w-100 rounded"
+                                        alt="...">
+                                </div>
+                                <?php
+                                $res = mysqli_query($conn, "SELECT * FROM product_samples WHERE product_id = $product_id");
+                                while ($samples = mysqli_fetch_assoc($res)) {
+
+                                    ?>
+                                    <div class="carousel-item  " data-bs-interval="3000">
+                                        <img src="product-images/product_samples/<?php echo $samples['image_file'] ?>"
+                                            class="d-block w-100 rounded" alt="...">
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="container-fluid">
+                            <div class="product_name_price rounded d-flex justify-content-between p-3 align-items-center">
+                                <h1><?php echo $row['product_name'] ?></h1>
+                                <h3>Php <?php echo $row['price'] ?>.00</h3>
+                            </div>
+                            <div class="product_description w-100 h-auto">
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia velit est commodi
+                                    architecto
+                                    labore natus perspiciatis hic iure odio ut! Quos maiores vero laudantium ex, quasi repellat
+                                    cum
+                                    voluptatum veritatis.
+                                </p>
+                            </div>
+                            <div class="variation_ordernow d-flex flex-column w-100">
+                                <!-- <div
+                                    class="product_variation w-100 d-flex align-items-center flex-wrap justify-content-center justify-content-md-start gap-2 mt-md-5">
+                                    <div class="variation">
+                                        <button type="button" class="btn variation-btn">Variation 1</button>
+                                    </div>
+                                    <div class="variation">
+                                        <button type="button" class="btn variation-btn">Variation 2</button>
+                                    </div>
+                                    <div class="variation">
+                                        <button type="button" class="btn variation-btn">Variation 3</button>
+                                    </div>
+                                </div> -->
+
+
+                                <div class="quantity_buttons">
+                                    <form id="add-to-cart-form" action="add-to-cart-form.php" method="POST" class="">
+                                        <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
+                                        <input type="hidden" name="product_name" value="<?php echo $row['product_name']; ?>">
+                                        <input type="hidden" name="price" value="<?php echo $row['price']; ?>">
+                                        <input type="hidden" name="image_file" value="<?php echo $row['image_file']; ?>">
+                                        <div id="quantity" class="p-2 ps-3">
+                                            <label for="quantity">Quantity:</label>
+                                            <input type="number" id="quantity" name="quantity" value="1" min="1">
+                                        </div>
+                                        <div class="add_to_cart_order_now mt-4 p-2">
+                                            <button class="add_to_cart"
+                                                onclick="document.getElementById('add-to-cart-form').submit();">
+                                                <h5>Add to Cart</h5>
+                                            </button>
+                                            <button class="order_now ms-2" style="border:none;">
+                                                <h5>Order Now</h5>
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="col-9 rounded p-2">
-                <div id="report" class="w-100 rounded p-2">
-                    <div id="timeline" class="w-100 p-2">
-                        <a class="rounded mx-1 p-2 " href="admin_sale_report.php">Week</a>
-                        <a class="rounded mx-1 p-2" href="admin_sale_report_month.php">Month</a>
-                        <a class="rounded mx-1 p-2 active" href="admin_sale_report_year.php">Year</a>
-                    </div>
-                    <div id="report_title" class=" my-3">
-                        <h5>Sale Summary this Year</h5>
-                    </div>
-                    <div id="table">
-                        <table id="table" class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Product ID</th>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Items Sold</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="total_sale" class="w-100 pe-2">
-                        <p class="m-0">Total Sales:</p>
-                        <h5 id="price" class="m-0">₱ 00.00</h5>
-                    </div>
-                </div>
+            <script>
+                document.querySelectorAll('.variation-btn').forEach((button, index) => {
+                    button.addEventListener('click', function () {
+                        const carousel = document.querySelector('#carouselExampleInterval');
+                        const bootstrapCarousel = new bootstrap.Carousel(carousel);
+                        bootstrapCarousel.to(index + 1);
+                    });
+                });
+            </script>
 
-            </div>
+            <?php
+        } else {
+            echo "<p>Product not found.</p>";
+        }
+    } else {
+        echo "<p>No product selected.</p>";
+    }
+    ?>
 
-        </div>
-
-
-
-    </div>
     <footer>
-        <div class="footer_content flex-wrap">
+        <div class="footer_content flex-wrap flex-md-nowrap">
             <div class="footer_logo">
                 <img id="footer-logo" src="img\LOGO.png" alt="">
             </div>

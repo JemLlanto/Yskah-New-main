@@ -10,7 +10,7 @@ include ("head.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css\sale_report.css" />
+    <link rel="stylesheet" href="css\cart5.css" />
 </head>
 
 <body>
@@ -23,7 +23,7 @@ include ("head.php");
                     <span class="navbar-toggler-icon" style="width:15px"></span>
                 </a>
 
-                <a id="img" class="navbar-brand" href="admin.php">
+                <a id="img" class="navbar-brand" href="user_landing_page.php">
                     <img src="img/LOGOO.png" alt="YsakaLogo" class="d-inline-block" style="width: 110px">
                 </a>
             </div>
@@ -128,7 +128,7 @@ include ("head.php");
                         <ul class="dropdown-menu p-2">
                             <li>
                                 <div class="drop_items ">
-                                    <a class="ms-2 mt-3" href="admin_setting.php">Account</a>
+                                    <a class="ms-2 mt-3" href="user_setting.php">Account</a>
                                 </div>
                             </li>
                             <li>
@@ -149,16 +149,16 @@ include ("head.php");
             <div class="offcanvas-body">
                 <ul class="navbar-nav nav-fill gap-2 p-0">
                     <li class="nav-item ps-3 ">
-                        <a class="nav-link text-dark text-start" href="admin.php">Home</a>
-                    </li>
-                    <li class="nav-item ps-3">
-                        <a class="nav-link text-dark text-start" href="admin_products.php">Product</a>
+                        <a class="nav-link text-dark text-start" href="user_landing_page.php">Home</a>
                     </li>
                     <li class="nav-item ps-3 ">
-                        <a class="nav-link text-dark text-start" href="admin_order.php">Orders</a>
+                        <a class="nav-link text-dark text-start" href="user_products.php">Product</a>
                     </li>
                     <li class="nav-item ps-3 active">
-                        <a class="nav-link text-dark text-start" href="admin_sale_report.php">Sale Report</a>
+                        <a class="nav-link text-dark text-start" href="user_cart.php">Cart</a>
+                    </li>
+                    <li class="nav-item ps-3">
+                        <a class="nav-link text-dark text-start" href="user_landing_page.php">Orders</a>
                     </li>
                 </ul>
             </div>
@@ -166,7 +166,7 @@ include ("head.php");
 
         <div
             class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
-            <a id="img" class="navbar-brand" href="admin.php">
+            <a id="img" class="navbar-brand" href="user_landing_page.php">
                 <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none"
                     style="width: 110px">
             </a>
@@ -174,16 +174,16 @@ include ("head.php");
             <div class="container navbar-collapse d-flex d-md-none" id="navbarNav">
                 <ul class="navbar-nav nav-fill gap-2 p-0">
                     <li class="nav-item">
-                        <a class="nav-link text-dark " href="admin.php">Home</a>
+                        <a class="nav-link text-dark " href="user_landing_page.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="admin-products.php">Product</a>
+                        <a class="nav-link text-dark " href="user_products.php">Product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark " href="admin_order.php">Orders</a>
+                        <a class="nav-link text-dark active" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark active" href="admin_sale_report.php">Sale Report</a>
+                        <a class="nav-link text-dark" href="user_landing_page.php">Orders</a>
                     </li>
 
                 </ul>
@@ -280,12 +280,7 @@ include ("head.php");
                     <ul class="dropdown-menu p-2">
                         <li>
                             <div class="drop_items ">
-                                <a class="me-2" href="admin_setting.php">Account</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="drop_items ">
-                                <a class="w-100 me-2 text-end" href="add_admin_form.php">Add Admin</a>
+                                <a class="me-2" href="user_setting.php">Account</a>
                             </div>
                         </li>
                         <li>
@@ -302,79 +297,96 @@ include ("head.php");
         </div>
     </nav>
 
-    <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-1 p-3">
-        <div class="row">
-            <div id="graph" class="col-3 p-2 rounded">
+    <div id="container" class="container-fluid-sm container-md d-flex flex-column mb-3 mt-3 p-3">
+        <?php
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
-                <div id="pie_chart" class="rounded p-2 mb-2">
-                    <img class="rounded" src="img\pie_chart.png" alt="">
+        if (!empty($_SESSION['cart'])): ?>
+            <?php
+            $totalPrice = 0;
+            foreach ($_SESSION['cart'] as $item) {
+                $totalPrice += $item['price'] * $item['quantity'];
+            }
+            ?>
+            <div id="select_all" class="container rounded p-2 mb-2 ps-2 d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center ps-2">
+                    <input type="checkbox" id="selectAllCheckbox">
+                    <p class="ms-2 mt-3">Select All</p>
                 </div>
-                <div id="bar_graph" class="rounded p-2 mt-2">
-                    <img class="rounded" src="img\bar_graph.png" alt="">
+                <div class="d-flex align-items-center">
+                    <div class="me-3 d-flex flex-column align-items-end justify-content-start">
+                        <p class="m-0">Total</p>
+                        <h5 id="price" class="m-0">₱ <?php echo number_format($totalPrice, 2); ?></h5>
+                    </div>
+                    <a href="user_check_out.php"><button id="check_out" class="py-3 p-2 rounded">Check Out
+                            (<?php echo count($_SESSION['cart']); ?>)</button></a>
                 </div>
             </div>
+            <?php foreach ($_SESSION['cart'] as $index => $item): ?>
+                <div class="cart_item">
+                    <div id="product_details">
+                        <div class="check_box">
+                            <input type="checkbox" class="itemCheckbox" data-index="<?php echo $index; ?>">
+                        </div>
+                        <div class="product_image">
+                            <img src="product-images/<?php echo $item['image_file']; ?>" alt="Product Image">
+                        </div>
+                        <div class="product_description">
+                            <h5><?php echo $item['product_name']; ?></h5>
+                            <div class="product_variation">
+                                <p>Quantity: <?php echo $item['quantity']; ?></p>
+                                <p>Price: ₱ <?php echo number_format($item['price'], 2); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edit_delete">
+                        <div class="edit_button">
+                            <a
+                                href="user_product_update.php?product_id=<?php echo $item['product_id']; ?>&index=<?php echo $index; ?>"><button>Edit</button></a>
+                        </div>
+                        <div class="delete_button ms-2">
+                            <form action="delete-from-cart.php" method="post">
+                                <?php
+                                $sql = "SELECT order_id FROM order_table WHERE product_id = " . $item['product_id'];
+                                $result = $conn->query($sql);
 
-            <div class="col-9 rounded p-2">
-                <div id="report" class="w-100 rounded p-2">
-                    <div id="timeline" class="w-100 p-2">
-                        <a class="rounded mx-1 p-2 " href="admin_sale_report.php">Week</a>
-                        <a class="rounded mx-1 p-2" href="admin_sale_report_month.php">Month</a>
-                        <a class="rounded mx-1 p-2 active" href="admin_sale_report_year.php">Year</a>
-                    </div>
-                    <div id="report_title" class=" my-3">
-                        <h5>Sale Summary this Year</h5>
-                    </div>
-                    <div id="table">
-                        <table id="table" class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Product ID</th>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Items Sold</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="total_sale" class="w-100 pe-2">
-                        <p class="m-0">Total Sales:</p>
-                        <h5 id="price" class="m-0">₱ 00.00</h5>
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $order_id = $row['order_id'];
+                                    ?>
+                                    <input type="hidden" name="index" value="<?php echo $index; ?>">
+                                    <input type="hidden" name="order_id" value="<?php echo $order_id; ?>">
+                                <?php } ?>
+                                <button type="submit">Delete</button>
+
+
+                            </form>
+                        </div>
                     </div>
                 </div>
-
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div id="select_all" class="container rounded p-2 mb-2 ps-2 d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center ps-2">
+                    <input type="checkbox" id="selectAllCheckbox">
+                    <p class="ms-2 mt-3">Select All</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="me-3 d-flex flex-column align-items-end justify-content-start">
+                        <p class="m-0">Total</p>
+                        <h5 id="price" class="m-0">₱ 0.00</h5>
+                    </div>
+                    <a href="user_check_out.php"><button id="check_out" class="py-3 p-2 rounded">Check Out</button></a>
+                </div>
             </div>
-
-        </div>
-
-
-
+            <div id="empty_cart" class="container rounded p-2">
+                <h5>Your cart is empty. Order <a href="user_products.php">here</a>.</h5>
+            </div>
+        <?php endif; ?>
     </div>
     <footer>
-        <div class="footer_content flex-wrap">
+        <div class="footer_content flex-wrap flex-md-nowrap">
             <div class="footer_logo">
                 <img id="footer-logo" src="img\LOGO.png" alt="">
             </div>

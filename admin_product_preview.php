@@ -292,6 +292,11 @@ include ("head.php");
                                 </div>
                             </li>
                             <li>
+                                <div class="drop_items ">
+                                    <a class="w-100 me-2 text-end" href="add_admin_form.php">Add Admin</a>
+                                </div>
+                            </li>
+                            <li>
                                 <div id="log_out" class="drop_items ">
                                     <form action="logout.php" method="post">
                                         <button type="submit" name="logout" class="btn p-0 py-1 text-end pe-2">Log
@@ -311,7 +316,7 @@ include ("head.php");
     if (isset($_GET['product_id'])) {
         $product_id = intval($_GET['product_id']);
 
-        $result = mysqli_query($conn, "SELECT * FROM product_samples WHERE product_id = $product_id");
+        $result = mysqli_query($conn, "SELECT * FROM products WHERE product_id = $product_id");
         $row = mysqli_fetch_assoc($result);
 
         if ($row) {
@@ -322,12 +327,20 @@ include ("head.php");
                     <div class="col">
                         <div id="carouselExampleInterval" class="carousel slide " data-bs-ride="carousel" data-interval="false">
                             <div class="carousel-inner">
-
-                                <div class="carousel-item active">
-                                    <img src="product-images/product_samples/<?php echo $row['image_file'] ?>"
-                                        class="d-block w-100 rounded" alt="...">
+                                <div class="carousel-item active " data-bs-interval="3000">
+                                    <img src="product-images/<?php echo $row['image_file'] ?>" class="d-block w-100 rounded"
+                                        alt="...">
                                 </div>
+                                <?php
+                                $res = mysqli_query($conn, "SELECT * FROM product_samples WHERE product_id = $product_id");
+                                while ($samples = mysqli_fetch_assoc($res)) {
 
+                                    ?>
+                                    <div class="carousel-item  " data-bs-interval="3000">
+                                        <img src="product-images/product_samples/<?php echo $samples['image_file'] ?>"
+                                            class="d-block w-100 rounded" alt="...">
+                                    </div>
+                                <?php } ?>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
                                 data-bs-slide="prev">

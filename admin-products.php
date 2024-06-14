@@ -288,7 +288,12 @@ include ("head.php");
                         <ul class="dropdown-menu p-2">
                             <li>
                                 <div class="drop_items ">
-                                    <a class="me-2" href="admin_setting.php">Account</a>
+                                    <a class="w-100 me-2 text-end" href="admin_setting.php">Account</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="drop_items ">
+                                    <a class="w-100 me-2 text-end" href="add_admin_form.php">Add Admin</a>
                                 </div>
                             </li>
                             <li>
@@ -312,7 +317,9 @@ include ("head.php");
             <?php
             $res = mysqli_query($conn, "SELECT * FROM products");
             while ($row = mysqli_fetch_assoc($res)) {
+
                 ?>
+
                 <div class="col-sm-6 col-lg-3">
                     <div class="card w-100">
                         <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="..." />
@@ -326,13 +333,13 @@ include ("head.php");
                             </div>
                             <div class="add_sample_button">
                                 <button id="add_sample_button" type="button" class="btn  col-sm-6 col-lg-3"
-                                    data-bs-toggle="modal" data-bs-target="#addsample">
+                                    data-bs-toggle="modal" data-bs-target="#addsample<?php echo $row['product_id']; ?>">
                                     Add Samples
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="addsample" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
+                                <div class="modal fade" id="addsample<?php echo $row['product_id']; ?>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -340,31 +347,35 @@ include ("head.php");
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="add-product ">
-                                                    <form action="admin_adding_sample.php" method="POST" autocomplete="off"
-                                                        enctype="multipart/form-data">
+                                            <form action="admin_adding_sample.php" method="POST" autocomplete="off"
+                                                enctype="multipart/form-data">
+                                                <div class="modal-body">
+                                                    <div class="add-product ">
+
                                                         <div class="mt-1 mb-1">
+                                                            <h5>Product ID: <?php echo $row['product_id']; ?></h5>
                                                             <input class="w-100 p-2" type="number" name="product_id"
-                                                                id="product_id"
-                                                                placeholder="<?php echo $row['product_id']; ?>">
+                                                                id="product_id" value="<?php echo $row['product_id']; ?>"
+                                                                hidden>
                                                         </div>
                                                         <div class="m-2">
                                                             <h5>Product Sample Image</h5>
-                                                            <input type="file" name="image_file" accept=".jpg, .jpeg, .png">
+                                                            <input type="file" name="image_file" accept=".jpg, .jpeg, .png"
+                                                                required>
                                                         </div>
 
 
 
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" name="addsample" class="btn btn-primary">Add
-                                                    Product</button>
-                                                </form>
-                                            </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="addsample" class="btn btn-primary">Add
+                                                        Sample</button>
+
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -426,7 +437,7 @@ include ("head.php");
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $row['product_name'] ?></h5>
                             <p class="card-text">
-                            <p class="m-0">Product ID: <?php echo $row['product_id']; ?></p>
+                            <p class="m-0">Product ID: <?php echo $row['product_id'] ?></p>
                             <p class="m-0">Php <?php echo $row['price'] ?>.00</p>
                             </p>
                             <a href="admin_product_preview.php?product_id=<?php echo $row['product_id']; ?>"

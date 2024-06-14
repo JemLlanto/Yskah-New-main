@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_SESSION["username"]) && isset($_SESSION["user_id"])) {
-    $id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id'];
     header("landing_page.php");
 } else {
     echo "<script>
