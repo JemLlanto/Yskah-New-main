@@ -2,6 +2,21 @@
 include ("sessionchecker.php");
 include ("connection.php");
 include ("head.php");
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
+    $order_id = $_POST['order_id'];
+    
+    // Update order status to 'Shipping'
+    $sql_update = "UPDATE order_items SET status = 'Shipped' WHERE order_id = ?";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("i", $order_id);
+    $stmt_update->execute();
+    $stmt_update->close();
+
+    // Redirect to admin_order_to_ship.php after update
+    header("Location: admin_order_shipped.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -297,50 +312,72 @@ include ("head.php");
         </div>
     </nav>
 
+    <?php
+
+// Query to fetch orders with status 'Shipping'
+$sql = "SELECT * FROM order_items WHERE status = 'Shipping'";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
+
     <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-3 p-3">
         <div id="order_nav" class="p-2 rounded">
-
-            <a class="order_nav_a " href="admin_order.php">For Confirmation</a>
+            <a class="order_nav_a" href="admin_order.php">For Confirmation</a>
             <a class="order_nav_a active" href="admin_order_to_ship.php">To Ship</a>
             <a class="order_nav_a" href="admin_order_shipped.php">Shipped</a>
             <a class="order_nav_a" href="admin_order_delivered.php">Delivered</a>
         </div>
-
-        <a href="admin_order_status.php">
+        <?php if ($result->num_rows > 0) : ?>
+        <?php while ($order = $result->fetch_assoc()) : ?>
+        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
             <div id="order_item" class="rounded mt-3 p-2">
-                <div id="order_head" class="container w-100  mb-2 p-2 me-0">
-                    <h5 class="m-0 ">Order ID: 00000</h5>
-                    <p id="shipping_information_text" class="m-0 text-end">The seller is preparing the orders.</p>
+                <div id="order_head" class="container w-100 mb-2 p-2 me-0">
+                    <h5 class="m-0">Order ID: <?php echo $order['order_id']; ?></h5>
+                    <button type="submit" class="btn btn-success" name="confirm_order">Confirm</button>
                 </div>
 
-
+                <!-- Display product details -->
                 <div id="product_details"
                     class="w-100 rounded border d-flex justify-content-between align-items-center p-2">
                     <div class="product_image d-flex justify-content-center align-items-center">
-                        <img src="img\homepic1.jpg" alt="" class="rounded me-2">
+                        <img src="product-images/<?php echo $order['image_file']; ?>" alt="" class="rounded me-2">
                         <div class="product_variation">
-                            <h5>Product asd asdasd</h5>
-                            <p>variation x 00</p>
+                            <h5><?php echo $order['product_name']; ?></h5>
+                            <p>Quantity: <?php echo $order['quantity']; ?></p>
                         </div>
                     </div>
-
                     <div id="product_description">
                         <div class="container d-flex align-items-center justify-content-center p-0">
-                            <p id="price" class="me-2 mt-2 mb-0">₱ 00.00</p>
+                            <p id="price" class="me-2 mt-2 mb-0">₱
+                                <?php echo number_format($order['price'] * $order['quantity'], 2); ?></p>
                         </div>
                     </div>
-
                 </div>
+
+                <!-- Display total price -->
                 <div class="container d-flex align-items-center justify-content-end p-2 pt-3 pe-3">
                     <p class="m-0">Total: </p>
-                    <h5 id="price" class="ms-2 m-0">₱ 00.00</h5>
+                    <h5 id="price" class="ms-2 m-0">₱
+                        <?php echo number_format($order['price'] * $order['quantity'], 2); ?></h5>
                 </div>
             </div>
-        </a>
-
+        </form>
+        <?php endwhile; ?>
+        <?php else : ?>
+        <div id=""
+            class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-1 text-center"
+            style="height: 150px">
+            <h5>Empty Order.</h5>
+        </div>
+        <?php endif; ?>
     </div>
+
+
+
     <footer>
-        <div class="footer_content flex-wrap">
+        <div class="footer_content flex-wrap flex-lg-nowrap">
             <div class="footer_logo">
                 <img id="footer-logo" src="img\LOGO.png" alt="">
             </div>

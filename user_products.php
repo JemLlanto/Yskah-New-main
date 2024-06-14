@@ -165,7 +165,7 @@ include ("head.php");
                         <a class="nav-link text-dark text-start" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item ps-3">
-                        <a class="nav-link text-dark text-start" href="user_landing_page.php">Orders</a>
+                        <a class="nav-link text-dark text-start" href="user_order.php">Orders</a>
                     </li>
                 </ul>
             </div>
@@ -190,7 +190,7 @@ include ("head.php");
                         <a class="nav-link text-dark" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="user_landing_page.php">Orders</a>
+                        <a class="nav-link text-dark" href="user_order.php">Orders</a>
                     </li>
 
                 </ul>

@@ -178,7 +178,7 @@ $_SESSION['cart'] = $cart_items;
                         <a class="nav-link text-dark text-start" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item ps-3">
-                        <a class="nav-link text-dark text-start" href="user_landing_page.php">Orders</a>
+                        <a class="nav-link text-dark text-start" href="user_order.php">Orders</a>
                     </li>
                 </ul>
             </div>
@@ -203,7 +203,7 @@ $_SESSION['cart'] = $cart_items;
                         <a class="nav-link text-dark" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="user_landing_page.php">Orders</a>
+                        <a class="nav-link text-dark" href="user_order.php">Orders</a>
                     </li>
 
                 </ul>
@@ -412,31 +412,6 @@ $_SESSION['cart'] = $cart_items;
     </footer>
 
 
-
-    <footer>
-        <div class="footer_content flex-wrap flex-md-nowrap">
-            <div class="footer_logo">
-                <img id="footer-logo" src="img\LOGO.png" alt="">
-            </div>
-            <div class="footer_details">
-                <h4>SOCIALS</h4>
-                <div class="socials">
-                    <a href="#">
-                        <p><i class='bx bxl-facebook-circle'></i>Facebook</p>
-                    </a>
-                    <a href="#">
-                        <p><i class='bx bxl-tiktok'></i>Tiktok</p>
-                    </a>
-                    <a href="#">
-                        <p><i class='bx bxl-instagram-alt'></i>Instagram</p>
-                    </a>
-                </div>
-                <div class="copyright">
-                    <p><i class='bx bx-copyright'></i>2021 Jessa Mae O. Figueroa | All Rights Reserve</p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
 </body>
 

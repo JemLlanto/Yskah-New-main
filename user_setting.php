@@ -52,14 +52,14 @@
             password='$hashed_password' WHERE user_id='" . $_POST['user_id'] . "'");
             echo "<script>
           alert('Record Successfully modified');
-          window.location='admin_setting.php';
+          window.location='user_setting.php';
           </script>";
         }
         ?>
     <!-- Modal -->
     <div class="modal fade" id="change_profile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <form action="update_photo.php" method="post" enctype="multipart/form-data">
+            <form action="user_update_photo.php" method="post" enctype="multipart/form-data">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Change Profile Picture</h5>
@@ -90,7 +90,7 @@
                     <span class="navbar-toggler-icon" style="width:15px"></span>
                 </a>
 
-                <a id="img" class="navbar-brand" href="admin.php">
+                <a id="img" class="navbar-brand" href="user_landing_page.php">
                     <img src="img/LOGOO.png" alt="YsakaLogo" class="d-inline-block" style="width: 110px">
                 </a>
             </div>

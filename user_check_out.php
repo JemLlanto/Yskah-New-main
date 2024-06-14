@@ -3,37 +3,6 @@ include ("sessionchecker.php");
 include ("connection.php");
 include ("head.php");
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
-    $selectedItems = json_decode($_POST['selected_items'], true);
-    $order_id = $_POST['order_id'];
-    $user_id = $_SESSION['user_id'];
-    $total_price = 0;
-    $order_date = date("Y-m-d H:i:s");
-
-    foreach ($selectedItems as $index) {
-        if (isset($_SESSION['cart'][$index])) {
-            $item = $_SESSION['cart'][$index];
-            $total_price += $item['price'] * $item['quantity'];
-        }
-    }
-
-    $stmt = $conn->prepare("INSERT INTO orders (order_id, user_id, total_price, status, order_date) VALUES (?, ?, ?, 'Pending', ?)");
-    $stmt->bind_param("iids", $order_id, $user_id, $total_price, $order_date);
-    $_SESSION['cart'] = []; 
-    if ($stmt->execute()) {
-        header("Location: user_order.php");
-        exit();
-    } else {
-        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-    }
-} else {
-    echo "No selected items found.";
-    
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -336,6 +305,7 @@ if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
         </div>
     </nav>
 
+
     <div id="container" class="container-fluid-sm container-md rounded d-flex flex-column mb-3 mt-3 p-3">
         <div id="address" class="container rounded d-flex justify-content-start align-items-start flex-column mb-2 p-2">
             <div id="address_head" class="d-flex align-items-center justify-content-between">
@@ -355,20 +325,30 @@ if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
                 </p>
             </div>
         </div>
-        <?php } ?>
+
         <?php
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
 
-        if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
-            $selectedItems = json_decode($_POST['selected_items'], true);
-            $totalPrice = 0;
-        ?>
 
-        <?php foreach ($selectedItems as $index): ?>
-        <?php if (isset($_SESSION['cart'][$index])): ?>
-        <?php $item = $_SESSION['cart'][$index]; ?>
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
+        $selectedItems = json_decode($_POST['selected_items'], true);
+        $totalPrice = 0;
+        $user_id = $_SESSION['user_id'];
+    ?>
+
+        <?php foreach ($selectedItems as $order_id): ?>
+        <?php
+        $sql = "SELECT * FROM order_table WHERE order_id = ? AND user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $order_id, $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $item = $result->fetch_assoc();
+    ?>
+        <?php if ($item): ?>
         <div id="product_details" class="w-100 rounded border d-flex justify-content-between align-items-end mb-2 p-2">
             <div class="product_image d-flex justify-content-center align-items-center">
                 <img src="product-images/<?php echo $item['image_file']; ?>" alt="" class="rounded me-2">
@@ -437,6 +417,7 @@ if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
                         </div>
                         <div class="modal-footer">
                             <form action="user-order-form.php" method="post">
+                                <input type="hidden" name="totalPrice" value="<?php echo $totalPrice; ?>">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button id="done_button" type="submit" class="btn btn-primary">Done</button>
                             </form>
@@ -445,7 +426,9 @@ if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
                 </div>
             </div>
         </div>
-        <?php } ?>
+        <?php } 
+        }
+         ?>
     </div>
 
     <footer>

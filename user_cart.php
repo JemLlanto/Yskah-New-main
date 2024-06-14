@@ -309,11 +309,17 @@ include ("head.php");
 
     <div id="container" class="container-fluid-sm container-md d-flex flex-column mb-3 mt-3 p-3">
         <?php
+
+
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    
-    if (!empty($_SESSION['cart'])):
+
+    $user_id = $_SESSION['user_id'];
+    $sql = "SELECT * FROM order_table WHERE user_id = $user_id";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0):
     ?>
         <div id="select_all" class="container rounded p-2 mb-2 ps-2 d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-between align-items-center ps-2">
@@ -327,23 +333,20 @@ include ("head.php");
                 </div>
                 <form id="checkoutForm" action="user_check_out.php" method="post">
                     <input type="hidden" name="selected_items" id="selected_items">
-                    <?php foreach ($_SESSION['cart'] as $index => $item): ?>
-                    <?php
-                    $sql = "SELECT order_id FROM order_table WHERE product_id = " . $item['product_id'];
-                    $result = $conn->query($sql);
-                    while ($row = mysqli_fetch_assoc($result)) { ?>
+                    <?php while ($row = $result->fetch_assoc()): ?>
                     <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
-                    <?php }  ?>
-                    <?php endforeach; ?>
+                    <?php endwhile; ?>
                     <button id="check_out" class="py-3 p-2 rounded">Check Out</button>
                 </form>
             </div>
         </div>
-        <?php foreach ($_SESSION['cart'] as $index => $item): ?>
+        <?php
+        $result->data_seek(0);
+        while ($item = $result->fetch_assoc()): ?>
         <div class="cart_item">
             <div id="product_details">
                 <div class="check_box">
-                    <input type="checkbox" class="itemCheckbox" data-index="<?php echo $index; ?>"
+                    <input type="checkbox" class="itemCheckbox" data-index="<?php echo $item['order_id']; ?>"
                         data-price="<?php echo $item['price'] * $item['quantity']; ?>">
                 </div>
                 <div class="product_image">
@@ -360,27 +363,19 @@ include ("head.php");
             <div class="edit_delete">
                 <div class="edit_button">
                     <a
-                        href="user_product_update.php?product_id=<?php echo $item['product_id']; ?>&index=<?php echo $index; ?>">
+                        href="user_product_update.php?product_id=<?php echo $item['product_id']; ?>&order_id=<?php echo $item['order_id']; ?>">
                         <button>Edit</button>
                     </a>
                 </div>
                 <div class="delete_button ms-2">
                     <form action="delete-from-cart.php" method="post">
-                        <?php
-                    $sql = "SELECT order_id FROM order_table WHERE product_id = " . $item['product_id'];
-                    $result = $conn->query($sql);
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $order_id = $row['order_id'];
-                        ?>
-                        <input type="hidden" name="index" value="<?php echo $index; ?>">
-                        <input type="hidden" name="order_id" value="<?php echo $order_id; ?>">
-                        <?php } ?>
+                        <input type="hidden" name="order_id" value="<?php echo $item['order_id']; ?>">
                         <button type="submit">Delete</button>
                     </form>
                 </div>
             </div>
         </div>
-        <?php endforeach; ?>
+        <?php endwhile; ?>
         <?php else: ?>
         <div id="select_all" class="container rounded p-2 mb-2 ps-2 d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-between align-items-center ps-2">
@@ -400,6 +395,7 @@ include ("head.php");
         </div>
         <?php endif; ?>
     </div>
+
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
