@@ -22,128 +22,279 @@ include ("head.php");
     while ($row = $result->fetch_assoc()) {
         ?>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
-        <div
-            class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
-            <div>
-                <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample"
-                    role="button" aria-controls="offcanvasExample">
-                    <span class="navbar-toggler-icon" style="width:15px"></span>
-                </a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
+            <div
+                class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
+                <div>
+                    <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample"
+                        role="button" aria-controls="offcanvasExample">
+                        <span class="navbar-toggler-icon" style="width:15px"></span>
+                    </a>
 
-                <a id="img" class="navbar-brand" href="admin.php">
-                    <img src="img/LOGOO.png" alt="YsakaLogo" class="d-inline-block" style="width: 110px">
-                </a>
-            </div>
+                    <a id="img" class="navbar-brand" href="admin.php">
+                        <img src="img/LOGOO.png" alt="YsakaLogo" class="d-inline-block" style="width: 110px">
+                    </a>
+                </div>
 
-            <div class="off d-lg-none my-2">
-                <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Notifications">
-                    <div class="orders">
-                        <div class="notif">
-                            <p>9+</p>
+                <div class="off d-lg-none my-2">
+                    <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Notifications">
+                        <div class="orders">
+                            <div class="notif">
+                                <p>9+</p>
+                            </div>
+                            <div class="order_button">
+                                <i class='bx bxs-bell'></i>
+                            </div>
                         </div>
-                        <div class="order_button">
-                            <i class='bx bxs-bell'></i>
-                        </div>
-                    </div>
-                </button>
+                    </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall"
-                    aria-labelledby="offcanvasRightLabelSmall">
-                    <div class="offcanvas-header">
-                        <h5 id="offcanvasRightLabelSmall">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall"
+                        aria-labelledby="offcanvasRightLabelSmall">
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasRightLabelSmall">Notifications</h5>
+                            <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
                         </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
+                        <div class="offcanvas-body">
+                            <div class="notification_section">
+                                <a href="#">
+                                    <div class="notif_container">
+                                        <div class="notif_title">
+                                            <p>Notification Title</p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
+                                            </p>
 
+                                        </div>
+                                        <div class="notif_details">
+                                            <p>Product name x 00</p>
+                                        </div>
                                     </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
+                                </a>
+                            </div>
+                            <div class="notification_section">
+                                <a href="#">
+                                    <div class="notif_container">
+                                        <div class="notif_title">
+                                            <p>Notification Title</p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
+                                            </p>
 
+                                        </div>
+                                        <div class="notif_details">
+                                            <p>Product name x 00</p>
+                                        </div>
                                     </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                                </a>
+                            </div>
+                            <div class="notification_section">
+                                <a href="#">
+                                    <div class="notif_container">
+                                        <div class="notif_title">
+                                            <p>Notification Title</p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
+                                            </p>
+
+                                        </div>
+                                        <div class="notif_details">
+                                            <p>Product name x 00</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
-
             </div>
-        </div>
 
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-            aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-                <div id="offcanvasExampleLabel"
-                    class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas-header">
+                    <div id="offcanvasExampleLabel"
+                        class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
+                        <div class="btn-group">
+                            <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <div class="user-off">
+                                    <div class="photo ms-2 me-1">
+                                        <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
+                                    </div>
+                                    <div class="name ms-1 mt-1">
+                                        <p><?php echo $_SESSION['username'] ?></p>
+                                    </div>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu p-2">
+                                <li>
+                                    <div class="drop_items ">
+                                        <a class="ms-2 mt-3" href="admin_setting.php">Account</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div id="log_out" class="drop_items">
+                                        <form action="logout.php" method="post">
+                                            <button id="log_out_button" type="submit" name="logout"
+                                                class="btn p-0 ps-2 text-start">Log
+                                                out</button>
+                                        </form>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav nav-fill gap-2 p-0">
+                        <li class="nav-item ps-3 ">
+                            <a class="nav-link text-dark text-start" href="admin.php">Home</a>
+                        </li>
+                        <li class="nav-item ps-3 active">
+                            <a class="nav-link text-dark text-start" href="admin_products.php">Product</a>
+                        </li>
+                        <li class="nav-item ps-3">
+                            <a class="nav-link text-dark text-start" href="admin_order.php">Orders</a>
+                        </li>
+                        <li class="nav-item ps-3">
+                            <a class="nav-link text-dark text-start" href="admin_sale_report.php">Sale Report</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
+                <a id="img" class="navbar-brand" href="admin.php">
+                    <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none"
+                        style="width: 110px">
+                </a>
+
+                <div class="container navbar-collapse d-flex d-md-none" id="navbarNav">
+                    <ul class="navbar-nav nav-fill gap-2 p-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark " href="admin.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark active" href="admin-products.php">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="admin_order.php">Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="admin_sale_report.php">Sale Report</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="right_nav d-none d-lg-flex">
+                    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge"
+                        aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Notifications">
+                        <div class="orders">
+                            <div class="notif">
+                                <p>9+</p>
+                            </div>
+                            <div class="order_button">
+                                <i class='bx bxs-bell'></i>
+                            </div>
+                        </div>
+                    </button>
+
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge"
+                        aria-labelledby="offcanvasRightLabelLarge">
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasRightLabelLarge">Notifications</h5>
+                            <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <div class="notification_section">
+                                <a href="#">
+                                    <div class="notif_container">
+                                        <div class="notif_title">
+                                            <p>Notification Title</p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
+                                            </p>
+
+                                        </div>
+                                        <div class="notif_details">
+                                            <p>Product name x 00</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="notification_section">
+                                <a href="#">
+                                    <div class="notif_container">
+                                        <div class="notif_title">
+                                            <p>Notification Title</p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
+                                            </p>
+
+                                        </div>
+                                        <div class="notif_details">
+                                            <p>Product name x 00</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="notification_section">
+                                <a href="#">
+                                    <div class="notif_container">
+                                        <div class="notif_title">
+                                            <p>Notification Title</p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
+                                            </p>
+
+                                        </div>
+                                        <div class="notif_details">
+                                            <p>Product name x 00</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="btn-group">
                         <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <div class="user-off">
-                                <div class="photo ms-2 me-1">
-                                    <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
+                            <div class="user">
+                                <div class="name">
+                                    <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
                                 </div>
-                                <div class="name ms-1 mt-1">
-                                    <p><?php echo $_SESSION['username'] ?></p>
+                                <div class="photo">
+                                    <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                                 </div>
                             </div>
                         </button>
                         <ul class="dropdown-menu p-2">
                             <li>
                                 <div class="drop_items ">
-                                    <a class="ms-2 mt-3" href="admin_setting.php">Account</a>
+                                    <a class="me-2" href="admin_setting.php">Account</a>
                                 </div>
                             </li>
                             <li>
-                                <div id="log_out" class="drop_items">
+                                <div id="log_out" class="drop_items ">
                                     <form action="logout.php" method="post">
-                                        <button id="log_out_button" type="submit" name="logout"
-                                            class="btn p-0 ps-2 text-start">Log
+                                        <button type="submit" name="logout" class="btn p-0 py-1 text-end pe-2">Log
                                             out</button>
                                     </form>
                                 </div>
@@ -151,159 +302,8 @@ include ("head.php");
                         </ul>
                     </div>
                 </div>
-                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav nav-fill gap-2 p-0">
-                    <li class="nav-item ps-3 ">
-                        <a class="nav-link text-dark text-start" href="admin.php">Home</a>
-                    </li>
-                    <li class="nav-item ps-3 active">
-                        <a class="nav-link text-dark text-start" href="admin_products.php">Product</a>
-                    </li>
-                    <li class="nav-item ps-3">
-                        <a class="nav-link text-dark text-start" href="admin_order.php">Orders</a>
-                    </li>
-                    <li class="nav-item ps-3">
-                        <a class="nav-link text-dark text-start" href="admin_sale_report.php">Sale Report</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div
-            class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
-            <a id="img" class="navbar-brand" href="admin.php">
-                <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none"
-                    style="width: 110px">
-            </a>
-
-            <div class="container navbar-collapse d-flex d-md-none" id="navbarNav">
-                <ul class="navbar-nav nav-fill gap-2 p-0">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark " href="admin.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark active" href="admin-products.php">Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="admin_order.php">Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="admin_sale_report.php">Sale Report</a>
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="right_nav d-none d-lg-flex">
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge"
-                    aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Notifications">
-                    <div class="orders">
-                        <div class="notif">
-                            <p>9+</p>
-                        </div>
-                        <div class="order_button">
-                            <i class='bx bxs-bell'></i>
-                        </div>
-                    </div>
-                </button>
-
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge"
-                    aria-labelledby="offcanvasRightLabelLarge">
-                    <div class="offcanvas-header">
-                        <h5 id="offcanvasRightLabelLarge">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="btn-group">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <div class="user">
-                            <div class="name">
-                                <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
-                            </div>
-                            <div class="photo">
-                                <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
-                            </div>
-                        </div>
-                    </button>
-                    <ul class="dropdown-menu p-2">
-                        <li>
-                            <div class="drop_items ">
-                                <a class="me-2" href="admin_setting.php">Account</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div id="log_out" class="drop_items ">
-                                <form action="logout.php" method="post">
-                                    <button type="submit" name="logout" class="btn p-0 py-1 text-end pe-2">Log
-                                        out</button>
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
+        </nav>
 
     <?php } ?>
 
@@ -312,133 +312,130 @@ include ("head.php");
             <?php
             $res = mysqli_query($conn, "SELECT * FROM products");
             while ($row = mysqli_fetch_assoc($res)) {
+
                 ?>
-            <div class="col-sm-6 col-lg-3">
-                <div class="card w-100">
-                    <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="..." />
-                    <div class="product_button">
-                        <div class="remove_button">
-                            <form action="admin_delete_product.php" method="POST"
-                                onsubmit="return confirm('Are you sure you want to remove this product?');">
-                                <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
-                                <button type="submit" name="remove">Remove</button>
-                            </form>
-                        </div>
-                        <div class="add_sample_button">
-                            <button id="add_sample_button" type="button" class="btn  col-sm-6 col-lg-3"
-                                data-bs-toggle="modal" data-bs-target="#addsample_<?php echo $row['product_id']; ?>">
-                                Add Samples
-                            </button>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card w-100">
+                        <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="..." />
+                        <div class="product_button">
+                            <div class="remove_button">
+                                <form action="admin_delete_product.php" method="POST"
+                                    onsubmit="return confirm('Are you sure you want to remove this product?');">
+                                    <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
+                                    <button type="submit" name="remove">Remove</button>
+                                </form>
+                            </div>
+                            <div class="add_sample_button">
+                                <button id="add_sample_button" type="button" class="btn  col-sm-6 col-lg-3"
+                                    data-bs-toggle="modal" data-bs-target="#addsample">
+                                    Add Samples
+                                </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="addsample_<?php echo $row['product_id']; ?>" tabindex="-1"
-                                aria-labelledby="exampleModalLabel_<?php echo $row['product_id']; ?>"
-                                aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title"
-                                                id="exampleModalLabel_<?php echo $row['product_id']; ?>">Add Product
-                                                Sample</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="add-product ">
-                                                <form action="admin_adding_sample.php" method="POST" autocomplete="off"
-                                                    enctype="multipart/form-data">
-                                                    <div class="mt-1 mb-1">
-                                                        <h1><?php echo $row['product_id']; ?></h1>
-                                                        <input class="w-100 p-2" type="hidden" name="product_id"
-                                                            id="product_id" value="<?php echo $row['product_id']; ?>"
-                                                            placeholder="<?php echo $row['product_id']; ?>">
-                                                    </div>
-                                                    <div class="m-2">
-                                                        <h5>Product Sample Image</h5>
-                                                        <input type="file" name="image_file" accept=".jpg, .jpeg, .png">
-                                                    </div>
-
-
-
+                                <!-- Modal -->
+                                <div class="modal fade" id="addsample" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add Product Sample</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" name="addsample" class="btn btn-primary">Add
-                                                Product</button>
-                                            </form>
+                                            <div class="modal-body">
+                                                <div class="add-product ">
+                                                    <form action="admin_adding_sample.php" method="POST" autocomplete="off"
+                                                        enctype="multipart/form-data">
+                                                        <div class="mt-1 mb-1">
+                                                            <input class="w-100 p-2" type="number" name="product_id"
+                                                                id="product_id"
+                                                                placeholder="<?php echo $row['product_id']; ?>">
+                                                        </div>
+                                                        <div class="m-2">
+                                                            <h5>Product Sample Image</h5>
+                                                            <input type="file" name="image_file" accept=".jpg, .jpeg, .png">
+                                                        </div>
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" name="addsample" class="btn btn-primary">Add
+                                                    Product</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="edit_button">
-                            <button id="edit_button" type="button" class="btn  col-sm-6 col-lg-3" data-bs-toggle="modal"
-                                data-bs-target="#editproduct">
-                                Edit Product
-                            </button>
+                            <div class="edit_button">
+                                <button id="edit_button" type="button" class="btn  col-sm-6 col-lg-3" data-bs-toggle="modal"
+                                    data-bs-target="#editproduct">
+                                    Edit Product
+                                </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="editproduct" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Edit Product Details</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="add-product ">
-                                                <form action="admin-add-producs.php" method="POST" autocomplete="off"
-                                                    enctype="multipart/form-data">
-                                                    <div class="mt-1 mb-1">
-
-                                                        <input class="w-100 p-2" type="text" name="product_name"
-                                                            id="product_name" placeholder="Product name" required>
-                                                    </div>
-                                                    <div class="mt-1 mb-1">
-
-                                                        <input class="w-100 p-2" type="number" name="price" id="price"
-                                                            placeholder="Product price" required>
-                                                    </div>
-                                                    <div class="mt-2 mb-1">
-                                                        <h5>Product Image</h5>
-                                                        <input type="file" name="image_file" accept=".jpg, .jpeg, .png">
-
-                                                    </div>
-
-
-
+                                <!-- Modal -->
+                                <div class="modal fade" id="editproduct" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit Product Details</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" name="editproduct" class="btn btn-primary">Edit
-                                                Product</button>
-                                            </form>
+                                            <div class="modal-body">
+                                                <div class="add-product ">
+                                                    <form action="admin-add-producs.php" method="POST" autocomplete="off"
+                                                        enctype="multipart/form-data">
+                                                        <div class="mt-1 mb-1">
+
+                                                            <input class="w-100 p-2" type="text" name="product_name"
+                                                                id="product_name" placeholder="Product name" required>
+                                                        </div>
+                                                        <div class="mt-1 mb-1">
+
+                                                            <input class="w-100 p-2" type="number" name="price" id="price"
+                                                                placeholder="Product price" required>
+                                                        </div>
+                                                        <div class="mt-2 mb-1">
+                                                            <h5>Product Image</h5>
+                                                            <input type="file" name="image_file" accept=".jpg, .jpeg, .png">
+
+                                                        </div>
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" name="editproduct" class="btn btn-primary">Edit
+                                                    Product</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $row['product_name'] ?></h5>
-                        <p class="card-text">
-                        <p class="m-0">Product ID: <?php echo $row['product_id']; ?></p>
-                        <p class="m-0">Php <?php echo $row['price'] ?>.00</p>
-                        </p>
-                        <a href="admin_product_preview.php?product_id=<?php echo $row['product_id']; ?>"
-                            class="btn btn-primary w-100">View
-                            Product</a>
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $row['product_name'] ?></h5>
+                            <p class="card-text">
+                            <p class="m-0">Product ID: <?php echo $row['product_id']; ?></p>
+                            <p class="m-0">Php <?php echo $row['price'] ?>.00</p>
+                            </p>
+                            <a href="admin_product_preview.php?product_id=<?php echo $row['product_id']; ?>"
+                                class="btn btn-primary w-100">View
+                                Product</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <?php } ?>
 
