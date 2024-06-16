@@ -18,7 +18,6 @@ include ("connection.php");
             <h2 class="mb-4 mt-2 ms-1">Sign up</h2>
             <form action="registration.php" method="POST">
                 <div class="d-flex gap-1">
-                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                     <div class="form-floating mb-3 w-50 ">
                         <input type="text" class="form-control" id="firstName" name="first_name" placeholder="John"
                             required />

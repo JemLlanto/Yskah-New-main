@@ -14,6 +14,23 @@ include ("head.php");
 </head>
 
 <body>
+    <div class="modal fade" id="variation_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
         <div
             class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
@@ -158,7 +175,7 @@ include ("head.php");
                         <a class="nav-link text-dark text-start" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item ps-3">
-                        <a class="nav-link text-dark text-start" href="user_landing_page.php">Orders</a>
+                        <a class="nav-link text-dark text-start" href="user_order.php">Orders</a>
                     </li>
                 </ul>
             </div>
@@ -183,7 +200,7 @@ include ("head.php");
                         <a class="nav-link text-dark" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="user_landing_page.php">Orders</a>
+                        <a class="nav-link text-dark" href="user_order.php">Orders</a>
                     </li>
 
                 </ul>
@@ -312,31 +329,19 @@ include ("head.php");
                     <div class="col">
                         <div id="carouselExampleInterval" class="carousel slide " data-bs-ride="carousel" data-interval="false">
                             <div class="carousel-inner">
-                                <div class="carousel-item active " data-bs-interval="3000">
+                                <div class="carousel-item active">
                                     <img src="product-images/<?php echo $row['image_file'] ?>" class="d-block w-100 rounded"
                                         alt="...">
                                 </div>
-                                <?php
-                                $res = mysqli_query($conn, "SELECT * FROM product_samples WHERE product_id = $product_id");
-                                while ($samples = mysqli_fetch_assoc($res)) {
-
-                                    ?>
-                                    <div class="carousel-item  " data-bs-interval="3000">
-                                        <img src="product-images/product_samples/<?php echo $samples['image_file'] ?>"
-                                            class="d-block w-100 rounded" alt="...">
-                                    </div>
-                                <?php } ?>
+                                <div class="carousel-item">
+                                    <img src="product-images/<?php echo $row['image_file'] ?>" class="d-block w-100 rounded"
+                                        alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="product-images/<?php echo $row['image_file'] ?>" class="d-block w-100 rounded"
+                                        alt="...">
+                                </div>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
                         </div>
                     </div>
 
@@ -356,8 +361,7 @@ include ("head.php");
                                 </p>
                             </div>
                             <div class="variation_ordernow d-flex flex-column w-100">
-                                <!-- <div
-                                    class="product_variation w-100 d-flex align-items-center flex-wrap justify-content-center justify-content-md-start gap-2 mt-md-5">
+                                <!-- <div class="product_variation w-100 d-flex align-items-center flex-wrap justify-content-center justify-content-md-start gap-2 mt-md-5">
                                     <div class="variation">
                                         <button type="button" class="btn variation-btn">Variation 1</button>
                                     </div>
@@ -381,7 +385,7 @@ include ("head.php");
                                             <input type="number" id="quantity" name="quantity" value="1" min="1">
                                         </div>
                                         <div class="add_to_cart_order_now mt-4 p-2">
-                                            <button class="add_to_cart"
+                                            <button class="add_to_cart" data-bs-toggle="modal" data-bs-target="#variation_modal"
                                                 onclick="document.getElementById('add-to-cart-form').submit();">
                                                 <h5>Add to Cart</h5>
                                             </button>

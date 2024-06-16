@@ -15,6 +15,12 @@ include ("head.php");
 </head>
 
 <body>
+    <?php 
+    $sql = "SELECT * FROM user_table WHERE username='" . $_SESSION['username'] . "'";
+    $result = $conn->query($sql);
+
+    while ($row = $result->fetch_assoc()) {
+    ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
         <div
             class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
@@ -119,7 +125,7 @@ include ("head.php");
                             aria-expanded="false">
                             <div class="user-off">
                                 <div class="photo ms-2 me-1">
-                                    <img src="img/default-profile.jpg" alt="">
+                                    <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                                 </div>
                                 <div class="name ms-1 mt-1">
                                     <p><?php echo $_SESSION['username'] ?></p>
@@ -159,7 +165,7 @@ include ("head.php");
                         <a class="nav-link text-dark text-start" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item ps-3">
-                        <a class="nav-link text-dark text-start" href="user_landing_page.php">Orders</a>
+                        <a class="nav-link text-dark text-start" href="user_order.php">Orders</a>
                     </li>
                 </ul>
             </div>
@@ -184,7 +190,7 @@ include ("head.php");
                         <a class="nav-link text-dark" href="user_cart.php">Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="user_landing_page.php">Orders</a>
+                        <a class="nav-link text-dark" href="user_order.php">Orders</a>
                     </li>
 
                 </ul>
@@ -274,7 +280,7 @@ include ("head.php");
                                 <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
                             </div>
                             <div class="photo">
-                                <img src="img/default-profile.jpg" alt="">
+                                <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                             </div>
                         </div>
                     </button>
@@ -298,26 +304,28 @@ include ("head.php");
         </div>
     </nav>
 
+    <?php } ?>
+
     <div class="container-fluid-md container-lg rounded mt-3 p-3 bg-light">
         <div class="row row-cols-1 row-cols-md-4 d-flex flex-row m-1 mt-4 mb-4 gy-2">
             <?php
             $res = mysqli_query($conn, "SELECT * FROM products");
             while ($row = mysqli_fetch_assoc($res)) {
                 ?>
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card w-100">
-                        <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="...">
-                        <div class="card-body p-0 ps-2 pb-2">
-                            <h4 class="card-title m-0 mt-2"><?php echo $row['product_name'] ?></h4>
-                            <p class="card-text m-0">
-                            <p class="m-0 ms-2 text-secondary">₱ <?php echo $row['price'] ?>.00</p>
-                            </p>
-                            <a href="user_product_preview.php?product_id=<?php echo $row['product_id'] ?>"
-                                class="btn btn-primary">View
-                                Product</a>
-                        </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="card w-100">
+                    <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="...">
+                    <div class="card-body p-0 ps-2 pb-2">
+                        <h4 class="card-title m-0 mt-2"><?php echo $row['product_name'] ?></h4>
+                        <p class="card-text m-0">
+                        <p class="m-0 ms-2 text-secondary">₱ <?php echo $row['price'] ?>.00</p>
+                        </p>
+                        <a href="user_product_preview.php?product_id=<?php echo $row['product_id'] ?>"
+                            class="btn btn-primary">View
+                            Product</a>
                     </div>
                 </div>
+            </div>
             <?php } ?>
         </div>
     </div>

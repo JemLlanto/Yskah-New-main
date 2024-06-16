@@ -4,44 +4,20 @@ include ("connection.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id'];
     $product_id = intval($_POST['product_id']);
     $product_name = trim($_POST['product_name']);
     $image_file = trim($_POST['image_file']);
     $price = floatval($_POST['price']);
     $quantity = intval($_POST['quantity']);
-    $index = isset($_POST['index']) ? intval($_POST['index']) : -1;
 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
-    }
-
-    $new_item = array(
-        'product_id' => $product_id,
-        'product_name' => $product_name,
-        'image_file' => $image_file,
-        'price' => $price,
-        'quantity' => $quantity
-    );
-
-    if ($index >= 0) {
-        $_SESSION['cart'][$index] = $new_item;
-        $message = "Cart item updated successfully.";
-    } else {
-        $_SESSION['cart'][] = $new_item;
-        $message = "Successfully added to cart.";
-
-        $stmt = $conn->prepare("INSERT INTO order_table ( product_id, product_name, image_file, price, quantity) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("iisssi", $product_id, $product_name, $image_file, $price, $quantity);
-        $stmt->execute();
-        $stmt->close();
-    }
+    $stmt = $conn->prepare("INSERT INTO order_table (user_id, product_id, product_name, image_file, price, quantity) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iissdi", $user_id, $product_id, $product_name, $image_file, $price, $quantity);
+    $stmt->execute();
+    $stmt->close();
 
     echo "<script>
-    alert('$message');
+    alert('Product added to cart');
     window.location = 'user_cart.php';
     </script>";
     exit();
