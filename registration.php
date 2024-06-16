@@ -1,10 +1,10 @@
 <?php
-include ("connection.php");
+include("connection.php");
 
 if (
     isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['sex']) && isset($_POST['phone']) &&
     isset($_POST['blockLot']) && isset($_POST['subdivision']) && isset($_POST['barangay']) &&
-    isset($_POST['city']) && isset($_POST['province']) && isset($_POST['zip']) && 
+    isset($_POST['city']) && isset($_POST['province']) && isset($_POST['zip']) &&
     isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])
 ) {
     $first_name = $_POST['first_name'];
@@ -23,10 +23,10 @@ if (
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $image_file = 'default-profile.jpg';
-    
+
     $email_checker = "SELECT * FROM user_table WHERE email=?";
     $username_checker = "SELECT * FROM user_table WHERE username=?";
-    
+
     $stmt_email = $conn->prepare($email_checker);
     $stmt_email->bind_param("s", $email);
     $stmt_email->execute();
@@ -48,16 +48,16 @@ if (
         window.location='registration_form.php';
         </script>";
     } else {
-
-        $sql = "INSERT INTO user_table (first_name, last_name, sex, phone, blockLot, subdivision, barangay, city, province, zip, username, email, password, image_file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $is_admin = 0;
+        $sql = "INSERT INTO user_table (is_admin, first_name, last_name, sex, phone, blockLot, subdivision, barangay, city, province, zip, username, email, password, image_file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssssssssssss", $first_name, $last_name, $sex, $phone, $blockLot, $subdivision, $barangay, $city, $province, $zip, $username, $email, $hashed_password, $image_file);
+        $stmt->bind_param("issssssssssssss", $is_admin, $first_name, $last_name, $sex, $phone, $blockLot, $subdivision, $barangay, $city, $province, $zip, $username, $email, $hashed_password, $image_file);
 
         $uname = $username;
-        $access = 2; 
-        $sql_2 = "INSERT INTO user (username, password, uname, access) VALUES (?, ?, ? ,?)";
+        $access = 2;
+        $sql_2 = "INSERT INTO user (username, password, uname, access) VALUES (?, ?, ?, ?)";
         $stmt_2 = $conn->prepare($sql_2);
-        $stmt_2->bind_param("sssi", $username, $password, $uname, $access);
+        $stmt_2->bind_param("sssi", $username, $hashed_password, $uname, $access);
 
         if ($stmt->execute() && $stmt_2->execute()) {
             echo "<script>
@@ -76,4 +76,3 @@ if (
     $stmt_username->close();
 }
 $conn->close();
-?>

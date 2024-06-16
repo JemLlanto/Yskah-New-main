@@ -6,6 +6,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['user_id'];
     $total_price = floatval($_POST['totalPrice']);
 
+    $title = ($_POST['title']);
+    $description = ($_POST['description']);
+    $status = ($_POST['status']);
+    // $image_file = ($_POST['image_file']);
+
+    $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status) VALUES (?, ?, ?, ?)");
+    $stmt1->bind_param("isss", $user_id, $title, $description, $status);
+    $stmt1->execute();
+    $stmt1->close();
+
     $sql = "SELECT * FROM order_table WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
@@ -19,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $image_file = $item['image_file'];
         $price = $item['price'];
         $quantity = $item['quantity'];
+
 
         // Insert each item into order_items table with correct order_id
         $stmt_insert_item = $conn->prepare("INSERT INTO order_items (order_id, user_id, product_id, product_name, image_file, price, quantity, total_price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')");
@@ -42,4 +53,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: user_cart.php");
     exit();
 }
-?>

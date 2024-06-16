@@ -14,7 +14,23 @@ include("head.php");
 </head>
 
 <body>
-
+    <div class="modal fade" id="variation_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
         <div class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
             <div>
@@ -324,94 +340,40 @@ include("head.php");
                                 </p>
                             </div>
                             <div class="variation_ordernow d-flex flex-column w-100">
-
+                                <!-- <div class="product_variation w-100 d-flex align-items-center flex-wrap justify-content-center justify-content-md-start gap-2 mt-md-5">
+                                    <div class="variation">
+                                        <button type="button" class="btn variation-btn">Variation 1</button>
+                                    </div>
+                                    <div class="variation">
+                                        <button type="button" class="btn variation-btn">Variation 2</button>
+                                    </div>
+                                    <div class="variation">
+                                        <button type="button" class="btn variation-btn">Variation 3</button>
+                                    </div>
+                                </div> -->
 
 
                                 <div class="quantity_buttons">
-
-
-                                    <div class="add_to_cart_order_now mt-4 p-2">
-                                        <button class="add_to_cart" data-bs-toggle="modal" data-bs-target="#variation_modal" ">
+                                    <form id="add-to-cart-form" action="add-to-cart-form.php" method="POST" class="">
+                                        <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
+                                        <input type="hidden" name="product_name" value="<?php echo $row['product_name']; ?>">
+                                        <input type="hidden" name="price" value="<?php echo $row['price']; ?>">
+                                        <input type="hidden" name="image_file" value="<?php echo $row['image_file']; ?>">
+                                        <div id="quantity" class="p-2 ps-3">
+                                            <label for="quantity">Quantity:</label>
+                                            <input type="number" id="quantity" name="quantity" value="1" min="1">
+                                        </div>
+                                        <div class="add_to_cart_order_now mt-4 p-2">
+                                            <button class="add_to_cart" data-bs-toggle="modal" data-bs-target="#variation_modal" onclick="document.getElementById('add-to-cart-form').submit();">
                                                 <h5>Add to Cart</h5>
                                             </button>
-                                            <button class=" order_now ms-2" style="border:none;">
-                                            <h5>Order Now</h5>
-                                        </button>
+                                            <button class="order_now ms-2" style="border:none;">
+                                                <h5>Order Now</h5>
+                                            </button>
 
-                                    </div>
-                                    <div class="modal fade" id="variation_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form id="add-to-cart-form" action="add-to-cart-form.php" method="POST" class="">
-
-                                                        <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
-                                                        <input type="hidden" name="product_name" value="<?php echo $row['product_name']; ?>">
-                                                        <input type="hidden" name="price" value="<?php echo $row['price']; ?>">
-                                                        <input type="hidden" name="image_file" value="<?php echo $row['image_file']; ?>">
-
-                                                        <div class="row w-100 rounded p-2">
-                                                            <h5>Variation Name</h5>
-                                                            <div class="col-md-3 m-0 mb-3">
-                                                                <div class="p-1 pe-2 d-flex align-items-center rounded" style="background-color: lightgray; width:auto;">
-                                                                    <div class="rounded" style="background-color: white; height:30px; width: 30px;">
-
-                                                                    </div>
-                                                                    <p class="m-0 ms-2">Desc</p>
-                                                                </div>
-                                                            </div>
-
-                                                            <input type="number" id="price" value="" hidden>
-                                                        </div>
-                                                        <div class="row w-100 rounded p-2">
-                                                            <h5>Variation Name</h5>
-                                                            <div class="col-md-3 m-0 mb-3">
-                                                                <div class="p-1 pe-2 d-flex align-items-center rounded" style="background-color: lightgray; width:auto;">
-                                                                    <div class="rounded" style="background-color: white; height:30px; width: 30px;">
-
-                                                                    </div>
-                                                                    <p class="m-0 ms-2">Desc</p>
-                                                                </div>
-                                                            </div>
-
-                                                            <input type="number" id="price" value="" hidden>
-                                                        </div>
-                                                        <div class="row w-100 rounded p-2">
-                                                            <h5>Variation Name</h5>
-                                                            <div class="col-md-3 m-0 mb-3">
-                                                                <div class="p-1 pe-2 d-flex align-items-center rounded" style="background-color: lightgray; width:auto;">
-                                                                    <div class="rounded" style="background-color: white; height:30px; width: 30px;">
-
-                                                                    </div>
-                                                                    <p class="m-0 ms-2">Desc</p>
-                                                                </div>
-                                                            </div>
-
-                                                            <input type="number" id="price" value="" hidden>
-                                                        </div>
-
-
-
-                                                        <div id="quantity" class="w-100">
-                                                            <label for="quantity">
-                                                                <h5>Quantity</h5>
-                                                            </label>
-                                                            <input class="w-100 py-2 ps-2" type="number" id="quantity" name="quantity" value="1" min="1" style="">
-                                                        </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary" class="add_to_cart" onclick="document.getElementById('add-to-cart-form').submit();">Add to Cart</button>
-                                                    </form>
-
-                                                </div>
-                                            </div>
                                         </div>
-                                    </div>
+
+                                    </form>
                                 </div>
                             </div>
                         </div>
