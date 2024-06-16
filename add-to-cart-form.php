@@ -4,6 +4,7 @@ include("connection.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['user_id'];
+    $user_id = $_SESSION['user_id'];
     $product_id = $_POST['product_id'];
     $product_name = $_POST['product_name'];
     $price = floatval($_POST['price']);

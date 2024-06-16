@@ -267,6 +267,11 @@ include("head.php");
                             </div>
                         </li>
                         <li>
+                            <div class="drop_items ">
+                                <a class="w-100 me-2 text-end" href="add_admin_form.php">Add Admin</a>
+                            </div>
+                        </li>
+                        <li>
                             <div id="log_out" class="drop_items ">
                                 <form action="logout.php" method="post">
                                     <button type="submit" name="logout" class="btn p-0 py-1 text-end pe-2">Log

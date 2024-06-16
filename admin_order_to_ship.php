@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css\order7.css" />
+    <link rel="stylesheet" href="css\order6.css" />
 </head>
 
 <body>
@@ -346,7 +346,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                             <div id="product_description">
                                 <div class="container d-flex align-items-center justify-content-center p-0">
                                     <p id="price" class="me-2 mt-2 mb-0">₱
-                                        <?php echo number_format($order['price'] * $order['quantity'], 2); ?></p>
+                                        <?php echo number_format($order['price'] * $order['quantity'], 2); ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -355,7 +356,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                         <div class="container d-flex align-items-center justify-content-end p-2 pt-3 pe-3">
                             <p class="m-0">Total: </p>
                             <h5 id="price" class="ms-2 m-0">₱
-                                <?php echo number_format($order['price'] * $order['quantity'], 2); ?></h5>
+                                <?php echo number_format($order['price'] * $order['quantity'], 2); ?>
+                            </h5>
                         </div>
                     </div>
                     </form>
