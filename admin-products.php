@@ -327,13 +327,13 @@ include ("head.php");
                             </div>
                             <div class="add_sample_button">
                                 <button id="add_sample_button" type="button" class="btn  col-sm-6 col-lg-3"
-                                    data-bs-toggle="modal" data-bs-target="#addsample">
+                                    data-bs-toggle="modal" data-bs-target="#addsample<?php echo $row['product_id']; ?>">
                                     Add Samples
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="addsample" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
+                                <div class="modal fade" id="addsample<?php echo $row['product_id']; ?>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -341,29 +341,75 @@ include ("head.php");
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                <div class="add-product ">
-                                                    <form action="admin_adding_sample.php" method="POST" autocomplete="off"
-                                                        enctype="multipart/form-data">
+                                            <form action="admin_adding_sample.php" method="POST" autocomplete="off"
+                                                enctype="multipart/form-data">
+                                                <div class="modal-body">
+                                                    <div class="add-product ">
+
                                                         <div class="mt-1 mb-1">
+                                                            <h5>Product ID: <?php echo $row['product_id']; ?></h5>
                                                             <input class="w-100 p-2" type="number" name="product_id"
-                                                                id="product_id"
-                                                                placeholder="<?php echo $row['product_id']; ?>">
+                                                                id="product_id" value="<?php echo $row['product_id']; ?>"
+                                                                hidden>
                                                         </div>
                                                         <div class="m-2">
                                                             <h5>Product Sample Image</h5>
-                                                            <input type="file" name="image_file" accept=".jpg, .jpeg, .png">
+                                                            <input type="file" name="image_file" accept=".jpg, .jpeg, .png"
+                                                                required>
                                                         </div>
 
 
+
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" name="addsample" class="btn btn-primary">Add
+                                                        Sample</button>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add_variation_button">
+                                <button id="add_sample_button" type="button" class="btn  col-sm-6 col-lg-3"
+                                    data-bs-toggle="modal" data-bs-target="#addvariant<?php echo $row['product_id']; ?>">
+                                    Add Variation
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="addvariant<?php echo $row['product_id']; ?>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-scrollablemodal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add Variant</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="add-product ">
+                                                    <form action="admin_adding_variant.php" method="POST" autocomplete="off"
+                                                        enctype="multipart/form-data">
+                                                        <div class=" mb-3">
+                                                            <h5 class="fw-bolder">Variant Name</h5>
+
+                                                            <input class="w-100 p-2" type="hidden" name="product_id"
+                                                                id="product_id" value="<?php echo $row['product_id']; ?>">
+                                                            <input class="w-100 p-2" type="text" name="name" id="name"
+                                                                placeholder="Variant Name">
+                                                        </div>
 
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" name="addsample" class="btn btn-primary">Add
-                                                    Product</button>
+                                                <button type="submit" name="addvariant" class="btn btn-primary">Add
+                                                    Variant</button>
                                                 </form>
                                             </div>
                                         </div>
