@@ -309,7 +309,8 @@ include("head.php");
         <?php if ($result->num_rows > 0) : ?>
             <?php while ($order = $result->fetch_assoc()) : ?>
                 <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
-                <a href="user_order_status.php?order_id=<?php echo $order['order_id']; ?>">
+                <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
+                <a href="user_order_status.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>">
                     <div id="order_item" class="rounded mt-3 p-2">
                         <div id="order_head" class="container w-100 mb-2 p-2 me-0">
                             <h5 class="m-0">Order ID: <?php echo $order['order_id']; ?></h5>

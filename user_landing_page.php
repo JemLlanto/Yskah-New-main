@@ -3,18 +3,6 @@ include("sessionchecker.php");
 include("connection.php");
 include("head.php");
 
-$id = $_SESSION['user_id'];
-$sql = "SELECT * FROM order_table WHERE user_id = $id";
-$result = $conn->query($sql);
-$cart_items = array();
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $cart_items[] = $row;
-    }
-}
-
-$_SESSION['cart'] = $cart_items;
 ?>
 
 <!DOCTYPE html>

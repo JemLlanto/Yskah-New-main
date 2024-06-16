@@ -2,6 +2,7 @@
 include("sessionchecker.php");
 include("connection.php");
 include("head.php");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -299,7 +300,10 @@ include("head.php");
         <?php if ($result->num_rows > 0) : ?>
             <?php while ($order = $result->fetch_assoc()) : ?>
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <a href="admin_order_status.php?user_id=<?php echo $order['user_id']; ?>">
+                    <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                    <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
+                    <a href="admin_order_status.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>">
+
                         <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
 
                         <div id="order_item" class="rounded mt-3 p-2">

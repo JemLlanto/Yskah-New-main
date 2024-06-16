@@ -397,11 +397,10 @@ include("head.php");
                                 <div class="modal-footer">
                                     <form action="user-order-form.php" method="post">
                                         <input type="hidden" name="totalPrice" value="<?php echo $totalPrice; ?>">
-
                                         <input type="hidden" name="title" value="Order Placed">
+                                        <input type="hidden" name="selected_items" id="selected_items" value='<?php echo json_encode($selectedItems); ?>'>
                                         <input type="hidden" name="description" value="Your Order has been placed succesfully. Click for more details">
                                         <input type="hidden" name="status" value="Unread">
-
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         <button id="done_button" type="submit" class="btn btn-primary">Done</button>
                                     </form>

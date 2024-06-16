@@ -332,8 +332,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
             <?php while ($order = $result->fetch_assoc()) : ?>
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
+                    <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                    <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
+                    <a href="admin_order_status.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>">
 
-                    <a href="admin_order_status.php?user_id=<?php echo $order['user_id']; ?>">
                         <!-- Display order details -->
                         <div id="order_item" class="rounded mt-3 p-2">
                             <div id="order_head" class="container w-100 mb-2 p-2 me-0">

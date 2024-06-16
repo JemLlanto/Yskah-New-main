@@ -6,14 +6,23 @@ include("head.php");
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
     $order_id = $_POST['order_id'];
 
-    // Update order status to 'Shipping'
+    $user_id = $_POST['user_id'];
+    $title = ($_POST['title']);
+    $description = ($_POST['description']);
+    $status = ($_POST['status']);
+
+    $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status) VALUES (?, ?, ?, ?)");
+    $stmt1->bind_param("isss", $user_id, $title, $description, $status);
+    $stmt1->execute();
+    $stmt1->close();
+
+
     $sql_update = "UPDATE order_items SET status = 'Shipped' WHERE order_id = ?";
     $stmt_update = $conn->prepare($sql_update);
     $stmt_update->bind_param("i", $order_id);
     $stmt_update->execute();
     $stmt_update->close();
 
-    // Redirect to admin_order_to_ship.php after update
     header("Location: admin_order_shipped.php");
     exit();
 }
@@ -310,12 +319,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
         </div>
         <?php if ($result->num_rows > 0) : ?>
             <?php while ($order = $result->fetch_assoc()) : ?>
-                <a href="admin_order_status.php?user_id=<?php echo $order['user_id']; ?>">
+                <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
+                <a href="admin_order_status.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>">
                     <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
                     <div id="order_item" class="rounded mt-3 p-2">
                         <div id="order_head" class="container w-100 mb-2 p-2 me-0">
                             <h5 class="m-0">Order ID: <?php echo $order['order_id']; ?></h5>
                             <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
+                            <input type="hidden" name="title" value="Order Confirm">
+                            <input type="hidden" name="description" value="Your Order has been Confirm by the Seller. Click for more details">
+                            <input type="hidden" name="status" value="Unread">
+
                             <button type="submit" class="btn btn-success" name="confirm_order">Confirm</button>
                         </div>
 

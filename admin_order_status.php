@@ -313,14 +313,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
         <?php
         $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
         $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
 
         // Prepare and execute the SQL statement
         $sql = "SELECT oi.*, u.first_name, u.last_name, u.phone, u.blockLot, u.subdivision, u.barangay, u.province, u.city, u.zip
         FROM order_items oi
         LEFT JOIN user_table u ON oi.user_id = u.user_id
-        WHERE  oi.user_id = ?";
+        WHERE  oi.user_id = ? AND status = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $user_id);
+        $stmt->bind_param("is", $user_id, $status);
         $stmt->execute();
         $result = $stmt->get_result();
         $items = $result->fetch_all(MYSQLI_ASSOC);
@@ -334,7 +335,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                             <h5 class="m-0">Shipping Information</h5>
                             <p id="shipping_information_text" class="m-0">
                                 <?php
-                                $status = $items[0]['status'];
                                 switch ($status) {
                                     case 'Pending':
                                         echo 'Waiting for Seller\'s confirmation';

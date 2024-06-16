@@ -289,15 +289,17 @@ include("head.php");
 
         <?php
         $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
+        $status = isset($_GET['status']) ? $_GET['status'] : '';
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
-        $sql = "SELECT * FROM order_items WHERE user_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $items = $result->fetch_all(MYSQLI_ASSOC);
-        ?>
+        if ($order_id && $status) {
+            $sql = "SELECT * FROM order_items WHERE user_id = ? AND status = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("is", $user_id, $status);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $items = $result->fetch_all(MYSQLI_ASSOC);
+        } ?>
         <?php if ($items) : ?>
             <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-3 p-3">
                 <div id="shipping_information" class="container rounded d-flex justify-content-start align-items-start flex-column mt-3 p-3">
@@ -305,7 +307,6 @@ include("head.php");
                         <h5 class="m-0">Shipping Information</h5>
                         <p id="shipping_information_text" class="m-0">
                             <?php
-                            $status = $items[0]['status']; // Assuming all items have the same status
                             switch ($status) {
                                 case 'Pending':
                                     echo 'Waiting for Seller\'s confirmation';
@@ -399,7 +400,9 @@ include("head.php");
                 <h5>Empty Order.</h5>
             </div>
         <?php endif; ?>
-    <?php }    ?>
+    <?php }
+
+    ?>
 
     <footer>
         <div class="footer_content flex-wrap">
