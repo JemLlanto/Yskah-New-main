@@ -362,10 +362,10 @@ include ("head.php");
 
 
                                     <div class="add_to_cart_order_now mt-4 p-2">
-                                        <button class="add_to_cart" data-bs-toggle="modal" data-bs-target="#variation_modal" ">
-                                                        <h5>Add to Cart</h5>
-                                                    </button>
-                                                    <button class=" order_now ms-2" style="border:none;">
+                                        <button class="add_to_cart" data-bs-toggle="modal" data-bs-target="#variation_modal">
+                                            <h5>Add to Cart</h5>
+                                        </button>
+                                        <button class=" order_now ms-2" style="border:none;">
                                             <h5>Order Now</h5>
                                         </button>
 
@@ -390,52 +390,27 @@ include ("head.php");
                                                         <input type="hidden" name="price" value="<?php echo $row['price']; ?>">
                                                         <input type="hidden" name="image_file"
                                                             value="<?php echo $row['image_file']; ?>">
+                                                        <?php
+                                                        $variants = mysqli_query($conn, "SELECT * FROM variant_table WHERE product_id = $product_id");
+                                                        while ($variant = mysqli_fetch_assoc($variants)) {
+                                                            ?>
+                                                            <div class="row w-100 rounded p-2">
+                                                                <h5><?php echo $variant['name']; ?></h5>
+                                                                <div class="col-md-3 m-0 mb-3">
+                                                                    <div class="p-1 pe-2 d-flex align-items-center rounded"
+                                                                        style="background-color: lightgray; width:auto;">
+                                                                        <div class="rounded"
+                                                                            style="background-color: white; height:30px; width: 30px;">
 
-                                                        <div class="row w-100 rounded p-2">
-                                                            <h5>Variation Name</h5>
-                                                            <div class="col-md-3 m-0 mb-3">
-                                                                <div class="p-1 pe-2 d-flex align-items-center rounded"
-                                                                    style="background-color: lightgray; width:auto;">
-                                                                    <div class="rounded"
-                                                                        style="background-color: white; height:30px; width: 30px;">
-
+                                                                        </div>
+                                                                        <p class="m-0 ms-2">Desc</p>
                                                                     </div>
-                                                                    <p class="m-0 ms-2">Desc</p>
                                                                 </div>
+
+                                                                <input type="number" id="price" value="" hidden>
                                                             </div>
+                                                        <?php } ?>
 
-                                                            <input type="number" id="price" value="" hidden>
-                                                        </div>
-                                                        <div class="row w-100 rounded p-2">
-                                                            <h5>Variation Name</h5>
-                                                            <div class="col-md-3 m-0 mb-3">
-                                                                <div class="p-1 pe-2 d-flex align-items-center rounded"
-                                                                    style="background-color: lightgray; width:auto;">
-                                                                    <div class="rounded"
-                                                                        style="background-color: white; height:30px; width: 30px;">
-
-                                                                    </div>
-                                                                    <p class="m-0 ms-2">Desc</p>
-                                                                </div>
-                                                            </div>
-
-                                                            <input type="number" id="price" value="" hidden>
-                                                        </div>
-                                                        <div class="row w-100 rounded p-2">
-                                                            <h5>Variation Name</h5>
-                                                            <div class="col-md-3 m-0 mb-3">
-                                                                <div class="p-1 pe-2 d-flex align-items-center rounded"
-                                                                    style="background-color: lightgray; width:auto;">
-                                                                    <div class="rounded"
-                                                                        style="background-color: white; height:30px; width: 30px;">
-
-                                                                    </div>
-                                                                    <p class="m-0 ms-2">Desc</p>
-                                                                </div>
-                                                            </div>
-
-                                                            <input type="number" id="price" value="" hidden>
-                                                        </div>
 
 
 
