@@ -16,7 +16,7 @@ if (count($_POST) > 0) {
     // $result = mysqli_query($conn, "SELECT * FROM user_table WHERE id='" . $_POST['id'] . "'");
     // $row = $result->fetch_assoc();
     // $hashed_password = $row['password'];
-//as
+    //as
 
     // $password = !empty($_POST['password']) ? $_POST['password'] : $hashed_password;
 
