@@ -53,13 +53,8 @@ if (
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("issssssssssssss", $is_admin, $first_name, $last_name, $sex, $phone, $blockLot, $subdivision, $barangay, $city, $province, $zip, $username, $email, $hashed_password, $image_file);
 
-        $uname = $username;
-        $access = 2;
-        $sql_2 = "INSERT INTO user (username, password, uname, access) VALUES (?, ?, ?, ?)";
-        $stmt_2 = $conn->prepare($sql_2);
-        $stmt_2->bind_param("sssi", $username, $hashed_password, $uname, $access);
 
-        if ($stmt->execute() && $stmt_2->execute()) {
+        if ($stmt->execute()) {
             echo "<script>
             alert('Registration successful');
             window.location='login_form.php';
@@ -69,7 +64,6 @@ if (
         }
 
         $stmt->close();
-        $stmt_2->close();
     }
 
     $stmt_email->close();

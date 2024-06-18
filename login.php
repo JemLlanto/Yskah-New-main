@@ -7,14 +7,11 @@ $password = $_POST['password'];
 
 
 $sql = "SELECT * FROM user_table WHERE username='$username'";
-$query = "SELECT * from `user` where username='$username'";
 $result = $conn->query($sql);
-$result_chat = $conn->query($query);
 
 
-if ($result->num_rows > 0 && $result_chat->num_rows > 0) {
+if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $row2 = $result_chat->fetch_assoc();
 
     $hashed_password = $row['password'];
 
@@ -26,7 +23,6 @@ if ($result->num_rows > 0 && $result_chat->num_rows > 0) {
     }
     if ($row['is_admin'] == 1 && $row2['access'] == 1) {
         $_SESSION["username"] = $username;
-        $_SESSION['userid'] = $row2['userid'];
         $_SESSION['user_id'] = $row['user_id'];
 
         echo "<script>
@@ -35,7 +31,6 @@ if ($result->num_rows > 0 && $result_chat->num_rows > 0) {
         </script>";
     } else {
         $_SESSION["username"] = $username;
-        $_SESSION['userid'] = $row2['userid'];
         $_SESSION['user_id'] = $row['user_id'];
         echo "<script>
         alert('Welcome');
