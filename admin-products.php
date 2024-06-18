@@ -22,6 +22,7 @@ include ("head.php");
     while ($row = $result->fetch_assoc()) {
         ?>
 
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
             <div
                 class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
@@ -377,7 +378,7 @@ include ("head.php");
                             <div class="add_variation_button">
                                 <button id="add_sample_button" type="button" class="btn  col-sm-6 col-lg-3"
                                     data-bs-toggle="modal" data-bs-target="#addvariant<?php echo $row['product_id']; ?>">
-                                    Add Variation
+                                    Manage Variation
                                 </button>
 
                                 <!-- Modal -->
@@ -386,7 +387,7 @@ include ("head.php");
                                     <div class="modal-dialog modal-dialog-scrollablemodal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Add Variant</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Manage Variant</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -406,26 +407,114 @@ include ("head.php");
                                                                 class="d-flex justify-content-between border-bottom align-content-center border-3 mb-2 pb-1">
                                                                 <h5 class="m-0"><?php echo $variant['name']; ?>
                                                                 </h5>
-                                                                <button class="btn btn-danger"
-                                                                    style="border:none; color: white;">Delete</button>
+                                                                <div class="remove_button">
+                                                                    <form action="admin_delete_variant.php" method="POST"
+                                                                        onsubmit="return confirm('Are you sure you want to remove this variant?');">
+                                                                        <input type="hidden" name="variant_id"
+                                                                            value="<?php echo $variant['variant_id']; ?>">
+                                                                        <button type="submit"
+                                                                            name="removevariant">Remove</button>
+                                                                    </form>
+                                                                </div>
+                                                                <!-- <button class="btn btn-danger"
+                                                                    style="border:none; color: white;">Delete</button> -->
                                                             </div>
 
                                                             <div class="col-md-3 m-0 mb-3 pt-2 d-flex justify-content-start">
-                                                                <div class="me-2 p-1 pe-2 d-flex align-items-center rounded"
-                                                                    style="background-color: lightgray; width:auto;">
-                                                                    <div class="rounded"
-                                                                        style="background-color: white; height:20px; width: 20px;">
+                                                                <?php
+                                                                $variant_id = $variant['variant_id'];
+                                                                $contents = mysqli_query($conn, "SELECT * FROM variant_content WHERE variant_id = $variant_id");
+                                                                while ($content = mysqli_fetch_assoc($contents)) {
+                                                                    ?>
+                                                                    <div class="me-2 p-1 pe-2 d-flex align-items-center rounded"
+                                                                        style="background-color: lightgray; width:auto;">
+                                                                        <div class="rounded"
+                                                                            style="background-color: white; height:20px; width: 20px;">
+                                                                        </div>
+                                                                        <p class="m-0 ms-2"><?php echo $content['option']; ?></p>
                                                                     </div>
-                                                                    <p class="m-0 ms-2">Desc</p>
-                                                                </div>
-
+                                                                    <?php
+                                                                }
+                                                                ?>
                                                                 <div class="p-0 m-0 d-flex align-items-center justify-content-center rounded"
                                                                     style="background-color: lightgray;;">
                                                                     <button
                                                                         class="m-0 py-1 px-2 d-flex align-items-center justify-content-center rounded"
-                                                                        style="background-color:transparent;">
+                                                                        style="background-color:transparent;" type="button"
+                                                                        data-bs-toggle="offcanvas"
+                                                                        aria-controls="offcanvasScrolling"
+                                                                        data-bs-target="#add_variant_option<?php echo $variant['name']; ?>">
                                                                         <h5 class="m-0">+</h5>
                                                                     </button>
+                                                                    <div class="offcanvas offcanvas-end" data-bs-scroll="true"
+                                                                        data-bs-backdrop="false" tabindex="-1"
+                                                                        id="add_variant_option<?php echo $variant['name']; ?>"
+                                                                        aria-labelledby="offcanvasScrollingLabel">
+                                                                        <div class="offcanvas-header">
+                                                                            <h5 class="offcanvas-title"
+                                                                                id="offcanvasScrollingLabel">Add variant option
+                                                                                for <?php echo $variant['name']; ?></h5>
+                                                                            <button type="button" class="btn-close text-reset"
+                                                                                data-bs-dismiss="offcanvas"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="offcanvas-body">
+                                                                            <form action="admin_add_option.php" method="POST">
+                                                                                <input type="hidden" name="variant_id"
+                                                                                    id="variant_id"
+                                                                                    value="<?php echo $variant_id ?>">
+                                                                                <div
+                                                                                    class="w-100 border border-2 rounded input-group mb-3 p-2 d-flex flex-column">
+                                                                                    <h5>Option 1</h5>
+                                                                                    <input type="text"
+                                                                                        class="w-100 form-control rounded my-1"
+                                                                                        name="option_name1" id="option_name1"
+                                                                                        placeholder="Option name"
+                                                                                        aria-describedby="basic-addon1">
+                                                                                    <input type="number"
+                                                                                        class="w-100 form-control rounded my-1"
+                                                                                        name="option_price1" id="option_price1"
+                                                                                        placeholder="Option price"
+                                                                                        aria-describedby="basic-addon1">
+                                                                                </div>
+                                                                                <div
+                                                                                    class="w-100 border border-2 rounded input-group mb-3 p-2 d-flex flex-column">
+                                                                                    <h5>Option 2</h5>
+                                                                                    <input type="text"
+                                                                                        class="w-100 form-control rounded my-1"
+                                                                                        name="option_name2" id="option_name2"
+                                                                                        placeholder="Option name"
+                                                                                        aria-describedby="basic-addon1">
+                                                                                    <input type="number"
+                                                                                        class="w-100 form-control rounded my-1"
+                                                                                        name="option_price2" id="option_price2"
+                                                                                        placeholder="Option price"
+                                                                                        aria-describedby="basic-addon1">
+                                                                                </div>
+                                                                                <div
+                                                                                    class="w-100 border border-2 rounded input-group mb-3 p-2 d-flex flex-column">
+                                                                                    <h5>Option 3</h5>
+                                                                                    <input type="text"
+                                                                                        class="w-100 form-control rounded my-1"
+                                                                                        name="option_name3" id="option_name3"
+                                                                                        placeholder="Option name"
+                                                                                        aria-describedby="basic-addon1">
+                                                                                    <input type="number"
+                                                                                        class="w-100 form-control rounded my-1"
+                                                                                        name="option_price3" id="option_price3"
+                                                                                        placeholder="Option price"
+                                                                                        aria-describedby="basic-addon1">
+                                                                                </div>
+                                                                                <div>
+                                                                                    <button class="w-100 btn btn-primary"
+                                                                                        style="submit" name="addoption">Add
+                                                                                        to Option</button>
+                                                                                </div>
+                                                                            </form>
+
+                                                                        </div>
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
 
@@ -437,13 +526,15 @@ include ("head.php");
                                                 <div class="add-product ">
                                                     <form action="admin_adding_variant.php" method="POST" autocomplete="off"
                                                         enctype="multipart/form-data">
-                                                        <div class=" mb-3">
-                                                            <h5 class="fw-bolder">Variant Name</h5>
+                                                        <div class="mt-3 mb-3">
+                                                            <h5 class="">Add new Variant</h5>
 
                                                             <input class="w-100 p-2" type="hidden" name="product_id"
                                                                 id="product_id" value="<?php echo $row['product_id']; ?>">
-                                                            <input class="w-100 p-2" type="text" name="name" id="name"
-                                                                placeholder="Variant Name">
+                                                            <input type="text"
+                                                                class="w-100 form-control border border-2 rounded my-1"
+                                                                name="name" id="name" placeholder="Variant Name">
+
                                                         </div>
 
                                                 </div>
@@ -499,9 +590,9 @@ include ("head.php");
                                                                 <span class="input-group-text">Edit Description</span>
                                                                 <textarea class="form-control" aria-label="With textarea"
                                                                     name="description"
-                                                                    placeholder="<?php echo $row['description']; ?>"
-                                                                    value="<?php echo $row['description']; ?>"></textarea>
+                                                                    placeholder="<?php echo $row['description']; ?>"><?php echo $row['description']; ?></textarea>
                                                             </div>
+
                                                             <div class="mt-3 mb-1">
                                                                 <h5>Change Product Thumbnail</h5>
                                                                 <div class="input-group mb-1">

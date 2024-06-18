@@ -376,7 +376,9 @@
                     <div id="user_image"
                         class="col-md-4 d-flex flex-column align-items-center justify-content-center pt-3 pb-3 px-2 ">
                         <div class="profile_image m-0 p-0">
-                            <img class="w-100 m-0" src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
+                            <div>
+                                <img class="w-100 m-0" src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
+                            </div>
                             <button type="button" class="btn btn-primary p-0" data-bs-toggle="modal"
                                 data-bs-target="#change_profile">
                                 <h1 class="mt-2">+</h1>
