@@ -390,7 +390,50 @@ include ("head.php");
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
+
                                             <div class="modal-body">
+                                                <div
+                                                    class="mt-0 d-flex justify-content-center flex-column align-items-center">
+                                                    <h5 class="w-100 text-start">Edit Variant</h5>
+                                                    <?php
+                                                    $product_id = $row['product_id'];
+                                                    $variants = mysqli_query($conn, "SELECT * FROM variant_table WHERE product_id = $product_id");
+
+                                                    while ($variant = mysqli_fetch_assoc($variants)) {
+                                                        ?>
+                                                        <div class="row w-100 border border-3 rounded pt-2 mb-2">
+                                                            <div
+                                                                class="d-flex justify-content-between border-bottom align-content-center border-3 mb-2 pb-1">
+                                                                <h5 class="m-0"><?php echo $variant['name']; ?>
+                                                                </h5>
+                                                                <button class="btn btn-danger"
+                                                                    style="border:none; color: white;">Delete</button>
+                                                            </div>
+
+                                                            <div class="col-md-3 m-0 mb-3 pt-2 d-flex justify-content-start">
+                                                                <div class="me-2 p-1 pe-2 d-flex align-items-center rounded"
+                                                                    style="background-color: lightgray; width:auto;">
+                                                                    <div class="rounded"
+                                                                        style="background-color: white; height:20px; width: 20px;">
+                                                                    </div>
+                                                                    <p class="m-0 ms-2">Desc</p>
+                                                                </div>
+
+                                                                <div class="p-0 m-0 d-flex align-items-center justify-content-center rounded"
+                                                                    style="background-color: lightgray;;">
+                                                                    <button
+                                                                        class="m-0 py-1 px-2 d-flex align-items-center justify-content-center rounded"
+                                                                        style="background-color:transparent;">
+                                                                        <h5 class="m-0">+</h5>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
                                                 <div class="add-product ">
                                                     <form action="admin_adding_variant.php" method="POST" autocomplete="off"
                                                         enctype="multipart/form-data">
@@ -418,13 +461,13 @@ include ("head.php");
                             </div>
                             <div class="edit_button">
                                 <button id="edit_button" type="button" class="btn  col-sm-6 col-lg-3" data-bs-toggle="modal"
-                                    data-bs-target="#editproduct">
+                                    data-bs-target="#editproduct<?php echo $row['product_id']; ?>">
                                     Edit Product
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="editproduct" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
+                                <div class="modal fade" id="editproduct<?php echo $row['product_id']; ?>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -434,22 +477,44 @@ include ("head.php");
                                             </div>
                                             <div class="modal-body">
                                                 <div class="add-product ">
-                                                    <form action="admin-add-producs.php" method="POST" autocomplete="off"
-                                                        enctype="multipart/form-data">
+                                                    <form action="admin_edit_product_details.php" method="POST"
+                                                        autocomplete="off" enctype="multipart/form-data">
                                                         <div class="mt-1 mb-1">
-
+                                                            <input type="hidden" name="product_id" id="product_id"
+                                                                value="<?php echo $row['product_id']; ?>">
                                                             <input class="w-100 p-2" type="text" name="product_name"
-                                                                id="product_name" placeholder="Product name" required>
+                                                                id="product_name"
+                                                                placeholder="<?php echo $row['product_name']; ?>"
+                                                                value="<?php echo $row['product_name']; ?>">
                                                         </div>
                                                         <div class="mt-1 mb-1">
 
                                                             <input class="w-100 p-2" type="number" name="price" id="price"
-                                                                placeholder="Product price" required>
+                                                                placeholder="<?php echo $row['price']; ?>"
+                                                                value="<?php echo $row['price']; ?>">
                                                         </div>
                                                         <div class="mt-2 mb-1">
                                                             <h5>Product Image</h5>
-                                                            <input type="file" name="image_file" accept=".jpg, .jpeg, .png">
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">Edit Description</span>
+                                                                <textarea class="form-control" aria-label="With textarea"
+                                                                    name="description"
+                                                                    placeholder="<?php echo $row['description']; ?>"
+                                                                    value="<?php echo $row['description']; ?>"></textarea>
+                                                            </div>
+                                                            <div class="mt-3 mb-1">
+                                                                <h5>Change Product Thumbnail</h5>
+                                                                <div class="input-group mb-1">
+                                                                    <input type="file" class="form-control" id="image_file"
+                                                                        name="image_file"
+                                                                        value="<?php echo $row['image_file']; ?>">
+                                                                </div>
+                                                                <div class="product_image"><img
+                                                                        src="product-images/<?php echo $row['image_file'] ?>"
+                                                                        alt="" class="m w-100"></div>
 
+
+                                                            </div>
                                                         </div>
 
 
