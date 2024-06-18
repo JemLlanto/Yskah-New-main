@@ -23,12 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $conn->begin_transaction();
 
+
     try {
         // Insert into notification_table
         $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status) VALUES (?, ?, ?, ?)");
         $stmt1->bind_param("isss", $user_id, $title, $description, $status);
         $stmt1->execute();
         $stmt1->close();
+
+
 
         foreach ($selected_items as $order_id) {
             $sql = "SELECT * FROM order_table WHERE order_id = ? AND user_id = ?";
@@ -44,9 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $price = $item['price'];
                 $quantity = $item['quantity'];
 
+                $order_number = uniqid();
+                
                 // Insert each item into order_items table with correct order_id
-                $stmt_insert_item = $conn->prepare("INSERT INTO order_items (order_id, user_id, product_id, product_name, image_file, price, quantity, total_price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')");
-                $stmt_insert_item->bind_param("iiissiii", $order_id, $user_id, $product_id, $product_name, $image_file, $price, $quantity, $total_price);
+                $stmt_insert_item = $conn->prepare("INSERT INTO order_items ( order_id, user_id, product_id, product_name, image_file, price, quantity, total_price, status, order_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)");
+                $stmt_insert_item->bind_param("iiissiiii", $order_id, $user_id, $product_id, $product_name, $image_file, $price, $quantity, $total_price, $order_number);
                 $stmt_insert_item->execute();
                 $stmt_insert_item->close();
 

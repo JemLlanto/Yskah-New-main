@@ -57,62 +57,30 @@ include ("head.php");
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
+                        <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                            ?>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="notification_section">
                                 <div class="notif_container">
                                     <div class="notif_title">
-                                        <p>Notification Title</p>
+                                        <p><?php echo $notif["title"] ?></p>
                                     </div>
                                     <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                                        <p class="ms-2"><?php echo $notif["description"] ?></p>
                                     </div>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
+                        <?php } ?>
                     </div>
-
                 </div>
-
             </div>
+
+        </div>
+
+        </div>
         </div>
 
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
@@ -218,57 +186,23 @@ include ("head.php");
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
+                        <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                            ?>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="notification_section">
                                 <div class="notif_container">
                                     <div class="notif_title">
-                                        <p>Notification Title</p>
+                                        <p><?php echo $notif["title"] ?></p>
                                     </div>
                                     <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                                        <p class="ms-2"><?php echo $notif["description"] ?></p>
                                     </div>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
+                        <?php } ?>
                     </div>
                 </div>
 
