@@ -443,12 +443,12 @@ include ("head.php");
                                                                         style="background-color:transparent;" type="button"
                                                                         data-bs-toggle="offcanvas"
                                                                         aria-controls="offcanvasScrolling"
-                                                                        data-bs-target="#add_variant_option<?php echo $variant['name']; ?>">
+                                                                        data-bs-target="#add_variant_option<?php echo $variant['variant_id']; ?>">
                                                                         <h5 class="m-0">+</h5>
                                                                     </button>
                                                                     <div class="offcanvas offcanvas-end" data-bs-scroll="true"
                                                                         data-bs-backdrop="false" tabindex="-1"
-                                                                        id="add_variant_option<?php echo $variant['name']; ?>"
+                                                                        id="add_variant_option<?php echo $variant['variant_id']; ?>"
                                                                         aria-labelledby="offcanvasScrollingLabel">
                                                                         <div class="offcanvas-header">
                                                                             <h5 class="offcanvas-title"

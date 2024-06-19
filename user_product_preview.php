@@ -11,6 +11,37 @@ include ("head.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css\admin_product_preview6.css" />
+    <style>
+        .radio-container {
+            background-color: lightgray;
+            padding: 0;
+            transition: background-color 0.2s, border 0.2s;
+        }
+
+        .radio-container input[type="radio"] {
+            display: none;
+        }
+
+        .radio-container input[type="radio"]:checked+.label-text {
+            background-color: #e6e6e6;
+        }
+
+        .label-text {
+            display: flex;
+            align-items: center;
+            padding: 0.5em;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .radio-circle {
+            background-color: white;
+            height: 20px;
+            width: 20px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -347,11 +378,7 @@ include ("head.php");
                             </div>
                             <div class="product_description w-100 h-auto">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia velit est commodi
-                                    architecto
-                                    labore natus perspiciatis hic iure odio ut! Quos maiores vero laudantium ex, quasi repellat
-                                    cum
-                                    voluptatum veritatis.
+                                    <?php echo $row['description'] ?>
                                 </p>
                             </div>
                             <div class="variation_ordernow d-flex flex-column w-100">
@@ -375,7 +402,7 @@ include ("head.php");
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Add to Cart</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -391,35 +418,52 @@ include ("head.php");
                                                         <input type="hidden" name="image_file"
                                                             value="<?php echo $row['image_file']; ?>">
                                                         <?php
+                                                        $product_id = $row['product_id'];
                                                         $variants = mysqli_query($conn, "SELECT * FROM variant_table WHERE product_id = $product_id");
+
                                                         while ($variant = mysqli_fetch_assoc($variants)) {
                                                             ?>
-                                                            <div class="row w-100 rounded p-2">
-                                                                <h5><?php echo $variant['name']; ?></h5>
-                                                                <div class="col-md-3 m-0 mb-3">
-                                                                    <div class="p-1 pe-2 d-flex align-items-center rounded"
-                                                                        style="background-color: lightgray; width:auto;">
-                                                                        <div class="rounded"
-                                                                            style="background-color: white; height:30px; width: 30px;">
+                                                            <div class="row w-100 border border-3 rounded m-auto pt-2 mb-2">
+                                                                <div
+                                                                    class="d-flex justify-content-between border-bottom align-content-center border-3 mb-2 pb-1">
+                                                                    <h5 class="m-0"><?php echo $variant['name']; ?>
+                                                                    </h5>
 
-                                                                        </div>
-                                                                        <p class="m-0 ms-2">Desc</p>
-                                                                    </div>
                                                                 </div>
 
-                                                                <input type="number" id="price" value="" hidden>
+                                                                <div class="col-md-3 m-0 mb-3 pt-2 d-flex justify-content-start">
+                                                                    <?php
+                                                                    $variant_id = $variant['variant_id'];
+                                                                    $contents = mysqli_query($conn, "SELECT * FROM variant_content WHERE variant_id = $variant_id");
+                                                                    while ($content = mysqli_fetch_assoc($contents)) {
+                                                                        ?>
+                                                                        <label class="radio-container rounded me-1">
+                                                                            <input type="radio"
+                                                                                name="<?php echo $variant['variant_id']; ?>"
+                                                                                value="<?php echo $content['price']; ?>">
+                                                                            <div class="label-text m-auto">
+                                                                                <div class="radio-circle"></div>
+                                                                                <?php echo $content['option']; ?>
+                                                                            </div>
+                                                                        </label>
+
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+
+                                                                </div>
+
                                                             </div>
-                                                        <?php } ?>
+                                                            <?php
+                                                        }
+                                                        ?>
 
-
-
-
-                                                        <div id="quantity" class="w-100">
+                                                        <div class="input-group mt-3">
                                                             <label for="quantity">
                                                                 <h5>Quantity</h5>
                                                             </label>
-                                                            <input class="w-100 py-2 ps-2" type="number" id="quantity"
-                                                                name="quantity" value="1" min="1" style="">
+                                                            <input type="number" class="form-control w-100 rounded py-2 ps-2"
+                                                                id="quantity" name="quantity" value="1" min="1" style="">
                                                         </div>
                                                 </div>
                                                 <div class="modal-footer">
