@@ -48,12 +48,15 @@ if (
         window.location='registration_form.php';
         </script>";
     } else {
+        
         $is_admin = 0;
         $sql = "INSERT INTO user_table (is_admin, first_name, last_name, sex, phone, blockLot, subdivision, barangay, city, province, zip, username, email, password, image_file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("issssssssssssss", $is_admin, $first_name, $last_name, $sex, $phone, $blockLot, $subdivision, $barangay, $city, $province, $zip, $username, $email, $hashed_password, $image_file);
 
 
+		mysqli_query($conn,"insert into `user` (uname, username, password, access) values ('$first_name', '$username', '$hashed_password', '2')");
+        
         if ($stmt->execute()) {
             echo "<script>
             alert('Registration successful');

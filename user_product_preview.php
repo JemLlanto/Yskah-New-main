@@ -378,7 +378,7 @@ include ("head.php");
                                                         <h5>Quantity</h5>
                                                     </label>
                                                     <input class="w-100 py-2 ps-2" type="number" id="quantity"
-                                                        name="quantity" value="1" min="1" style="">
+                                                        name="quantity" value="1" min="1">
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
