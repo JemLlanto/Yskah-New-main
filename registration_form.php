@@ -99,6 +99,8 @@ include ("connection.php");
                 <div
                     class="d-flex flex-row flex-wrap justify-content-center justify-content-md-between align-items-center">
                     <div class="">
+
+                        <input type="hidden" name="chatname" id="chatname">
                         <button type="submit" class="btn btn-primary">Sign up</button>
                     </div>
                     <div class="">

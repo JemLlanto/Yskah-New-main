@@ -54,14 +54,23 @@ if (
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("issssssssssssss", $is_admin, $first_name, $last_name, $sex, $phone, $blockLot, $subdivision, $barangay, $city, $province, $zip, $username, $email, $hashed_password, $image_file);
 
-
 		mysqli_query($conn,"insert into `user` (uname, username, password, access) values ('$first_name', '$username', '$hashed_password', '2')");
+
+        if (isset($_POST['chatname'])){
+            $cid="";
+            $chat_name=$_POST['chatname'];
+            
+            mysqli_query($conn,"insert into chatroom (chat_name, date_created, userid) values ('$chat_name', NOW(), '1')");
+            $cid=mysqli_insert_id($conn);
+            
+            mysqli_query($conn,"insert into chat_member (chatroomid, userid) values ('$cid', '".$_SESSION['id']."')");
         
         if ($stmt->execute()) {
             echo "<script>
             alert('Registration successful');
             window.location='login_form.php';
             </script>";
+        }
         } else {
             echo "Error: " . $conn->error;
         }

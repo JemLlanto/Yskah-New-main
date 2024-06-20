@@ -36,12 +36,17 @@ if ($result->num_rows > 0 && $result_chat->num_rows > 0) {
         $_SESSION["username"] = $username;
         $_SESSION['user_id'] = $row['user_id'];
         $_SESSION['id'] = $row2['userid'];
+
+
+        
+            
         echo "<script>
         alert('Welcome');
         window.location='user_landing_page.php';
         </script>";
     }
-} else {
+}
+else {
     echo "<script>
     alert('Invalid username or password');
     window.location='login_form.php';
