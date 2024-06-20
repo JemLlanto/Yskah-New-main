@@ -1,7 +1,7 @@
 <?php
-include ("sessionchecker.php");
-include ("connection.php");
-include ("head.php");
+include("sessionchecker.php");
+include("connection.php");
+include("head.php");
 
 ?>
 <!DOCTYPE html>
@@ -16,7 +16,7 @@ include ("head.php");
 
 <body>
 
-    <?php 
+    <?php
     $sql = "SELECT * FROM user_table WHERE username='" . $_SESSION['username'] . "'";
     $result = $conn->query($sql);
 
@@ -58,57 +58,23 @@ include ("head.php");
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
+                        <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                            ?>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="notification_section">
                                 <div class="notif_container">
                                     <div class="notif_title">
-                                        <p>Notification Title</p>
+                                        <p><?php echo $notif["title"] ?></p>
                                     </div>
                                     <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                                        <p class="ms-2"><?php echo $notif["description"] ?></p>
                                     </div>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
+                        <?php } ?>
                     </div>
 
                 </div>
@@ -219,57 +185,23 @@ include ("head.php");
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
+                        <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                            ?>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="notification_section">
                                 <div class="notif_container">
                                     <div class="notif_title">
-                                        <p>Notification Title</p>
+                                        <p><?php echo $notif["title"] ?></p>
                                     </div>
                                     <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                                        <p class="ms-2"><?php echo $notif["description"] ?></p>
                                     </div>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                            </div>
+                        </a>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -311,16 +243,16 @@ include ("head.php");
         <?php
 
 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
-    $user_id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM order_table WHERE user_id = $user_id";
-    $result = $conn->query($sql);
+        $user_id = $_SESSION['user_id'];
+        $sql = "SELECT * FROM order_table WHERE user_id = $user_id";
+        $result = $conn->query($sql);
 
-    if ($result->num_rows > 0):
-    ?>
+        if ($result->num_rows > 0) :
+        ?>
         <div id="select_all" class="container rounded p-2 mb-2 ps-2 d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-between align-items-center ps-2">
                 <input type="checkbox" id="selectAllCheckbox">
@@ -333,7 +265,7 @@ include ("head.php");
                 </div>
                 <form id="checkoutForm" action="user_check_out.php" method="post">
                     <input type="hidden" name="selected_items" id="selected_items">
-                    <?php while ($row = $result->fetch_assoc()): ?>
+                    <?php while ($row = $result->fetch_assoc()) : ?>
                     <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
                     <?php endwhile; ?>
                     <button id="check_out" class="py-3 p-2 rounded">Check Out</button>
@@ -341,8 +273,8 @@ include ("head.php");
             </div>
         </div>
         <?php
-        $result->data_seek(0);
-        while ($item = $result->fetch_assoc()): ?>
+            $result->data_seek(0);
+            while ($item = $result->fetch_assoc()) : ?>
         <div class="cart_item">
             <div id="product_details">
                 <div class="check_box">
@@ -376,7 +308,7 @@ include ("head.php");
             </div>
         </div>
         <?php endwhile; ?>
-        <?php else: ?>
+        <?php else : ?>
         <div id="select_all" class="container rounded p-2 mb-2 ps-2 d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-between align-items-center ps-2">
                 <input type="checkbox" id="selectAllCheckbox">
