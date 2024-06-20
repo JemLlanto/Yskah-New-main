@@ -15,12 +15,12 @@ include ("head.php");
 </head>
 
 <body>
-    <?php 
+    <?php
     $sql = "SELECT * FROM user_table WHERE username='" . $_SESSION['username'] . "'";
     $result = $conn->query($sql);
 
     while ($row = $result->fetch_assoc()) {
-    ?>
+        ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
         <div
             class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
@@ -248,14 +248,14 @@ include ("head.php");
                 ?>
             <div class="col-sm-6 col-lg-4">
                 <div class="card w-100">
-                    <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="...">
-                    <div class="card-body p-0 ps-2 pb-2">
-                        <h4 class="card-title m-0 mt-2"><?php echo $row['product_name'] ?></h4>
-                        <p class="card-text m-0">
-                        <p class="m-0 ms-2 text-secondary">₱ <?php echo $row['price'] ?>.00</p>
+                    <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="..." />
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $row['product_name'] ?></h5>
+                        <p class="card-text">
+                        <p class="m-0">Php <?php echo $row['price'] ?>.00</p>
                         </p>
-                        <a href="user_product_preview.php?product_id=<?php echo $row['product_id'] ?>"
-                            class="btn btn-primary">View
+                        <a href="user_product_preview.php?product_id=<?php echo $row['product_id']; ?>"
+                            class="btn btn-primary w-100">View
                             Product</a>
                     </div>
                 </div>

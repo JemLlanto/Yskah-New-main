@@ -325,16 +325,17 @@ include ("head.php");
         id="Intro">
         <div class="d-flex flex-column align-items-end text-end">
             <h1>Introduction</h1>
-            <h5 id="introText" class="w">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus eveniet dolore
+            <h5 id="introText" class="w-50">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus eveniet
+                dolore
                 excepturi
                 incidunt,
                 amet
                 quasi fugit animi perspiciatis quisquam molestias.</h5>
         </div>
-        <a href="admin-products.php"><button type="button" class="btn btn-lg btn-light p-3 w-100">Order Now</button></a>
+        <a href="index-products.php"><button type="button" class="btn btn-lg btn-light p-3 w-100">Order Now</button></a>
     </div>
 
-    <div class="overflow-hidden d-flex justify-content-center " style=" height: 60dvh">
+    <div class="overflow-hidden d-flex justify-content-center" style=" height: 60dvh">
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active " data-bs-interval="3000">
@@ -352,7 +353,6 @@ include ("head.php");
             </div>
         </div>
     </div>
-
     <div class="container-fluid">
         <h3 class="pt-4 ps-4">Hot Products</h3>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 m-1 mt-4 mb-4">

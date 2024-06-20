@@ -369,11 +369,7 @@ include ("head.php");
                             </div>
                             <div class="product_description w-100 h-auto">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia velit est commodi
-                                    architecto
-                                    labore natus perspiciatis hic iure odio ut! Quos maiores vero laudantium ex, quasi repellat
-                                    cum
-                                    voluptatum veritatis.
+                                    <?php echo $row['description'] ?>
                                 </p>
                             </div>
 

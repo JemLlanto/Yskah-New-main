@@ -11,6 +11,37 @@ include ("head.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css\admin_product_preview6.css" />
+    <style>
+    .radio-container {
+        background-color: lightgray;
+        padding: 0;
+        transition: background-color 0.2s, border 0.2s;
+    }
+
+    .radio-container input[type="radio"] {
+        display: none;
+    }
+
+    .radio-container input[type="radio"]:checked+.label-text {
+        background-color: #e6e6e6;
+    }
+
+    .label-text {
+        display: flex;
+        align-items: center;
+        padding: 0.5em;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .radio-circle {
+        background-color: white;
+        height: 20px;
+        width: 20px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+    </style>
 </head>
 
 <body>
