@@ -86,6 +86,7 @@ include ("head.php");
             });
         });
     </script>
+
 </head>
 
 <body>
@@ -386,9 +387,10 @@ include ("head.php");
                                                             <div>
                                                                 <h5 class="m-0">Add to Cart</h5>
                                                             </div>
-                                                            <div class="m-0" id="totalPrice">Price: Php
+                                                            <div class="m-0" id="totalPrice">Php
                                                                 <?php echo $row['price'] ?>.00
                                                             </div>
+
                                                         </div>
 
                                                     </h5>
@@ -399,13 +401,7 @@ include ("head.php");
                                                     <form id="add-to-cart-form" action="add-to-cart-form.php" method="POST"
                                                         class="">
 
-                                                        <input type="hidden" name="product_id"
-                                                            value="<?php echo $row['product_id']; ?>">
-                                                        <input type="hidden" name="product_name"
-                                                            value="<?php echo $row['product_name']; ?>">
-                                                        <input type="hidden" name="price" value="<?php echo $row['price']; ?>">
-                                                        <input type="hidden" name="image_file"
-                                                            value="<?php echo $row['image_file']; ?>">
+
                                                         <?php
                                                         $product_id = $row['product_id'];
                                                         $variants = mysqli_query($conn, "SELECT * FROM variant_table WHERE product_id = $product_id");
@@ -418,13 +414,16 @@ include ("head.php");
                                                                     <h5 class="m-0"><?php echo $variant['name']; ?></h5>
                                                                 </div>
 
-                                                                <div class="col-md-3 m-0 mb-3 pt-2 d-flex justify-content-start">
+                                                                <div
+                                                                    class=" m-0 mb-3 pt-2 d-flex justify-content-start flex-wrap gap-1">
                                                                     <?php
+                                                                    // $price = 0;
                                                                     $variant_id = $variant['variant_id'];
                                                                     $contents = mysqli_query($conn, "SELECT * FROM variant_content WHERE variant_id = $variant_id");
                                                                     while ($content = mysqli_fetch_assoc($contents)) {
+                                                                        // $price += $content['price'];
                                                                         ?>
-                                                                        <label class="shadow-sm radio-container rounded me-1">
+                                                                        <label class="shadow-sm radio-container rounded">
                                                                             <input type="radio"
                                                                                 name="<?php echo $variant['variant_id']; ?>"
                                                                                 value="<?php echo $content['price']; ?>">
@@ -433,7 +432,9 @@ include ("head.php");
                                                                                 <?php echo $content['option']; ?>
                                                                             </div>
                                                                         </label>
+
                                                                         <?php
+
                                                                     }
                                                                     ?>
                                                                 </div>
@@ -441,7 +442,14 @@ include ("head.php");
                                                             <?php
                                                         }
                                                         ?>
-
+                                                        <input type="hidden" name="product_id"
+                                                            value="<?php echo $row['product_id']; ?>">
+                                                        <input type="hidden" name="product_name"
+                                                            value="<?php echo $row['product_name']; ?>">
+                                                        <input type="hidden" id="total_price" name="price"
+                                                            value="<?php echo $row['price']; ?>">
+                                                        <input type="hidden" name="image_file"
+                                                            value="<?php echo $row['image_file']; ?>">
                                                         <div class="input-group mt-3">
                                                             <label for="quantity">
                                                                 <h5>Quantity</h5>
@@ -454,7 +462,7 @@ include ("head.php");
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Close</button>
                                                     <button type="button" class="btn btn-primary" class="add_to_cart"
-                                                        onclick="document.getElementById('add-to-cart-form').submit();">Add to
+                                                        onclick="submitForm()">Add to
                                                         Cart</button>
                                                     </form>
 
@@ -469,7 +477,21 @@ include ("head.php");
 
                 </div>
             </div>
+            <script>
+                function calculateTotalPrice() {
+                    let total = 0;
+                    const radios = document.querySelectorAll('input[type="radio"]:checked');
+                    radios.forEach((radio) => {
+                        total += parseFloat(radio.value);
+                    });
+                    document.getElementById('total_price').value = total.toFixed(2);
+                }
 
+                function submitForm() {
+                    calculateTotalPrice();
+                    document.getElementById('add-to-cart-form').submit();
+                }
+            </script>
             <script>
                 document.querySelectorAll('.variation-btn').forEach((button, index) => {
                     button.addEventListener('click', function () {
