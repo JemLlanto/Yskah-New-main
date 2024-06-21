@@ -31,8 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt1->execute();
         $stmt1->close();
 
-
-
         foreach ($selected_items as $order_id) {
             $sql = "SELECT * FROM order_table WHERE order_id = ? AND user_id = ?";
             $stmt = $conn->prepare($sql);

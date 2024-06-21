@@ -12,79 +12,79 @@ include ("head.php");
     <title>Document</title>
     <link rel="stylesheet" href="css\admin_product_preview6.css" />
     <style>
-        @import url("head.php");
+    @import url("head.php");
 
-        .add_to_cart,
-        .order_now {
-            transition: .3s;
-        }
+    .add_to_cart,
+    .order_now {
+        transition: .3s;
+    }
 
-        .add_to_cart:hover {
-            background-color: var(--ter_color);
-            color: white
-        }
+    .add_to_cart:hover {
+        background-color: var(--ter_color);
+        color: white
+    }
 
-        .order_now:hover {
-            background-color: rgb(223, 64, 36);
-        }
+    .order_now:hover {
+        background-color: rgb(223, 64, 36);
+    }
 
-        .product_description {
-            overflow: scroll;
-            overflow-x: hidden;
-            background-color: #f2f2f2;
-        }
+    .product_description {
+        overflow: scroll;
+        overflow-x: hidden;
+        background-color: #f2f2f2;
+    }
 
-        .radio-container {
-            background-color: var(--main_color);
-            padding: 0;
-            transition: .3s;
-        }
+    .radio-container {
+        background-color: var(--main_color);
+        padding: 0;
+        transition: .3s;
+    }
 
-        .radio-container:hover {
-            background-color: var(--ter_color);
-            color: white;
+    .radio-container:hover {
+        background-color: var(--ter_color);
+        color: white;
 
-        }
+    }
 
-        .radio-container input[type="radio"] {
-            display: none;
-        }
+    .radio-container input[type="radio"] {
+        display: none;
+    }
 
-        .radio-container input[type="radio"]:checked+.label-text {
-            background-color: var(--ter_color);
-            color: white;
-        }
+    .radio-container input[type="radio"]:checked+.label-text {
+        background-color: var(--ter_color);
+        color: white;
+    }
 
-        .label-text {
-            display: flex;
-            align-items: center;
-            padding: 0.5em;
-            border-radius: 5px;
-            width: 100%;
-        }
+    .label-text {
+        display: flex;
+        align-items: center;
+        padding: 0.5em;
+        border-radius: 5px;
+        width: 100%;
+    }
 
-        .radio-circle {
-            background-color: white;
-            height: 20px;
-            width: 20px;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
+    .radio-circle {
+        background-color: white;
+        height: 20px;
+        width: 20px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
     </style>
     <script>
-        function updateTotalPrice() {
-            let total = 0;
-            document.querySelectorAll('input[type=radio]:checked').forEach((radio) => {
-                total += parseFloat(radio.value);
-            });
-            document.getElementById('totalPrice').innerText = 'Price: Php ' + total.toFixed(2);
-        }
-
-        document.addEventListener('DOMContentLoaded', (event) => {
-            document.querySelectorAll('input[type=radio]').forEach((radio) => {
-                radio.addEventListener('change', updateTotalPrice);
-            });
+    function updateTotalPrice() {
+        let total = 0;
+        document.querySelectorAll('input[type=radio]:checked').forEach((radio) => {
+            total += parseFloat(radio.value);
         });
+        document.getElementById('totalPrice').innerText = 'Price: Php ' + total.toFixed(2);
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('input[type=radio]').forEach((radio) => {
+            radio.addEventListener('change', updateTotalPrice);
+        });
+    });
     </script>
 
 </head>
@@ -131,18 +131,18 @@ include ("head.php");
                         $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ");
                         while ($notif = mysqli_fetch_assoc($notifs)) {
                             ?>
-                            <a href="#" style="text-decoration: none;">
-                                <div class="notification_section">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p><?php echo $notif["title"] ?></p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p class="ms-2"><?php echo $notif["description"] ?></p>
-                                        </div>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="notification_section">
+                                <div class="notif_container">
+                                    <div class="notif_title">
+                                        <p><?php echo $notif["title"] ?></p>
+                                    </div>
+                                    <div class="notif_message">
+                                        <p class="ms-2"><?php echo $notif["description"] ?></p>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+                        </a>
                         <?php } ?>
                     </div>
 
@@ -258,18 +258,18 @@ include ("head.php");
                         $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ");
                         while ($notif = mysqli_fetch_assoc($notifs)) {
                             ?>
-                            <a href="#" style="text-decoration: none;">
-                                <div class="notification_section">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p><?php echo $notif["title"] ?></p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p class="ms-2"><?php echo $notif["description"] ?></p>
-                                        </div>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="notification_section">
+                                <div class="notif_container">
+                                    <div class="notif_title">
+                                        <p><?php echo $notif["title"] ?></p>
+                                    </div>
+                                    <div class="notif_message">
+                                        <p class="ms-2"><?php echo $notif["description"] ?></p>
                                     </div>
                                 </div>
-                            </a>
+                            </div>
+                        </a>
                         <?php } ?>
                     </div>
                 </div>
@@ -316,193 +316,193 @@ include ("head.php");
         if ($row) {
             ?>
 
-            <div id="container" class="container-fluid rounded d-flex mb-3 mt-3 py-2">
-                <div class="row row-cols-1 row-cols-md-2 gx-1 gy-4 gy-md-0">
-                    <div class="col">
-                        <div id="carouselExampleInterval" class="carousel slide " data-bs-ride="carousel" data-interval="false">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="product-images/<?php echo $row['image_file'] ?>" class="d-block w-100 rounded"
-                                        alt="...">
-                                </div>
-                                <?php
+    <div id="container" class="container-fluid rounded d-flex mb-3 mt-3 py-2">
+        <div class="row row-cols-1 row-cols-md-2 gx-1 gy-4 gy-md-0">
+            <div class="col">
+                <div id="carouselExampleInterval" class="carousel slide " data-bs-ride="carousel" data-interval="false">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="product-images/<?php echo $row['image_file'] ?>" class="d-block w-100 rounded"
+                                alt="...">
+                        </div>
+                        <?php
                                 $res = mysqli_query($conn, "SELECT * FROM product_samples WHERE product_id = $product_id");
                                 while ($samples = mysqli_fetch_assoc($res)) {
 
                                     ?>
-                                    <div class="carousel-item  " data-bs-interval="3000">
-                                        <img src="product-images/product_samples/<?php echo $samples['image_file'] ?>"
-                                            class="d-block w-100 rounded" alt="...">
-                                    </div>
-                                <?php } ?>
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
+                        <div class="carousel-item  " data-bs-interval="3000">
+                            <img src="product-images/product_samples/<?php echo $samples['image_file'] ?>"
+                                class="d-block w-100 rounded" alt="...">
                         </div>
+                        <?php } ?>
                     </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
 
-                    <div class="col">
-                        <div class="container-fluid">
-                            <div class="product_name_price rounded d-flex justify-content-between p-3 align-items-center">
-                                <h1><?php echo $row['product_name'] ?></h1>
-                                <h3>Php <?php echo $row['price'] ?>.00</h3>
+            <div class="col">
+                <div class="container-fluid">
+                    <div class="product_name_price rounded d-flex justify-content-between p-3 align-items-center">
+                        <h1><?php echo $row['product_name'] ?></h1>
+                        <h3>Php <?php echo $row['price'] ?>.00</h3>
+                    </div>
+                    <div class="product_description w-100 mt-2">
+                        <p>
+                            <?php echo $row['description'] ?>
+                        </p>
+                    </div>
+                    <div class="variation_ordernow d-flex flex-column w-100">
+
+
+
+                        <div class="quantity_buttons">
+
+
+                            <div class="add_to_cart_order_now mt-4 p-2">
+                                <button class="add_to_cart rounded" data-bs-toggle="modal"
+                                    data-bs-target="#variation_modal">
+                                    <h5>Add to Cart</h5>
+                                </button>
+                                <button class=" order_now ms-2 rounded" style="border:none;">
+                                    <h5>Order Now</h5>
+                                </button>
+
                             </div>
-                            <div class="product_description w-100 mt-2">
-                                <p>
-                                    <?php echo $row['description'] ?>
-                                </p>
-                            </div>
-                            <div class="variation_ordernow d-flex flex-column w-100">
+                            <div class="modal fade" id="variation_modal" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title w-100" id="exampleModalLabel">
+                                                <div class="w-100 d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <h5 class="m-0">Add to Cart</h5>
+                                                    </div>
+                                                    <div class="m-0" id="totalPrice">Php
+                                                        <?php echo $row['price'] ?>.00
+                                                    </div>
 
-
-
-                                <div class="quantity_buttons">
-
-
-                                    <div class="add_to_cart_order_now mt-4 p-2">
-                                        <button class="add_to_cart rounded" data-bs-toggle="modal"
-                                            data-bs-target="#variation_modal">
-                                            <h5>Add to Cart</h5>
-                                        </button>
-                                        <button class=" order_now ms-2 rounded" style="border:none;">
-                                            <h5>Order Now</h5>
-                                        </button>
-
-                                    </div>
-                                    <div class="modal fade" id="variation_modal" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title w-100" id="exampleModalLabel">
-                                                        <div class="w-100 d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h5 class="m-0">Add to Cart</h5>
-                                                            </div>
-                                                            <div class="m-0" id="totalPrice">Php
-                                                                <?php echo $row['price'] ?>.00
-                                                            </div>
-
-                                                        </div>
-
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form id="add-to-cart-form" action="add-to-cart-form.php" method="POST"
-                                                        class="">
+
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="add-to-cart-form" action="add-to-cart-form.php" method="POST"
+                                                class="">
 
 
-                                                        <?php
+                                                <?php
                                                         $product_id = $row['product_id'];
                                                         $variants = mysqli_query($conn, "SELECT * FROM variant_table WHERE product_id = $product_id");
 
                                                         while ($variant = mysqli_fetch_assoc($variants)) {
                                                             ?>
-                                                            <div class="row w-100 border border-3 rounded m-auto pt-2 mb-2">
-                                                                <div
-                                                                    class="d-flex justify-content-between border-bottom align-content-center border-3 mb-2 pb-1">
-                                                                    <h5 class="m-0"><?php echo $variant['name']; ?></h5>
-                                                                </div>
+                                                <div class="row w-100 border border-3 rounded m-auto pt-2 mb-2">
+                                                    <div
+                                                        class="d-flex justify-content-between border-bottom align-content-center border-3 mb-2 pb-1">
+                                                        <h5 class="m-0"><?php echo $variant['name']; ?></h5>
+                                                    </div>
 
-                                                                <div
-                                                                    class=" m-0 mb-3 pt-2 d-flex justify-content-start flex-wrap gap-1">
-                                                                    <?php
+                                                    <div
+                                                        class=" m-0 mb-3 pt-2 d-flex justify-content-start flex-wrap gap-1">
+                                                        <?php
                                                                     // $price = 0;
                                                                     $variant_id = $variant['variant_id'];
                                                                     $contents = mysqli_query($conn, "SELECT * FROM variant_content WHERE variant_id = $variant_id");
                                                                     while ($content = mysqli_fetch_assoc($contents)) {
                                                                         // $price += $content['price'];
                                                                         ?>
-                                                                        <label class="shadow-sm radio-container rounded">
-                                                                            <input type="radio"
-                                                                                name="<?php echo $variant['variant_id']; ?>"
-                                                                                value="<?php echo $content['price']; ?>">
-                                                                            <div class="label-text m-auto">
-                                                                                <div class="radio-circle"></div>
-                                                                                <?php echo $content['option']; ?>
-                                                                            </div>
-                                                                        </label>
+                                                        <label class="shadow-sm radio-container rounded">
+                                                            <input type="radio"
+                                                                name="<?php echo $variant['variant_id']; ?>"
+                                                                value="<?php echo $content['price']; ?>">
+                                                            <div class="label-text m-auto">
+                                                                <div class="radio-circle"></div>
+                                                                <?php echo $content['option']; ?>
+                                                            </div>
+                                                        </label>
 
-                                                                        <?php
+                                                        <?php
 
                                                                     }
                                                                     ?>
-                                                                </div>
-                                                            </div>
-                                                            <?php
+                                                    </div>
+                                                </div>
+                                                <?php
                                                         }
                                                         ?>
-                                                        <input type="hidden" name="product_id"
-                                                            value="<?php echo $row['product_id']; ?>">
-                                                        <input type="hidden" name="product_name"
-                                                            value="<?php echo $row['product_name']; ?>">
-                                                        <input type="hidden" id="total_price" name="price"
-                                                            value="<?php echo $row['price']; ?>">
-                                                        <input type="hidden" name="image_file"
-                                                            value="<?php echo $row['image_file']; ?>">
-                                                        <div class="input-group mt-3">
-                                                            <label for="quantity">
-                                                                <h5>Quantity</h5>
-                                                            </label>
-                                                            <input type="number" class="form-control w-100 rounded py-2 ps-2"
-                                                                id="quantity" name="quantity" value="1" min="1" style="">
-                                                        </div>
+                                                <input type="hidden" name="product_id"
+                                                    value="<?php echo $row['product_id']; ?>">
+                                                <input type="hidden" name="product_name"
+                                                    value="<?php echo $row['product_name']; ?>">
+                                                <input type="hidden" id="total_price" name="price"
+                                                    value="<?php echo $row['price']; ?>">
+                                                <input type="hidden" name="image_file"
+                                                    value="<?php echo $row['image_file']; ?>">
+                                                <div class="input-group mt-3">
+                                                    <label for="quantity">
+                                                        <h5>Quantity</h5>
+                                                    </label>
+                                                    <input type="number" class="form-control w-100 rounded py-2 ps-2"
+                                                        id="quantity" name="quantity" value="1" min="1" style="">
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary" class="add_to_cart"
-                                                        onclick="submitForm()">Add to
-                                                        Cart</button>
-                                                    </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" class="add_to_cart"
+                                                onclick="submitForm()">Add to
+                                                Cart</button>
+                                            </form>
 
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-            <script>
-                function calculateTotalPrice() {
-                    let total = 0;
-                    const radios = document.querySelectorAll('input[type="radio"]:checked');
-                    radios.forEach((radio) => {
-                        total += parseFloat(radio.value);
-                    });
-                    document.getElementById('total_price').value = total.toFixed(2);
-                }
 
-                function submitForm() {
-                    calculateTotalPrice();
-                    document.getElementById('add-to-cart-form').submit();
-                }
-            </script>
-            <script>
-                document.querySelectorAll('.variation-btn').forEach((button, index) => {
-                    button.addEventListener('click', function () {
-                        const carousel = document.querySelector('#carouselExampleInterval');
-                        const bootstrapCarousel = new bootstrap.Carousel(carousel);
-                        bootstrapCarousel.to(index + 1);
-                    });
-                });
-            </script>
+        </div>
+    </div>
+    <script>
+    function calculateTotalPrice() {
+        let total = 0;
+        const radios = document.querySelectorAll('input[type="radio"]:checked');
+        radios.forEach((radio) => {
+            total += parseFloat(radio.value);
+        });
+        document.getElementById('total_price').value = total.toFixed(2);
+    }
 
-            <?php
+    function submitForm() {
+        calculateTotalPrice();
+        document.getElementById('add-to-cart-form').submit();
+    }
+    </script>
+    <script>
+    document.querySelectorAll('.variation-btn').forEach((button, index) => {
+        button.addEventListener('click', function() {
+            const carousel = document.querySelector('#carouselExampleInterval');
+            const bootstrapCarousel = new bootstrap.Carousel(carousel);
+            bootstrapCarousel.to(index + 1);
+        });
+    });
+    </script>
+
+    <?php
         } else {
             echo "<p>Product not found.</p>";
         }

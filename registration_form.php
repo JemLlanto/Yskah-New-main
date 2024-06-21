@@ -100,7 +100,7 @@ include ("connection.php");
                     class="d-flex flex-row flex-wrap justify-content-center justify-content-md-between align-items-center">
                     <div class="">
 
-                        <input type="hidden" name="chatname" id="chatname">
+                        <input type="hidden" name="chat_name" id="chat_name">
                         <button type="submit" class="btn btn-primary">Sign up</button>
                     </div>
                     <div class="">

@@ -307,7 +307,7 @@ include("head.php");
     <?php
 
     // Query to fetch orders with status 'Shipping'
-    $sql = "SELECT * FROM order_items WHERE status = 'Delivered' GROUP BY user_id";
+    $sql = "SELECT * FROM order_items WHERE status = 'Delivered'";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();

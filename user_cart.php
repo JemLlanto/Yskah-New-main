@@ -264,6 +264,7 @@ include("head.php");
                     <h5 id="price" class="m-0">₱ 0.00</h5>
                 </div>
                 <form id="checkoutForm" action="user_check_out.php" method="post">
+                    <input type="hidden" name="totalPrice" id="totalPriceInput" value="0.00">
                     <input type="hidden" name="selected_items" id="selected_items">
                     <?php while ($row = $result->fetch_assoc()) : ?>
                     <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>">
@@ -336,6 +337,7 @@ include("head.php");
         const checkoutForm = document.getElementById("checkoutForm");
         const selectedItemsInput = document.getElementById("selected_items");
         const totalPriceElement = document.getElementById("price");
+        const totalPriceInput = document.getElementById("totalPriceInput");
         const checkoutButton = document.getElementById("check_out");
 
         function updateSelectedItems() {
@@ -351,6 +353,7 @@ include("head.php");
 
             selectedItemsInput.value = JSON.stringify(selectedItems);
             totalPriceElement.innerText = `₱ ${totalPrice.toFixed(2)}`;
+            totalPriceInput.value = totalPrice.toFixed(2);
             checkoutButton.innerText = `Check Out (${selectedItems.length})`;
         }
 
@@ -374,6 +377,7 @@ include("head.php");
         });
     });
     </script>
+
 
     <footer>
         <div class="footer_content flex-wrap flex-md-nowrap">
