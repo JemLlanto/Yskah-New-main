@@ -1,5 +1,5 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
+<nav class="navbar navbar-default" style="height: 70px; align-content: center; display: block">
+    <div class="container-fluid" style=" align-items: center; justify-content: space-around !important;">
         <div class="navbar-header">
         </div>
 

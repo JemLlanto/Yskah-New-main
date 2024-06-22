@@ -3,7 +3,7 @@
 		        <span style="font-size:18px; margin-left:10px; position:relative; top:13px;"><strong><span
 		                    id="user_details"><span class="glyphicon glyphicon-user"></span><span
 		                        class="badge"><?php echo mysqli_num_rows($cmem); ?></span></span>
-		                <?php echo $chatrow['chat_name']; ?></strong></span>
+		                Yskah</strong></span>
 		        <div class="showme hidden" style="position: absolute; left:-120px; top:20px;">
 		            <div class="well">
 		                <strong>Room Member/s:</strong>
