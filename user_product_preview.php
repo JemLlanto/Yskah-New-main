@@ -29,6 +29,7 @@ include ("head.php");
         }
 
         .product_description {
+            height: 350px;
             overflow: scroll;
             overflow-x: hidden;
             background-color: #f2f2f2;
@@ -387,7 +388,9 @@ include ("head.php");
                                                             <div>
                                                                 <h5 class="m-0">Add to Cart</h5>
                                                             </div>
-                                                            <div class="m-0" id="totalPrice">Php
+                                                            <div class="m-0" id="totalPrice">
+
+                                                                Php
                                                                 <?php echo $row['price'] ?>.00
                                                             </div>
 

@@ -711,22 +711,32 @@ include ("head.php");
                             <div class="add-product ">
                                 <form action="admin_add_products.php" method="POST" autocomplete="off"
                                     enctype="multipart/form-data">
-                                    <div class="mt-1 mb-1">
 
+                                    <div class="mt-1 mb-1">
                                         <input class="w-100 p-2" type="text" name="product_name" id="product_name"
                                             placeholder="Product name" required>
                                     </div>
-                                    <div class="mt-1 mb-1">
 
+                                    <div class="mt-1 mb-1">
                                         <input class="w-100 p-2" type="number" name="price" id="price"
                                             placeholder="Product price" required>
                                     </div>
+
                                     <div class="mt-2 mb-1">
-                                        <h5>Product Image</h5>
-                                        <input type="file" name="image_file" accept=".jpg, .jpeg, .png">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Description</span>
+                                            <textarea class="form-control" aria-label="With textarea"
+                                                name="description"></textarea>
+                                        </div>
 
+                                        <div class=" mt-3 mb-1">
+                                            <h5>Choose Product Thumbnail</h5>
+                                            <div class="input-group mb-1">
+                                                <input type="file" class="form-control" id="image_file"
+                                                    name="image_file" accept=".jpg, .jpeg, .png">
+                                            </div>
+                                        </div>
                                     </div>
-
 
 
                             </div>

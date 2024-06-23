@@ -65,6 +65,12 @@ if (isset($_POST['editproduct'])) {
     $stmt->execute();
     $stmt->close();
 
+    // Update the sales table
+    $stmt1 = $conn->prepare("UPDATE sales SET product_name = ?, price = ? WHERE product_id = ?");
+    $stmt1->bind_param("sdi", $product_name, $price, $product_id);
+    $stmt1->execute();
+    $stmt1->close();
+
     echo "<script>
     alert('Product updated successfully.');
     window.location='admin-products.php';

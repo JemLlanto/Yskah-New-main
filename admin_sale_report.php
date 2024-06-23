@@ -11,6 +11,14 @@ include ("head.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css\sale_report.css" />
+    <style>
+        @import url("head.php");
+
+        .tbl_header {
+            background-color: var(--ter_color);
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -325,78 +333,80 @@ include ("head.php");
                         <h5>Sale Summary this Week</h5>
                     </div>
                     <div id="table">
-                        <table id="table" class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Product ID</th>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Items Sold</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <?php
+                        $sales = mysqli_query($conn, "SELECT * FROM sales");
+                        $total_sales = 0;
+                        ?>
+
+                        <div class="rounded">
+                            <table id="table" class="table table-striped table-hover">
+                                <thead>
+                                    <tr class="tbl_header">
+                                        <th scope="col">Product ID</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Items Sold</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    while ($sale = mysqli_fetch_assoc($sales)) {
+                                        $total = $sale['price'] * $sale['item_sold'];
+                                        $total_sales += $total;
+                                        ?>
+                                        <tr>
+                                            <th scope="row"><?php echo $sale['product_id']; ?></th>
+                                            <td><?php echo $sale['product_name']; ?></td>
+                                            <td>₱ <?php echo number_format($sale['price'], 2); ?></td>
+                                            <td><?php echo $sale['item_sold']; ?></td>
+                                            <td>₱ <?php echo number_format($total, 2); ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="total_sale" class="w-100 pe-2">
+                            <p class="m-0">Total Sales:</p>
+                            <h5 id="price" class="m-0">₱ <?php echo number_format($total_sales, 2); ?></h5>
+                        </div>
+
                     </div>
-                    <div id="total_sale" class="w-100 pe-2">
-                        <p class="m-0">Total Sales:</p>
-                        <h5 id="price" class="m-0">₱ 00.00</h5>
-                    </div>
+
                 </div>
 
             </div>
+
+
 
         </div>
-
-
-
-    </div>
-    <footer>
-        <div class="footer_content flex-wrap">
-            <div class="footer_logo">
-                <img id="footer-logo" src="img\LOGO.png" alt="">
-            </div>
-            <div class="footer_details">
-                <h4>SOCIALS</h4>
-                <div class="socials">
-                    <a href="#">
-                        <p><i class='bx bxl-facebook-circle'></i>Facebook</p>
-                    </a>
-                    <a href="#">
-                        <p><i class='bx bxl-tiktok'></i>Tiktok</p>
-                    </a>
-                    <a href="#">
-                        <p><i class='bx bxl-instagram-alt'></i>Instagram</p>
-                    </a>
+        <footer>
+            <div class="footer_content flex-wrap">
+                <div class="footer_logo">
+                    <img id="footer-logo" src="img\LOGO.png" alt="">
                 </div>
-                <div class="copyright">
-                    <p><i class='bx bx-copyright'></i>2021 Jessa Mae O. Figueroa | All Rights Reserve</p>
+                <div class="footer_details">
+                    <h4>SOCIALS</h4>
+                    <div class="socials">
+                        <a href="#">
+                            <p><i class='bx bxl-facebook-circle'></i>Facebook</p>
+                        </a>
+                        <a href="#">
+                            <p><i class='bx bxl-tiktok'></i>Tiktok</p>
+                        </a>
+                        <a href="#">
+                            <p><i class='bx bxl-instagram-alt'></i>Instagram</p>
+                        </a>
+                    </div>
+                    <div class="copyright">
+                        <p><i class='bx bx-copyright'></i>2021 Jessa Mae O. Figueroa | All Rights Reserve</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 </body>
 
 </html>
