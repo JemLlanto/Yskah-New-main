@@ -11,4 +11,10 @@
     <link href="../css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="../css/dataTables.responsive.css" rel="stylesheet">
 
+
+    <style>
+    body {
+        background-color: rgb(210, 210, 210);
+    }
+    </style>
 </head>

@@ -1,7 +1,7 @@
 <div class="col-lg-12">
     <div class="panel panel-default" style="height:50px;">
         <span style="font-size:18px; margin-left:10px; position:relative; top:13px;"><strong><span
-                    class="glyphicon glyphicon-list"></span> List of Chat Rooms</strong></span>
+                    class="glyphicon glyphicon-list"></span> List of Users</strong></span>
         <div class="pull-right" style="margin-right:10px; margin-top:7px;">
 
         </div>

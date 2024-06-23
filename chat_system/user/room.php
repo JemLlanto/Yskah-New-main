@@ -1,12 +1,10 @@
 		<div class="col-lg-8" style="float:none;margin:auto;">
 		    <div class="panel panel-default" style="height:50px;">
 		        <span style="font-size:18px; margin-left:10px; position:relative; top:13px;"><strong><span
-		                    id="user_details"><span class="glyphicon glyphicon-user"></span><span
-		                        class="badge"><?php echo mysqli_num_rows($cmem); ?></span></span>
-		                Yskah</strong></span>
+		                    id="user_details"><span class="glyphicon glyphicon-user"></span>
+		                    Yskah</strong></span>
 		        <div class="showme hidden" style="position: absolute; left:-120px; top:20px;">
 		            <div class="well">
-		                <strong>Room Member/s:</strong>
 		                <div style="height: 10px;"></div>
 		                <?php
 						$rm=mysqli_query($conn,"select * from chat_member left join `user` on user.userid=chat_member.userid where chatroomid='$id'");

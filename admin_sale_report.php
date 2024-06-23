@@ -2,7 +2,17 @@
 include ("sessionchecker.php");
 include ("connection.php");
 include ("head.php");
+
+
+// Query to fetch data for the current week
+$sql = "SELECT product_id, product_name, price, SUM(quantity) as items_sold, SUM(total_price) as total
+        FROM order_items
+        WHERE WEEK(order_date) = WEEK(CURRENT_DATE) AND status = 'Delivered'
+        GROUP BY product_id";
+$result = $conn->query($sql);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -305,7 +315,6 @@ include ("head.php");
     <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-1 p-3">
         <div class="row">
             <div id="graph" class="col-3 p-2 rounded">
-
                 <div id="pie_chart" class="rounded p-2 mb-2">
                     <img class="rounded" src="img\pie_chart.png" alt="">
                 </div>
@@ -313,7 +322,6 @@ include ("head.php");
                     <img class="rounded" src="img\bar_graph.png" alt="">
                 </div>
             </div>
-
             <div class="col-9 rounded p-2">
                 <div id="report" class="w-100 rounded p-2">
                     <div id="timeline" class="w-100 p-2">
@@ -336,43 +344,50 @@ include ("head.php");
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
+                                <?php
+                            if ($result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<th scope='row'>" . $row['product_id'] . "</th>";
+                                    echo "<td>" . $row['product_name'] . "</td>";
+                                    echo "<td>₱ " . number_format($row['price'], 2) . "</td>";
+                                    echo "<td>" . $row['items_sold'] . "</td>";
+                                    echo "<td>₱ " . number_format($row['total'], 2) . "</td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr>";
+                                echo "<td colspan='5'>No sales data available for this week.</td>";
+                                echo "</tr>";
+                            }
+                            ?>
                             </tbody>
                         </table>
                     </div>
                     <div id="total_sale" class="w-100 pe-2">
                         <p class="m-0">Total Sales:</p>
-                        <h5 id="price" class="m-0">₱ 00.00</h5>
+                        <h5 id="price" class="m-0">
+                            <?php
+                        // Query to fetch total sales for the current week
+                        $total_sales_sql = "SELECT SUM(total_price) as total_sales
+                                           FROM order_items
+                                           WHERE WEEK(order_date) = WEEK(CURRENT_DATE) AND status = 'completed'";
+                        $total_sales_result = $conn->query($total_sales_sql);
+                        $total_sales_row = $total_sales_result->fetch_assoc();
+                        echo "₱ " . number_format($total_sales_row['total_sales'], 2);
+                        ?>
+                        </h5>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
-
-
     </div>
+
+    <?php
+$conn->close();
+?>
+
+
     <footer>
         <div class="footer_content flex-wrap">
             <div class="footer_logo">
