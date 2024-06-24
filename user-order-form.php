@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 // Remove item from order_table
                 $stmt_delete = $conn->prepare("DELETE FROM order_table WHERE order_id = ?");
+
                 $stmt_delete->bind_param("i", $order_id);
                 $stmt_delete->execute();
                 $stmt_delete->close();

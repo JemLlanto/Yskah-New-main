@@ -247,7 +247,7 @@ include ("head.php");
     $result = $stmt->get_result();
     ?>
 
-    <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-3 p-3">
+    <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-3 p-3" style="min-height: 700px;">
         <div id="order_nav" class="p-2 rounded">
             <a class="order_nav_a active" href="user_order.php">For Confirmation</a>
             <a class="order_nav_a" href="user_order_to_ship.php">To Ship</a>
@@ -296,11 +296,18 @@ include ("head.php");
                         </div>
                     </div>
                 </a>
+
             <?php endwhile; ?>
+            <div class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-3 text-center"
+                style="height: 200px;">
+                <h5>Check out more products <a href="user_products.php" style="color: #4d88ff
+;">here.</a></h5>
+            </div>
         <?php else: ?>
-            <div class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-1 text-center"
-                style="height: 150px;">
-                <h5>Empty Order.</h5>
+            <div class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-3 text-center"
+                style="height: 550px;">
+                <h5>Empty Order. Check our products <a href="user_products.php" style="color: #4d88ff
+;">here.</a></h5>
             </div>
         <?php endif; ?>
     </div>

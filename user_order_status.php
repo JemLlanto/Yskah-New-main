@@ -329,16 +329,16 @@ include ("head.php");
                             <?php
                             switch ($status) {
                                 case 'Pending':
-                                    echo 'Waiting for Seller\'s confirmation';
+                                    echo "Waiting for Seller's confirmation";
                                     break;
                                 case 'Shipping':
-                                    echo 'The seller is preparing the orders.';
+                                    echo 'The seller is preparing the order/s.';
                                     break;
                                 case 'Shipped':
-                                    echo 'The order has been shipped.';
+                                    echo 'The order/s has been shipped.';
                                     break;
                                 case 'Delivered':
-                                    echo 'The order has been delivered.';
+                                    echo 'The order/s has been delivered.';
                                     break;
                                 default:
                                     echo 'Unknown status';
