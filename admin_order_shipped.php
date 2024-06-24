@@ -5,29 +5,36 @@ include ("head.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
     $order_number = $_POST['order_number'];
-
     $user_id = $_POST['user_id'];
-    $title = ($_POST['title']);
-    $description = ($_POST['description']);
-    $status = ($_POST['status']);
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $status = $_POST['status'];
 
+    // Get the current date and time
+    $current_time = new DateTime();
+    $current_time->add(new DateInterval('PT6H')); // Add 6 hours
+    $delivered_date = $current_time->format('Y-m-d H:i:s');
+
+    // Insert into notification_table
     $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status) VALUES (?, ?, ?, ?)");
     $stmt1->bind_param("isss", $user_id, $title, $description, $status);
     $stmt1->execute();
     $stmt1->close();
 
-
-    $sql_update = "UPDATE order_items SET status = 'Delivered' WHERE order_number = ?";
+    // Update order_items to set status and delivered_date
+    $sql_update = "UPDATE order_items SET status = 'Delivered', delivered_date = ? WHERE order_number = ?";
     $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("i", $order_number);
+    $stmt_update->bind_param("si", $delivered_date, $order_number);
     $stmt_update->execute();
     $stmt_update->close();
 
-
+    // Redirect to the admin order delivered page
     header("Location: admin_order_delivered.php");
     exit();
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

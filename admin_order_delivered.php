@@ -305,7 +305,7 @@ include ("head.php");
 
 
     <?php
-    $sql = "SELECT * FROM order_items WHERE status = 'Delivered' GROUP BY order_number";
+    $sql = "SELECT * FROM order_items WHERE status = 'Delivered' GROUP BY order_number ORDER BY delivered_date DESC";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -324,7 +324,7 @@ include ("head.php");
                     <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
                     <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
                     <a
-                        href="admin_order_status.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>&order_number=<?php echo $order['order_number']; ?>">
+                        href="admin_order_status-delivered.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>&order_number=<?php echo $order['order_number']; ?>">
                         <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
 
                         <div id="order_item" class="rounded mt-3 p-2">

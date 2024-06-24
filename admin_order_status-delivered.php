@@ -388,7 +388,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 <?php echo date('m/d/Y H:i:s', strtotime($items[0]['order_date'])); ?>
                             </p>
                         </div>
-
+                        <div class="w-100 d-flex align-items-center justify-content-between">
+                            <p id="payment_details_text" class="m-0 ms-2">Delivered Time</p>
+                            <p id="payment_details_text" class="m-0 me-2">
+                                <?php echo date('m/d/Y H:i:s', strtotime($items[0]['delivered_date'])); ?>
+                            </p>
+                        </div>
 
                     </div>
 
