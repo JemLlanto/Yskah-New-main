@@ -1,32 +1,40 @@
 <?php
-include("sessionchecker.php");
-include("connection.php");
-include("head.php");
+include ("sessionchecker.php");
+include ("connection.php");
+include ("head.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
-    $order_id = $_POST['order_id'];
+    $order_number = $_POST['order_number'];
     $user_id = $_POST['user_id'];
-    $title = ($_POST['title']);
-    $description = ($_POST['description']);
-    $status = ($_POST['status']);
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $status = $_POST['status'];
 
+    // Get the current date and time
+    $current_time = new DateTime();
+    $current_time->add(new DateInterval('PT6H')); // Add 6 hours
+    $delivered_date = $current_time->format('Y-m-d H:i:s');
+
+    // Insert into notification_table
     $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status) VALUES (?, ?, ?, ?)");
     $stmt1->bind_param("isss", $user_id, $title, $description, $status);
     $stmt1->execute();
     $stmt1->close();
 
-
-    $sql_update = "UPDATE order_items SET status = 'Delivered' WHERE order_id = ?";
+    // Update order_items to set status and delivered_date
+    $sql_update = "UPDATE order_items SET status = 'Delivered', delivered_date = ? WHERE order_number = ?";
     $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("i", $order_id);
+    $stmt_update->bind_param("si", $delivered_date, $order_number);
     $stmt_update->execute();
     $stmt_update->close();
 
-
+    // Redirect to the admin order delivered page
     header("Location: admin_order_delivered.php");
     exit();
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -327,8 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
     </nav>
 
     <?php
-
-    $sql = "SELECT * FROM order_items WHERE status = 'Shipped' GROUP BY user_id";
+    $sql = "SELECT * FROM order_items WHERE status = 'Shipped' GROUP BY order_number";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -340,60 +347,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
             <a class="order_nav_a active" href="admin_order_shipped.php">Shipped</a>
             <a class="order_nav_a" href="admin_order_delivered.php">Delivered</a>
         </div>
-        <?php if ($result->num_rows > 0) : ?>
-        <?php while ($order = $result->fetch_assoc()) : ?>
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
-            <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
-            <a
-                href="admin_order_status.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>&order_number=<?php echo $order['order_number']; ?>"><input
-                    type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
-                <div id="order_item" class="rounded mt-3 p-2">
-                    <div id="order_head" class="container w-100 mb-2 p-2 me-0">
-                        <h5 class="m-0">Order ID: <?php echo $order['order_id']; ?></h5>
-                        <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
-                        <input type="hidden" name="title" value="Order Confirm">
-                        <input type="hidden" name="description"
-                            value="Your Order has been Confirm by the Seller. Click for more details">
-                        <input type="hidden" name="status" value="Unread">
+        <?php if ($result->num_rows > 0): ?>
+            <?php while ($order = $result->fetch_assoc()): ?>
+                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-                        <button type="submit" class="btn btn-success" name="confirm_order">Confirm</button>
-                    </div>
+                    <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                    <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
+                    <input type="hidden" name="order_number" value="<?php echo $order['order_number']; ?>">
+                    <a
+                        href="admin_order_status.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>&order_number=<?php echo $order['order_number']; ?>"><input
+                            type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                        <div id="order_item" class="rounded mt-3 p-2">
+                            <div id="order_head" class="container w-100 mb-2 p-2 me-0">
+                                <h5 class="m-0">Order ID: <?php echo $order['order_number']; ?></h5>
+                                <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
+                                <input type="hidden" name="title" value="Order Delivered">
+                                <input type="hidden" name="description"
+                                    value="Your Order has been Delivered by the Seller. Click for more details">
+                                <input type="hidden" name="status" value="Unread">
 
-                    <!-- Display product details -->
-                    <div id="product_details"
-                        class="w-100 rounded border d-flex justify-content-between align-items-center p-2">
-                        <div class="product_image d-flex justify-content-center align-items-center">
-                            <img src="product-images/<?php echo $order['image_file']; ?>" alt="" class="rounded me-2">
-                            <div class="product_variation">
-                                <h5><?php echo $order['product_name']; ?></h5>
-                                <p>Quantity: <?php echo $order['quantity']; ?></p>
+                                <button type="submit" class="btn btn-success" name="confirm_order">Confirm</button>
+                            </div>
+
+                            <!-- Display product details -->
+                            <div id="product_details"
+                                class="w-100 rounded border d-flex justify-content-between align-items-center p-2">
+                                <div class="product_image d-flex justify-content-center align-items-center">
+                                    <img src="product-images/<?php echo $order['image_file']; ?>" alt="" class="rounded me-2">
+                                    <div class="product_variation">
+                                        <h5><?php echo $order['product_name']; ?></h5>
+                                        <p>Quantity: <?php echo $order['quantity']; ?></p>
+                                    </div>
+                                </div>
+                                <div id="product_description">
+                                    <div class="container d-flex align-items-center justify-content-center p-0">
+                                        <p id="price" class="me-2 mt-2 mb-0">₱
+                                            <?php echo number_format($order['price'] * $order['quantity'], 2); ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Display total price -->
+                            <div class="container d-flex align-items-center justify-content-end p-2 pt-3 pe-3">
+                                <p class="m-0">Total: </p>
+                                <h5 id="price" class="ms-2 m-0">₱
+                                    <?php echo number_format($order['total'], 2); ?>
+                                </h5>
                             </div>
                         </div>
-                        <div id="product_description">
-                            <div class="container d-flex align-items-center justify-content-center p-0">
-                                <p id="price" class="me-2 mt-2 mb-0">₱
-                                    <?php echo number_format($order['price'] * $order['quantity'], 2); ?></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Display total price -->
-                    <div class="container d-flex align-items-center justify-content-end p-2 pt-3 pe-3">
-                        <p class="m-0">Total: </p>
-                        <h5 id="price" class="ms-2 m-0">₱
-                            <?php echo number_format($order['price'] * $order['quantity'], 2); ?></h5>
-                    </div>
-                </div>
-            </a>
-        </form>
-        <?php endwhile; ?>
-        <?php else : ?>
-        <div id=""
-            class="container rounded p-2 bg-light mt-1 text-center d-flex align-items-center justify-content-center"
-            style="height: 150px">
-            <h5>Empty Order.</h5>
-        </div>
+                    </a>
+                </form>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <div class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-3 text-center"
+                style="height: 550px;">
+                <h5>Empty Order.</h5>
+            </div>
         <?php endif; ?>
     </div>
 

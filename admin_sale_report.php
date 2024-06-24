@@ -1,7 +1,7 @@
 <?php
-include ("sessionchecker.php");
-include ("connection.php");
-include ("head.php");
+include("sessionchecker.php");
+include("connection.php");
+include("head.php");
 
 
 // Query to fetch data for the current week
@@ -21,15 +21,21 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css\sale_report.css" />
+    <style>
+        @import url("head.php");
+
+        .tbl_header {
+            background-color: var(--ter_color);
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
-        <div
-            class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
+        <div class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
             <div>
-                <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample"
-                    role="button" aria-controls="offcanvasExample">
+                <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                     <span class="navbar-toggler-icon" style="width:15px"></span>
                 </a>
 
@@ -39,9 +45,7 @@ $result = $conn->query($sql);
             </div>
 
             <div class="off d-lg-none my-2">
-                <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Notifications">
+                <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
                     <div class="orders">
                         <div class="notif">
                             <p>9+</p>
@@ -52,12 +56,10 @@ $result = $conn->query($sql);
                     </div>
                 </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall"
-                    aria-labelledby="offcanvasRightLabelSmall">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall" aria-labelledby="offcanvasRightLabelSmall">
                     <div class="offcanvas-header">
                         <h5 id="offcanvasRightLabelSmall">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
+                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
                         <div class="notification_section">
@@ -118,14 +120,11 @@ $result = $conn->query($sql);
             </div>
         </div>
 
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-            aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <div id="offcanvasExampleLabel"
-                    class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
+                <div id="offcanvasExampleLabel" class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
                     <div class="btn-group">
-                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="user-off">
                                 <div class="photo ms-2 me-1">
                                     <img src="img/default-profile.jpg" alt="">
@@ -144,8 +143,7 @@ $result = $conn->query($sql);
                             <li>
                                 <div id="log_out" class="drop_items">
                                     <form action="logout.php" method="post">
-                                        <button id="log_out_button" type="submit" name="logout"
-                                            class="btn p-0 ps-2 text-start">Log
+                                        <button id="log_out_button" type="submit" name="logout" class="btn p-0 ps-2 text-start">Log
                                             out</button>
                                     </form>
                                 </div>
@@ -153,8 +151,7 @@ $result = $conn->query($sql);
                         </ul>
                     </div>
                 </div>
-                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
+                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav nav-fill gap-2 p-0">
@@ -174,11 +171,9 @@ $result = $conn->query($sql);
             </div>
         </div>
 
-        <div
-            class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
+        <div class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
             <a id="img" class="navbar-brand" href="admin.php">
-                <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none"
-                    style="width: 110px">
+                <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none" style="width: 110px">
             </a>
 
             <div class="container navbar-collapse d-flex d-md-none" id="navbarNav">
@@ -200,9 +195,7 @@ $result = $conn->query($sql);
             </div>
 
             <div class="right_nav d-none d-lg-flex">
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge"
-                    aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Notifications">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge" aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
                     <div class="orders">
                         <div class="notif">
                             <p>9+</p>
@@ -213,12 +206,10 @@ $result = $conn->query($sql);
                     </div>
                 </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge"
-                    aria-labelledby="offcanvasRightLabelLarge">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge" aria-labelledby="offcanvasRightLabelLarge">
                     <div class="offcanvas-header">
                         <h5 id="offcanvasRightLabelLarge">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
+                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
                         <div class="notification_section">
@@ -276,8 +267,7 @@ $result = $conn->query($sql);
                 </div>
 
                 <div class="btn-group">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="user">
                             <div class="name">
                                 <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
@@ -333,61 +323,57 @@ $result = $conn->query($sql);
                         <h5>Sale Summary this Week</h5>
                     </div>
                     <div id="table">
-                        <table id="table" class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Product ID</th>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Items Sold</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                            if ($result->num_rows > 0) {
-                                while($row = $result->fetch_assoc()) {
-                                    echo "<tr>";
-                                    echo "<th scope='row'>" . $row['product_id'] . "</th>";
-                                    echo "<td>" . $row['product_name'] . "</td>";
-                                    echo "<td>₱ " . number_format($row['price'], 2) . "</td>";
-                                    echo "<td>" . $row['items_sold'] . "</td>";
-                                    echo "<td>₱ " . number_format($row['total'], 2) . "</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr>";
-                                echo "<td colspan='5'>No sales data available for this week.</td>";
-                                echo "</tr>";
-                            }
-                            ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="total_sale" class="w-100 pe-2">
-                        <p class="m-0">Total Sales:</p>
-                        <h5 id="price" class="m-0">
-                            <?php
-                        // Query to fetch total sales for the current week
-                        $total_sales_sql = "SELECT SUM(total_price) as total_sales
-                                           FROM order_items
-                                           WHERE WEEK(order_date) = WEEK(CURRENT_DATE) AND status = 'completed'";
-                        $total_sales_result = $conn->query($total_sales_sql);
-                        $total_sales_row = $total_sales_result->fetch_assoc();
-                        echo "₱ " . number_format($total_sales_row['total_sales'], 2);
+                        <?php
+                        $sales = mysqli_query($conn, "SELECT * FROM sales");
+                        $total_sales = 0;
                         ?>
-                        </h5>
+
+                        <div class="rounded">
+                            <table id="table" class="table table-striped table-hover">
+                                <thead>
+                                    <tr class="tbl_header">
+                                        <th scope="col">Product ID</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Items Sold</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    while ($sale = mysqli_fetch_assoc($sales)) {
+                                        $total = $sale['price'] * $sale['item_sold'];
+                                        $total_sales += $total;
+                                    ?>
+                                        <tr>
+                                            <th scope="row"><?php echo $sale['product_id']; ?></th>
+                                            <td><?php echo $sale['product_name']; ?></td>
+                                            <td>₱ <?php echo number_format($sale['price'], 2); ?></td>
+                                            <td><?php echo $sale['item_sold']; ?></td>
+                                            <td>₱ <?php echo number_format($total, 2); ?></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="total_sale" class="w-100 pe-2">
+                            <p class="m-0">Total Sales:</p>
+                            <h5 id="price" class="m-0">₱ <?php echo number_format($total_sales, 2); ?></h5>
+                        </div>
+
                     </div>
                 </div>
+
             </div>
+
         </div>
+
+
+
     </div>
-
-    <?php
-$conn->close();
-?>
-
-
     <footer>
         <div class="footer_content flex-wrap">
             <div class="footer_logo">
