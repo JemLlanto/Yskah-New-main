@@ -1,8 +1,18 @@
 <?php
-include ("sessionchecker.php");
-include ("connection.php");
-include ("head.php");
+include("sessionchecker.php");
+include("connection.php");
+include("head.php");
+
+
+// Query to fetch data for the current week
+$sql = "SELECT product_id, product_name, price, SUM(quantity) as items_sold, SUM(total_price) as total
+        FROM order_items
+        WHERE WEEK(order_date) = WEEK(CURRENT_DATE) AND status = 'Delivered'
+        GROUP BY product_id";
+$result = $conn->query($sql);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,11 +33,9 @@ include ("head.php");
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
-        <div
-            class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
+        <div class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
             <div>
-                <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample"
-                    role="button" aria-controls="offcanvasExample">
+                <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                     <span class="navbar-toggler-icon" style="width:15px"></span>
                 </a>
 
@@ -37,9 +45,7 @@ include ("head.php");
             </div>
 
             <div class="off d-lg-none my-2">
-                <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Notifications">
+                <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
                     <div class="orders">
                         <div class="notif">
                             <p>9+</p>
@@ -50,12 +56,10 @@ include ("head.php");
                     </div>
                 </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall"
-                    aria-labelledby="offcanvasRightLabelSmall">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall" aria-labelledby="offcanvasRightLabelSmall">
                     <div class="offcanvas-header">
                         <h5 id="offcanvasRightLabelSmall">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
+                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
                         <div class="notification_section">
@@ -116,14 +120,11 @@ include ("head.php");
             </div>
         </div>
 
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
-            aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <div id="offcanvasExampleLabel"
-                    class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
+                <div id="offcanvasExampleLabel" class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
                     <div class="btn-group">
-                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="user-off">
                                 <div class="photo ms-2 me-1">
                                     <img src="img/default-profile.jpg" alt="">
@@ -142,8 +143,7 @@ include ("head.php");
                             <li>
                                 <div id="log_out" class="drop_items">
                                     <form action="logout.php" method="post">
-                                        <button id="log_out_button" type="submit" name="logout"
-                                            class="btn p-0 ps-2 text-start">Log
+                                        <button id="log_out_button" type="submit" name="logout" class="btn p-0 ps-2 text-start">Log
                                             out</button>
                                     </form>
                                 </div>
@@ -151,8 +151,7 @@ include ("head.php");
                         </ul>
                     </div>
                 </div>
-                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
+                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav nav-fill gap-2 p-0">
@@ -172,11 +171,9 @@ include ("head.php");
             </div>
         </div>
 
-        <div
-            class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
+        <div class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
             <a id="img" class="navbar-brand" href="admin.php">
-                <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none"
-                    style="width: 110px">
+                <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none" style="width: 110px">
             </a>
 
             <div class="container navbar-collapse d-flex d-md-none" id="navbarNav">
@@ -198,9 +195,7 @@ include ("head.php");
             </div>
 
             <div class="right_nav d-none d-lg-flex">
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge"
-                    aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Notifications">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge" aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
                     <div class="orders">
                         <div class="notif">
                             <p>9+</p>
@@ -211,12 +206,10 @@ include ("head.php");
                     </div>
                 </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge"
-                    aria-labelledby="offcanvasRightLabelLarge">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge" aria-labelledby="offcanvasRightLabelLarge">
                     <div class="offcanvas-header">
                         <h5 id="offcanvasRightLabelLarge">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
+                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
                         <div class="notification_section">
@@ -274,8 +267,7 @@ include ("head.php");
                 </div>
 
                 <div class="btn-group">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="user">
                             <div class="name">
                                 <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
@@ -313,7 +305,6 @@ include ("head.php");
     <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-1 p-3">
         <div class="row">
             <div id="graph" class="col-3 p-2 rounded">
-
                 <div id="pie_chart" class="rounded p-2 mb-2">
                     <img class="rounded" src="img\pie_chart.png" alt="">
                 </div>
@@ -321,7 +312,6 @@ include ("head.php");
                     <img class="rounded" src="img\bar_graph.png" alt="">
                 </div>
             </div>
-
             <div class="col-9 rounded p-2">
                 <div id="report" class="w-100 rounded p-2">
                     <div id="timeline" class="w-100 p-2">
@@ -354,7 +344,7 @@ include ("head.php");
                                     while ($sale = mysqli_fetch_assoc($sales)) {
                                         $total = $sale['price'] * $sale['item_sold'];
                                         $total_sales += $total;
-                                        ?>
+                                    ?>
                                         <tr>
                                             <th scope="row"><?php echo $sale['product_id']; ?></th>
                                             <td><?php echo $sale['product_name']; ?></td>
@@ -362,7 +352,7 @@ include ("head.php");
                                             <td><?php echo $sale['item_sold']; ?></td>
                                             <td>₱ <?php echo number_format($total, 2); ?></td>
                                         </tr>
-                                        <?php
+                                    <?php
                                     }
                                     ?>
                                 </tbody>
@@ -375,38 +365,39 @@ include ("head.php");
                         </div>
 
                     </div>
-
                 </div>
 
             </div>
-
-
 
         </div>
-        <footer>
-            <div class="footer_content flex-wrap">
-                <div class="footer_logo">
-                    <img id="footer-logo" src="img\LOGO.png" alt="">
+
+
+
+    </div>
+    <footer>
+        <div class="footer_content flex-wrap">
+            <div class="footer_logo">
+                <img id="footer-logo" src="img\LOGO.png" alt="">
+            </div>
+            <div class="footer_details">
+                <h4>SOCIALS</h4>
+                <div class="socials">
+                    <a href="#">
+                        <p><i class='bx bxl-facebook-circle'></i>Facebook</p>
+                    </a>
+                    <a href="#">
+                        <p><i class='bx bxl-tiktok'></i>Tiktok</p>
+                    </a>
+                    <a href="#">
+                        <p><i class='bx bxl-instagram-alt'></i>Instagram</p>
+                    </a>
                 </div>
-                <div class="footer_details">
-                    <h4>SOCIALS</h4>
-                    <div class="socials">
-                        <a href="#">
-                            <p><i class='bx bxl-facebook-circle'></i>Facebook</p>
-                        </a>
-                        <a href="#">
-                            <p><i class='bx bxl-tiktok'></i>Tiktok</p>
-                        </a>
-                        <a href="#">
-                            <p><i class='bx bxl-instagram-alt'></i>Instagram</p>
-                        </a>
-                    </div>
-                    <div class="copyright">
-                        <p><i class='bx bx-copyright'></i>2021 Jessa Mae O. Figueroa | All Rights Reserve</p>
-                    </div>
+                <div class="copyright">
+                    <p><i class='bx bx-copyright'></i>2021 Jessa Mae O. Figueroa | All Rights Reserve</p>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 </body>
 
 </html>

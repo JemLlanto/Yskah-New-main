@@ -3,9 +3,6 @@
 		        <span style="font-size:18px; margin-left:10px; position:relative; top:13px;"><strong>Chat Room:
 		                <?php echo $chatrow['chat_name']; ?></strong></span>
 		        <div class="pull-right" style="margin-right:10px; margin-top:7px;">
-		            <span id="user_details" style="font-size:18px; position:relative; top:2px;"><strong>Members:
-		                </strong><span class="badge"><?php echo mysqli_num_rows($cmem); ?></span></span>
-		            <a href="#add_member" data-toggle="modal" class="btn btn-primary">Add Member</a>
 		            <a href="#delete_room" data-toggle="modal" class="btn btn-danger">Delete Room</a>
 		            <a href="index.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
 		        </div>

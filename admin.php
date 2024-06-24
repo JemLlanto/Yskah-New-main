@@ -313,7 +313,7 @@ include ("head.php");
     <?php } ?>
 
     <div class="chat">
-        <a href="chat_system\admin\chatroom.php?id=3">
+        <a href="chat_system\admin\">
             <button value=" <?php echo $row['chatroomid']; ?>" type="button" class="btn  border-0"
                 data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
                 <img src="img\chat_icon.png" />

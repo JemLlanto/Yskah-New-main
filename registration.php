@@ -56,13 +56,13 @@ if (
 
 		mysqli_query($conn,"insert into `user` (uname, username, password, access) values ('$first_name', '$username', '$hashed_password', '2')");
 
-        if (isset($_POST['chatname'])){
+        if (isset($_POST['chat_name'])){
             $cid="";
-            $chat_name=$_POST['chatname'];
+            $chat_name=$_POST['username'];
             
             mysqli_query($conn,"insert into chatroom (chat_name, date_created, userid) values ('$chat_name', NOW(), '1')");
             $cid=mysqli_insert_id($conn);
-            
+
             mysqli_query($conn,"insert into chat_member (chatroomid, userid) values ('$cid', '".$_SESSION['id']."')");
         
         if ($stmt->execute()) {

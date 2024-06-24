@@ -1,6 +1,6 @@
 <?php
-include ("sessionchecker.php");
-include ("connection.php");
+include("sessionchecker.php");
+include("connection.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['user_id'];
@@ -89,4 +89,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: user_cart.php");
     exit();
 }
-?>
