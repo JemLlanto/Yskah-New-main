@@ -1,5 +1,7 @@
 <?php
-include("connection.php");
+include ("connection.php");
+
+$password_pattern = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/';
 
 if (
     isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['sex']) && isset($_POST['phone']) &&
@@ -11,6 +13,7 @@ if (
     $last_name = $_POST['last_name'];
     $sex = $_POST['sex'];
     $phone = $_POST['phone'];
+    $island_group = $_POST['island_group'];
     $blockLot = $_POST['blockLot'];
     $subdivision = $_POST['subdivision'];
     $barangay = $_POST['barangay'];
@@ -20,6 +23,14 @@ if (
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+
+    if (!preg_match($password_pattern, $password)) {
+        echo "<script>
+        alert('Password does not meet the required criteria.');
+        window.location='registration_form.php';
+        </script>";
+        exit();
+    }
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $image_file = 'default-profile.jpg';
@@ -48,29 +59,29 @@ if (
         window.location='registration_form.php';
         </script>";
     } else {
-        
+
         $is_admin = 0;
-        $sql = "INSERT INTO user_table (is_admin, first_name, last_name, sex, phone, blockLot, subdivision, barangay, city, province, zip, username, email, password, image_file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO user_table (is_admin, first_name, last_name, sex, phone, island_group, blockLot, subdivision, barangay, city, province, zip, username, email, password, image_file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("issssssssssssss", $is_admin, $first_name, $last_name, $sex, $phone, $blockLot, $subdivision, $barangay, $city, $province, $zip, $username, $email, $hashed_password, $image_file);
+        $stmt->bind_param("isssssssssssssss", $is_admin, $first_name, $last_name, $sex, $phone, $island_group, $blockLot, $subdivision, $barangay, $city, $province, $zip, $username, $email, $hashed_password, $image_file);
 
-		mysqli_query($conn,"insert into `user` (uname, username, password, access) values ('$first_name', '$username', '$hashed_password', '2')");
+        mysqli_query($conn, "insert into `user` (uname, username, password, access) values ('$first_name', '$username', '$hashed_password', '2')");
 
-        if (isset($_POST['chat_name'])){
-            $cid="";
-            $chat_name=$_POST['username'];
-            
-            mysqli_query($conn,"insert into chatroom (chat_name, date_created, userid) values ('$chat_name', NOW(), '1')");
-            $cid=mysqli_insert_id($conn);
+        if (isset($_POST['chat_name'])) {
+            $cid = "";
+            $chat_name = $_POST['username'];
 
-            mysqli_query($conn,"insert into chat_member (chatroomid, userid) values ('$cid', '".$_SESSION['id']."')");
-        
-        if ($stmt->execute()) {
-            echo "<script>
+            mysqli_query($conn, "insert into chatroom (chat_name, date_created, userid) values ('$chat_name', NOW(), '1')");
+            $cid = mysqli_insert_id($conn);
+
+            mysqli_query($conn, "insert into chat_member (chatroomid, userid) values ('$cid', '1')");
+
+            if ($stmt->execute()) {
+                echo "<script>
             alert('Registration successful');
             window.location='login_form.php';
             </script>";
-        }
+            }
         } else {
             echo "Error: " . $conn->error;
         }

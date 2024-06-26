@@ -6,7 +6,6 @@ if (isset($_POST['remove'])) {
     $product_id = $_POST['product_id'];
 
     $query = "DELETE FROM products WHERE product_id = '$product_id'";
-
     $query = "SELECT image_file FROM products WHERE product_id = '$product_id'";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);

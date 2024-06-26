@@ -11,5 +11,14 @@
     <link href="../css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="../css/dataTables.responsive.css" rel="stylesheet">
 
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(235, 235, 235);
+        }
+    </style>
 </head>

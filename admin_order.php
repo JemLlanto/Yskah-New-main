@@ -11,8 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
     $description = ($_POST['description']);
     $status = ($_POST['status']);
 
+    $description_with_order_number = $description . " Order Number: " . $order_number;
+
+    // Insert notification with order number
     $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status) VALUES (?, ?, ?, ?)");
-    $stmt1->bind_param("isss", $user_id, $title, $description, $status);
+    $stmt1->bind_param("isss", $user_id, $title, $description_with_order_number, $status);
     $stmt1->execute();
     $stmt1->close();
 
@@ -82,57 +85,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
+                            <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $notification_id = $notif["notification_id"];
+                                $title = $notif["title"];
 
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
+                                // Determine the URL based on the title
+                                $url = "#";
+                                if ($title == "Order Placed") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Confirm") {
+                                    $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Delivered") {
+                                    $url = "user_order_delivered.php";
+                                }
+                                ?>
+                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                    <div class="notification_section">
+                                        <div class="notif_container">
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p><?php echo $notif["title"]; ?></p>
+                                                <p style="font-size: 18px"><?php echo $date; ?></p>
+                                            </div>
+                                            <div class="notif_message">
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                            <?php } ?>
                         </div>
 
                     </div>
@@ -243,57 +226,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
+                            <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $notification_id = $notif["notification_id"];
+                                $title = $notif["title"];
 
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
+                                // Determine the URL based on the title
+                                $url = "#";
+                                if ($title == "Order Placed") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Confirm") {
+                                    $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Delivered") {
+                                    $url = "user_order_delivered.php";
+                                }
+                                ?>
+                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                    <div class="notification_section">
+                                        <div class="notif_container">
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p><?php echo $notif["title"]; ?></p>
+                                                <p style="font-size: 18px"><?php echo $date; ?></p>
+                                            </div>
+                                            <div class="notif_message">
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
 
@@ -338,10 +301,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
 
     <?php
 
-    $sql = "SELECT * FROM order_items WHERE status = 'pending' GROUP BY order_number";
+    $sql = "
+SELECT o.*, 
+       GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options
+FROM order_items o
+LEFT JOIN variant_content vc ON FIND_IN_SET(vc.variant_content_id, o.variant_content_ids)
+WHERE o.status = 'Pending'
+GROUP BY o.order_id
+";
+
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
+
+
     ?>
 
     <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-3 p-3">
@@ -353,59 +326,67 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
         </div>
         <?php if ($result->num_rows > 0): ?>
             <?php while ($order = $result->fetch_assoc()): ?>
-                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <a
+                    href="admin_order_status.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>&order_number=<?php echo $order['order_number']; ?>">
 
-                    <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
-                    <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
-                    <input type="hidden" name="order_number" value="<?php echo $order['order_number']; ?>">
+                    <!-- Display order details -->
+                    <div id="order_item" class="rounded mt-3 p-2">
+                        <div id="order_head" class="container w-100 mb-2 p-2 me-0">
+                            <h5 class="m-0">Order ID: <?php echo $order['order_number']; ?></h5>
+                            <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
+                            <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
 
-                    <a
-                        href="admin_order_status.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>&order_number=<?php echo $order['order_number']; ?>">
+                            <div>
+                                <!-- Confirm Order Form -->
+                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" style="display: inline;">
+                                    <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                                    <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
+                                    <input type="hidden" name="order_number" value="<?php echo $order['order_number']; ?>">
+                                    <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
+                                    <input type="hidden" name="title" value="Order Confirm">
+                                    <input type="hidden" name="description"
+                                        value="Your Order has been Confirm by the Seller. Click for more details">
+                                    <input type="hidden" name="status" value="Unread">
+                                    <button type="submit" class="btn btn-success" name="confirm_order">Confirm</button>
+                                </form>
 
-                        <!-- Display order details -->
-                        <div id="order_item" class="rounded mt-3 p-2">
-                            <div id="order_head" class="container w-100 mb-2 p-2 me-0">
-                                <h5 class="m-0">Order ID: <?php echo $order['order_number']; ?></h5>
-                                <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
-                                <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
-
-                                <input type="hidden" name="title" value="Order Confirm">
-                                <input type="hidden" name="description"
-                                    value="Your Order has been Confirm by the Seller. Click for more details">
-                                <input type="hidden" name="status" value="Unread">
-
-                                <button type="submit" class="btn btn-success" name="confirm_order">Confirm</button>
-                            </div>
-
-                            <!-- Display product details -->
-                            <div id="product_details"
-                                class="w-100 rounded border d-flex justify-content-between align-items-center p-2">
-                                <div class="product_image d-flex justify-content-center align-items-center">
-                                    <img src="product-images/<?php echo $order['image_file']; ?>" alt="" class="rounded me-2">
-                                    <div class="product_variation">
-                                        <h5><?php echo $order['product_name']; ?></h5>
-                                        <p>Quantity: <?php echo $order['quantity']; ?></p>
-                                    </div>
-                                </div>
-                                <div id="product_description">
-                                    <div class="container d-flex align-items-center justify-content-center p-0">
-                                        <p id="price" class="me-2 mt-2 mb-0">₱
-                                            <?php echo number_format($order['price'] * $order['quantity'], 2); ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Display total price -->
-                            <div class="container d-flex align-items-center justify-content-end p-2 pt-3 pe-3">
-                                <p class="m-0">Total: </p>
-                                <h5 id="price" class="ms-2 m-0">₱
-                                    <?php echo number_format($order['total'], 2); ?>
-                                </h5>
+                                <!-- Cancel Order Form -->
+                                <form method="post" action="admin-delete-from-cart.php" style="display: inline;">
+                                    <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                                    <button type="submit" class="btn btn-danger" name="cancel_order">Cancel</button>
+                                </form>
                             </div>
                         </div>
-                    </a>
-                </form>
+
+                        <!-- Display product details -->
+                        <div id="product_details"
+                            class="w-100 rounded border d-flex justify-content-between align-items-center p-2">
+                            <div class="product_image d-flex justify-content-center align-items-center">
+                                <img src="product-images/<?php echo $order['image_file']; ?>" alt="" class="rounded me-2">
+                                <div class="product_variation">
+                                    <h5><?php echo $order['product_name'] . ' | ' . $order['variant_options']; ?></h5>
+                                    <div class="product_variation">
+                                        <p>Quantity: <?php echo $order['quantity']; ?></p>
+                                        <p>Price: ₱ <?php echo number_format($order['price'], 2); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="product_description">
+                                <div class="container d-flex align-items-center justify-content-center p-0">
+                                    <p id="price" class="me-2 mt-2 mb-0">₱
+                                        <?php echo number_format($order['price'] * $order['quantity'], 2); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Display total price -->
+                        <div class="container d-flex align-items-center justify-content-end p-2 pt-3 pe-3">
+                            <p class="m-0">Total: </p>
+                            <h5 id="price" class="ms-2 m-0">₱ <?php echo number_format($order['total'], 2); ?></h5>
+                        </div>
+                    </div>
+                </a>
             <?php endwhile; ?>
         <?php else: ?>
             <div class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-3 text-center"
@@ -414,6 +395,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
             </div>
         <?php endif; ?>
     </div>
+
 
 
     <footer>

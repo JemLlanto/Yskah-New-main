@@ -1,7 +1,7 @@
 <?php
-include("sessionchecker.php");
-include("connection.php");
-include("head.php");
+include ("sessionchecker.php");
+include ("connection.php");
+include ("head.php");
 
 ?>
 <!DOCTYPE html>
@@ -16,9 +16,11 @@ include("head.php");
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
-        <div class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
+        <div
+            class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
             <div>
-                <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample"
+                    role="button" aria-controls="offcanvasExample">
                     <span class="navbar-toggler-icon" style="width:15px"></span>
                 </a>
 
@@ -28,7 +30,9 @@ include("head.php");
             </div>
 
             <div class="off d-lg-none my-2">
-                <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
+                <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" title="Notifications">
                     <div class="orders">
                         <div class="notif">
                             <p>9+</p>
@@ -39,63 +43,45 @@ include("head.php");
                     </div>
                 </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall" aria-labelledby="offcanvasRightLabelSmall">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall"
+                    aria-labelledby="offcanvasRightLabelSmall">
                     <div class="offcanvas-header">
                         <h5 id="offcanvasRightLabelSmall">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
+                        <?php
+                        $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                        while ($notif = mysqli_fetch_assoc($notifs)) {
+                            $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                            $notification_id = $notif["notification_id"];
+                            $title = $notif["title"];
 
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                            // Determine the URL based on the title
+                            $url = "#";
+                            if ($title == "Order Placed") {
+                                $url = "user_order.php";
+                            } elseif ($title == "Order Confirm") {
+                                $url = "user_order_to_ship.php";
+                            } elseif ($title == "Order Delivered") {
+                                $url = "user_order_delivered.php";
+                            }
+                            ?>
+                            <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <div class="notification_section">
+                                    <div class="notif_container">
+                                        <div class="notif_title d-flex align-content-center justify-content-between">
+                                            <p><?php echo $notif["title"]; ?></p>
+                                            <p style="font-size: 18px"><?php echo $date; ?></p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <?php } ?>
                     </div>
 
                 </div>
@@ -103,11 +89,14 @@ include("head.php");
             </div>
         </div>
 
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <div id="offcanvasExampleLabel" class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
+                <div id="offcanvasExampleLabel"
+                    class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
                     <div class="btn-group">
-                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                             <div class="user-off">
                                 <div class="photo ms-2 me-1">
                                     <img src="img/default-profile.jpg" alt="">
@@ -126,7 +115,8 @@ include("head.php");
                             <li>
                                 <div id="log_out" class="drop_items">
                                     <form action="logout.php" method="post">
-                                        <button id="log_out_button" type="submit" name="logout" class="btn p-0 ps-2 text-start">Log
+                                        <button id="log_out_button" type="submit" name="logout"
+                                            class="btn p-0 ps-2 text-start">Log
                                             out</button>
                                     </form>
                                 </div>
@@ -134,7 +124,8 @@ include("head.php");
                         </ul>
                     </div>
                 </div>
-                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav nav-fill gap-2 p-0">
@@ -154,9 +145,11 @@ include("head.php");
             </div>
         </div>
 
-        <div class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
+        <div
+            class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
             <a id="img" class="navbar-brand" href="admin.php">
-                <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none" style="width: 110px">
+                <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none"
+                    style="width: 110px">
             </a>
 
             <div class="container navbar-collapse d-flex d-md-none" id="navbarNav">
@@ -178,7 +171,9 @@ include("head.php");
             </div>
 
             <div class="right_nav d-none d-lg-flex">
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge" aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge"
+                    aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Notifications">
                     <div class="orders">
                         <div class="notif">
                             <p>9+</p>
@@ -189,68 +184,51 @@ include("head.php");
                     </div>
                 </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge" aria-labelledby="offcanvasRightLabelLarge">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge"
+                    aria-labelledby="offcanvasRightLabelLarge">
                     <div class="offcanvas-header">
                         <h5 id="offcanvasRightLabelLarge">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
+                        <?php
+                        $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                        while ($notif = mysqli_fetch_assoc($notifs)) {
+                            $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                            $notification_id = $notif["notification_id"];
+                            $title = $notif["title"];
 
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                            // Determine the URL based on the title
+                            $url = "#";
+                            if ($title == "Order Placed") {
+                                $url = "user_order.php";
+                            } elseif ($title == "Order Confirm") {
+                                $url = "user_order_to_ship.php";
+                            } elseif ($title == "Order Delivered") {
+                                $url = "user_order_delivered.php";
+                            }
+                            ?>
+                            <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <div class="notification_section">
+                                    <div class="notif_container">
+                                        <div class="notif_title d-flex align-content-center justify-content-between">
+                                            <p><?php echo $notif["title"]; ?></p>
+                                            <p style="font-size: 18px"><?php echo $date; ?></p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <?php } ?>
                     </div>
                 </div>
 
                 <div class="btn-group">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         <div class="user">
                             <div class="name">
                                 <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
@@ -287,10 +265,22 @@ include("head.php");
 
 
     <?php
-    $sql = "SELECT * FROM order_items WHERE status = 'Delivered' GROUP BY order_number ORDER BY delivered_date DESC";
+    $sql = "
+    SELECT o.*, 
+           GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options,
+           'Delivered' AS order_status
+    FROM order_items o
+    LEFT JOIN variant_content vc ON FIND_IN_SET(vc.variant_content_id, o.variant_content_ids)
+    WHERE o.status = 'Delivered'
+    GROUP BY o.order_number
+    ORDER BY order_status DESC, delivered_date DESC
+";
+
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
+
+
     ?>
 
     <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-3 p-3">
@@ -300,12 +290,13 @@ include("head.php");
             <a class="order_nav_a" href="admin_order_shipped.php">Shipped</a>
             <a class="order_nav_a active" href="admin_order_delivered.php">Delivered</a>
         </div>
-        <?php if ($result->num_rows > 0) : ?>
-            <?php while ($order = $result->fetch_assoc()) : ?>
+        <?php if ($result->num_rows > 0): ?>
+            <?php while ($order = $result->fetch_assoc()): ?>
                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
                     <input type="hidden" name="status" value="<?php echo $order['status']; ?>">
-                    <a href="admin_order_status-delivered.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>&order_number=<?php echo $order['order_number']; ?>">
+                    <a
+                        href="admin_order_status-delivered.php?order_id=<?php echo $order['order_id']; ?>&status=<?php echo $order['status']; ?>&user_id=<?php echo $order['user_id']; ?>&order_number=<?php echo $order['order_number']; ?>">
                         <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
 
                         <div id="order_item" class="rounded mt-3 p-2">
@@ -316,12 +307,16 @@ include("head.php");
                             </div>
 
                             <!-- Display product details -->
-                            <div id="product_details" class="w-100 rounded border d-flex justify-content-between align-items-center p-2">
+                            <div id="product_details"
+                                class="w-100 rounded border d-flex justify-content-between align-items-center p-2">
                                 <div class="product_image d-flex justify-content-center align-items-center">
                                     <img src="product-images/<?php echo $order['image_file']; ?>" alt="" class="rounded me-2">
                                     <div class="product_variation">
-                                        <h5><?php echo $order['product_name']; ?></h5>
-                                        <p>Quantity: <?php echo $order['quantity']; ?></p>
+                                        <h5><?php echo $order['product_name'] . ' | ' . $order['variant_options']; ?></h5>
+                                        <div class="product_variation">
+                                            <p>Quantity: <?php echo $order['quantity']; ?></p>
+                                            <p>Price: ₱ <?php echo number_format($order['price'], 2); ?></p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div id="product_description">
@@ -344,8 +339,9 @@ include("head.php");
                     </a>
                 </form>
             <?php endwhile; ?>
-        <?php else : ?>
-            <div class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-3 text-center" style="height: 550px;">
+        <?php else: ?>
+            <div class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-3 text-center"
+                style="height: 550px;">
                 <h5>Empty Order.</h5>
             </div>
         <?php endif; ?>

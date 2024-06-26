@@ -37,14 +37,27 @@ include ("connection.php");
                         <option value="male">Male</option>
                     </select>
                 </div>
-                <div class="form-floating mb-3 w-100">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
-                        required />
-                    <label for="email" class="form-label text-secondary">Email</label>
+
+                <div class="row">
+                    <div class="form-floating mb-3 col-6">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                            required />
+                        <label for="email" class="form-label text-secondary ps-4">Email</label>
+                    </div>
+                    <div class="form-floating mb-3 col-6">
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="63+" required />
+                        <label for="phone" class="form-label text-secondary ps-4">Phone</label>
+                    </div>
                 </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="phone" name="phone" placeholder="63+" required />
-                    <label for="phone" class="form-label text-secondary">Phone</label>
+
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="island_group">Island Group</label>
+                    <select class="form-select" id="island_group" name="island_group">
+                        <option selected>Choose...</option>
+                        <option value="Luzon">Luzon</option>
+                        <option value="Visayas">Visayas</option>
+                        <option value="Mindanao">Mindanao</option>
+                    </select>
                 </div>
 
                 <div class="row pb-2">
@@ -91,6 +104,8 @@ include ("connection.php");
 
                     <div class="form-floating mb-md-3 mb-2 w-50">
                         <input type="password" class="form-control" id="password" placeholder="password" name="password"
+                            pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                            title="Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number"
                             required />
                         <label for="password" class="form-label text-secondary">Password</label>
                     </div>

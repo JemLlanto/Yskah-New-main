@@ -1,15 +1,7 @@
 <?php
-include("sessionchecker.php");
-include("connection.php");
-include("head.php");
-
-
-// Query to fetch data for the current week
-$sql = "SELECT product_id, product_name, price, SUM(quantity) as items_sold, SUM(total_price) as total
-        FROM order_items
-        WHERE WEEK(order_date) = WEEK(CURRENT_DATE) AND status = 'Delivered'
-        GROUP BY product_id";
-$result = $conn->query($sql);
+include ("sessionchecker.php");
+include ("connection.php");
+include ("head.php");
 ?>
 
 
@@ -33,9 +25,11 @@ $result = $conn->query($sql);
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
-        <div class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
+        <div
+            class="container-fluid ms-0 ms-md-3 d-flex align-items-center justify-content-space justify-content-md-between d-lg-none w-100">
             <div>
-                <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                <a id="off_nav_button" class="btn btn-light" data-bs-toggle="offcanvas" href="#offcanvasExample"
+                    role="button" aria-controls="offcanvasExample">
                     <span class="navbar-toggler-icon" style="width:15px"></span>
                 </a>
 
@@ -45,7 +39,9 @@ $result = $conn->query($sql);
             </div>
 
             <div class="off d-lg-none my-2">
-                <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
+                <button id="notif_button" class="btn p-1" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" title="Notifications">
                     <div class="orders">
                         <div class="notif">
                             <p>9+</p>
@@ -56,63 +52,45 @@ $result = $conn->query($sql);
                     </div>
                 </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall" aria-labelledby="offcanvasRightLabelSmall">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightSmall"
+                    aria-labelledby="offcanvasRightLabelSmall">
                     <div class="offcanvas-header">
                         <h5 id="offcanvasRightLabelSmall">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
+                        <?php
+                        $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                        while ($notif = mysqli_fetch_assoc($notifs)) {
+                            $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                            $notification_id = $notif["notification_id"];
+                            $title = $notif["title"];
 
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                            // Determine the URL based on the title
+                            $url = "#";
+                            if ($title == "Order Placed") {
+                                $url = "user_order.php";
+                            } elseif ($title == "Order Confirm") {
+                                $url = "user_order_to_ship.php";
+                            } elseif ($title == "Order Delivered") {
+                                $url = "user_order_delivered.php";
+                            }
+                            ?>
+                            <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <div class="notification_section">
+                                    <div class="notif_container">
+                                        <div class="notif_title d-flex align-content-center justify-content-between">
+                                            <p><?php echo $notif["title"]; ?></p>
+                                            <p style="font-size: 18px"><?php echo $date; ?></p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <?php } ?>
                     </div>
 
                 </div>
@@ -120,11 +98,14 @@ $result = $conn->query($sql);
             </div>
         </div>
 
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel">
             <div class="offcanvas-header">
-                <div id="offcanvasExampleLabel" class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
+                <div id="offcanvasExampleLabel"
+                    class="offcanvas-title d-flex flex-row align-items-center justify-content-center justify-content-md-end me-2">
                     <div class="btn-group">
-                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                             <div class="user-off">
                                 <div class="photo ms-2 me-1">
                                     <img src="img/default-profile.jpg" alt="">
@@ -143,7 +124,8 @@ $result = $conn->query($sql);
                             <li>
                                 <div id="log_out" class="drop_items">
                                     <form action="logout.php" method="post">
-                                        <button id="log_out_button" type="submit" name="logout" class="btn p-0 ps-2 text-start">Log
+                                        <button id="log_out_button" type="submit" name="logout"
+                                            class="btn p-0 ps-2 text-start">Log
                                             out</button>
                                     </form>
                                 </div>
@@ -151,7 +133,8 @@ $result = $conn->query($sql);
                         </ul>
                     </div>
                 </div>
-                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" id="btn-close" class="btn-close" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav nav-fill gap-2 p-0">
@@ -171,9 +154,11 @@ $result = $conn->query($sql);
             </div>
         </div>
 
-        <div class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
+        <div
+            class="container-fluid ms-0 ms-md-3 d-none d-md-flex align-items-center justify-content-space justify-content-md-between">
             <a id="img" class="navbar-brand" href="admin.php">
-                <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none" style="width: 110px">
+                <img src="img/LOGOO.png" alt="YsakaLogo" class="d-lg-inline-block float-start d-none"
+                    style="width: 110px">
             </a>
 
             <div class="container navbar-collapse d-flex d-md-none" id="navbarNav">
@@ -195,7 +180,9 @@ $result = $conn->query($sql);
             </div>
 
             <div class="right_nav d-none d-lg-flex">
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge" aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Notifications">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightLarge"
+                    aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Notifications">
                     <div class="orders">
                         <div class="notif">
                             <p>9+</p>
@@ -206,68 +193,51 @@ $result = $conn->query($sql);
                     </div>
                 </button>
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge" aria-labelledby="offcanvasRightLabelLarge">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightLarge"
+                    aria-labelledby="offcanvasRightLabelLarge">
                     <div class="offcanvas-header">
                         <h5 id="offcanvasRightLabelLarge">Notifications</h5>
-                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        <button id="btn-close" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
+                        <?php
+                        $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                        while ($notif = mysqli_fetch_assoc($notifs)) {
+                            $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                            $notification_id = $notif["notification_id"];
+                            $title = $notif["title"];
 
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                            // Determine the URL based on the title
+                            $url = "#";
+                            if ($title == "Order Placed") {
+                                $url = "user_order.php";
+                            } elseif ($title == "Order Confirm") {
+                                $url = "user_order_to_ship.php";
+                            } elseif ($title == "Order Delivered") {
+                                $url = "user_order_delivered.php";
+                            }
+                            ?>
+                            <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <div class="notification_section">
+                                    <div class="notif_container">
+                                        <div class="notif_title d-flex align-content-center justify-content-between">
+                                            <p><?php echo $notif["title"]; ?></p>
+                                            <p style="font-size: 18px"><?php echo $date; ?></p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <?php } ?>
                     </div>
                 </div>
 
                 <div class="btn-group">
-                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         <div class="user">
                             <div class="name">
                                 <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
@@ -306,24 +276,56 @@ $result = $conn->query($sql);
         <div class="row">
             <div id="graph" class="col-3 p-2 rounded">
                 <div id="pie_chart" class="rounded p-2 mb-2">
-                    <img class="rounded" src="img\pie_chart.png" alt="">
+                    <img class="rounded" src="img/pie_chart.png" alt="">
                 </div>
                 <div id="bar_graph" class="rounded p-2 mt-2">
-                    <img class="rounded" src="img\bar_graph.png" alt="">
+                    <img class="rounded" src="img/bar_graph.png" alt="">
                 </div>
             </div>
             <div class="col-9 rounded p-2">
                 <div id="report" class="w-100 rounded p-2">
                     <div id="timeline" class="w-100 p-2">
-                        <a class="rounded mx-1 p-2 active" href="admin_sale_report.php">Week</a>
+                        <a class="rounded mx-1 p-2 active" href="admin_sale_report_week.php">Week</a>
                         <a class="rounded mx-1 p-2" href="admin_sale_report_month.php">Month</a>
                         <a class="rounded mx-1 p-2" href="admin_sale_report_year.php">Year</a>
                     </div>
-                    <div id="report_title" class=" my-3">
-                        <h5>Sale Summary this Week</h5>
+                    <div id="report_title" class="my-3 d-flex justify-content-center align-items-center gap-3">
+                        <h5 class="m-0">Sale Summary by Week</h5>
+                        <form method="GET" action="admin_sale_report.php" id="weekForm">
+                            <select name="week" id="week" class="form-select w-auto d-inline"
+                                onchange="document.getElementById('weekForm').submit();">
+                                <?php
+                                // Get the current month and year
+                                $current_month = date('m');
+                                $current_year = date('Y');
+                                $selected_week = isset($_GET['week']) ? $_GET['week'] : 1;
+
+                                // Calculate the number of weeks in the current month
+                                $num_of_days = date('t', strtotime("$current_year-$current_month-01"));
+                                $num_of_weeks = ceil($num_of_days / 7);
+
+                                // Generate options for weeks
+                                for ($w = 1; $w <= $num_of_weeks; $w++) {
+                                    $selected = $w == $selected_week ? 'selected' : '';
+                                    echo "<option value='$w' $selected>Week $w</option>";
+                                }
+                                ?>
+                            </select>
+                        </form>
                     </div>
+
                     <div id="table">
                         <?php
+                        // Calculate start and end dates for the selected week
+                        $start_of_month = date('Y-m-01');
+                        $start_of_week = date('Y-m-d', strtotime("$start_of_month + " . (($selected_week - 1) * 7) . " days"));
+                        $end_of_week = date('Y-m-d', strtotime("$start_of_week + 6 days"));
+
+                        // Ensure the end of the week does not exceed the end of the month
+                        if (strtotime($end_of_week) > strtotime(date('Y-m-t'))) {
+                            $end_of_week = date('Y-m-t');
+                        }
+
                         $sales = mysqli_query($conn, "SELECT * FROM sales");
                         $total_sales = 0;
                         ?>
@@ -341,18 +343,34 @@ $result = $conn->query($sql);
                                 </thead>
                                 <tbody>
                                     <?php
+                                    $total_sales = 0;
+
                                     while ($sale = mysqli_fetch_assoc($sales)) {
-                                        $total = $sale['price'] * $sale['item_sold'];
+                                        $product_id = $sale['product_id'];
+
+                                        // SQL query to fetch order items where delivered_date is within the selected week
+                                        $solds = mysqli_query($conn, "SELECT * FROM order_items WHERE status = 'Delivered' AND product_id = '$product_id' AND delivered_date BETWEEN '$start_of_week' AND '$end_of_week'");
+
+                                        $item_sold = 0;
+                                        $price = 0;
+
+                                        // Calculate total items sold for the selected week
+                                        while ($sold = mysqli_fetch_assoc($solds)) {
+                                            $item_sold += $sold['quantity'];
+                                            $price += $sold['total_price'];
+                                        }
+
+                                        $total = $price;
                                         $total_sales += $total;
-                                    ?>
+                                        ?>
                                         <tr>
                                             <th scope="row"><?php echo $sale['product_id']; ?></th>
                                             <td><?php echo $sale['product_name']; ?></td>
                                             <td>₱ <?php echo number_format($sale['price'], 2); ?></td>
-                                            <td><?php echo $sale['item_sold']; ?></td>
+                                            <td><?php echo $item_sold; ?></td>
                                             <td>₱ <?php echo number_format($total, 2); ?></td>
                                         </tr>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </tbody>
@@ -363,17 +381,12 @@ $result = $conn->query($sql);
                             <p class="m-0">Total Sales:</p>
                             <h5 id="price" class="m-0">₱ <?php echo number_format($total_sales, 2); ?></h5>
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
         </div>
-
-
-
     </div>
+
     <footer>
         <div class="footer_content flex-wrap">
             <div class="footer_logo">

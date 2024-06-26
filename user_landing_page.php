@@ -58,19 +58,32 @@ include ("head.php");
                                 aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-
                             <?php
                             $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
+                                $title = $notif["title"];
+
+                                // Determine the URL based on the title
+                                $url = "#";
+                                if ($title == "Order Placed") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Confirm") {
+                                    $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Delivered") {
+                                    $url = "user_order_delivered.php";
+                                }
                                 ?>
-                                <a href="#" style="text-decoration: none;">
+                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
-                                            <div class="notif_title">
-                                                <p><?php echo $notif["title"] ?></p>
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p><?php echo $notif["title"]; ?></p>
+                                                <p style="font-size: 18px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
-                                                <p class="ms-2"><?php echo $notif["description"] ?></p>
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -190,15 +203,29 @@ include ("head.php");
                             <?php
                             $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
+                                $title = $notif["title"];
+
+                                // Determine the URL based on the title
+                                $url = "#";
+                                if ($title == "Order Placed") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Confirm") {
+                                    $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Delivered") {
+                                    $url = "user_order_delivered.php";
+                                }
                                 ?>
-                                <a href="#" style="text-decoration: none;">
+                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
-                                            <div class="notif_title">
-                                                <p><?php echo $notif["title"] ?></p>
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p><?php echo $notif["title"]; ?></p>
+                                                <p style="font-size: 18px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
-                                                <p class="ms-2"><?php echo $notif["description"] ?></p>
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -247,16 +274,16 @@ include ("head.php");
     $result = $conn->query($sql);
 
     while ($row = $result->fetch_assoc()) {
-    ?>
+        ?>
 
-    <div class="chat">
-        <a href="chat_system/user/chatroom.php?id=<?php echo $row['chatroomid']; ?>">
-            <button value=" <?php echo $row['chatroomid']; ?>" type="button" class="btn  border-0"
-                data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
-                <img src="img\chat_icon.png" />
-            </button>
-        </a>
-    </div>
+        <div class="chat">
+            <a href="chat_system/user/chatroom.php?id=<?php echo $row['chatroomid']; ?>">
+                <button value=" <?php echo $row['chatroomid']; ?>" type="button" class="btn  border-0"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                    <img src="img\chat_icon.png" />
+                </button>
+            </a>
+        </div>
 
     <?php } ?>
 

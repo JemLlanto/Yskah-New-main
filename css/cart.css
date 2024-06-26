@@ -99,7 +99,7 @@ body {
   margin-top: 5px;
 }
 .edit_delete {
-  width: 100%;
+  width: 0%;
   display: flex;
   justify-content: end;
   /* background-color: gray; */

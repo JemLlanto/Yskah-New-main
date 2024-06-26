@@ -8,13 +8,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
     <link href="../css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="../css/dataTables.responsive.css" rel="stylesheet">
 
 
     <style>
-    body {
-        background-color: rgb(210, 210, 210);
-    }
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: rgb(210, 210, 210);
+            font-family: Arial, Helvetica, sans-serif;
+        }
     </style>
 </head>

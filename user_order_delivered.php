@@ -57,17 +57,31 @@ include ("head.php");
                         </div>
                         <div class="offcanvas-body">
                             <?php
-                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ");
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
+                                $title = $notif["title"];
+
+                                // Determine the URL based on the title
+                                $url = "#";
+                                if ($title == "Order Placed") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Confirm") {
+                                    $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Delivered") {
+                                    $url = "user_order_delivered.php";
+                                }
                                 ?>
-                                <a href="#" style="text-decoration: none;">
+                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
-                                            <div class="notif_title">
-                                                <p><?php echo $notif["title"] ?></p>
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p><?php echo $notif["title"]; ?></p>
+                                                <p style="font-size: 18px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
-                                                <p class="ms-2"><?php echo $notif["description"] ?></p>
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -184,17 +198,31 @@ include ("head.php");
                         </div>
                         <div class="offcanvas-body">
                             <?php
-                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ");
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
+                                $title = $notif["title"];
+
+                                // Determine the URL based on the title
+                                $url = "#";
+                                if ($title == "Order Placed") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Confirm") {
+                                    $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Delivered") {
+                                    $url = "user_order_delivered.php";
+                                }
                                 ?>
-                                <a href="#" style="text-decoration: none;">
+                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
-                                            <div class="notif_title">
-                                                <p><?php echo $notif["title"] ?></p>
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p><?php echo $notif["title"]; ?></p>
+                                                <p style="font-size: 18px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
-                                                <p class="ms-2"><?php echo $notif["description"] ?></p>
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -238,7 +266,16 @@ include ("head.php");
 
     <?php
     $user_id = $_SESSION['user_id'];
-    $sql = "SELECT * FROM order_items WHERE status = 'Delivered' AND user_id = ? GROUP BY order_number";
+    $sql = "
+    SELECT o.*, 
+           GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options
+    FROM order_items o
+    LEFT JOIN variant_content vc ON FIND_IN_SET(vc.variant_content_id, o.variant_content_ids)
+    WHERE o.user_id = ? AND o.status = 'Delivered'
+    GROUP BY o.order_id
+    ORDER BY delivered_date DESC
+";
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
@@ -272,8 +309,11 @@ include ("head.php");
                             <div class="product_image d-flex justify-content-center align-items-center">
                                 <img src="product-images/<?php echo $order['image_file']; ?>" alt="" class="rounded me-2">
                                 <div class="product_variation">
-                                    <h5><?php echo $order['product_name']; ?></h5>
-                                    <p>Quantity: <?php echo $order['quantity']; ?></p>
+                                    <h5><?php echo $order['product_name'] . ' | ' . $order['variant_options']; ?></h5>
+                                    <div class="product_variation">
+                                        <p>Quantity: <?php echo $order['quantity']; ?></p>
+                                        <p>Price: ₱ <?php echo number_format($order['price'], 2); ?></p>
+                                    </div>
                                 </div>
                             </div>
                             <div id="product_description">

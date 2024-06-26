@@ -11,6 +11,14 @@ include ("head.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css\sale_report.css" />
+    <style>
+        @import url("head.php");
+
+        .tbl_header {
+            background-color: var(--ter_color);
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -50,57 +58,37 @@ include ("head.php");
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
+                        <?php
+                        $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                        while ($notif = mysqli_fetch_assoc($notifs)) {
+                            $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                            $notification_id = $notif["notification_id"];
+                            $title = $notif["title"];
 
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                            // Determine the URL based on the title
+                            $url = "#";
+                            if ($title == "Order Placed") {
+                                $url = "user_order.php";
+                            } elseif ($title == "Order Confirm") {
+                                $url = "user_order_to_ship.php";
+                            } elseif ($title == "Order Delivered") {
+                                $url = "user_order_delivered.php";
+                            }
+                            ?>
+                            <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <div class="notification_section">
+                                    <div class="notif_container">
+                                        <div class="notif_title d-flex align-content-center justify-content-between">
+                                            <p><?php echo $notif["title"]; ?></p>
+                                            <p style="font-size: 18px"><?php echo $date; ?></p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <?php } ?>
                     </div>
 
                 </div>
@@ -211,57 +199,37 @@ include ("head.php");
                             aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
+                        <?php
+                        $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                        while ($notif = mysqli_fetch_assoc($notifs)) {
+                            $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                            $notification_id = $notif["notification_id"];
+                            $title = $notif["title"];
 
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
+                            // Determine the URL based on the title
+                            $url = "#";
+                            if ($title == "Order Placed") {
+                                $url = "user_order.php";
+                            } elseif ($title == "Order Confirm") {
+                                $url = "user_order_to_ship.php";
+                            } elseif ($title == "Order Delivered") {
+                                $url = "user_order_delivered.php";
+                            }
+                            ?>
+                            <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <div class="notification_section">
+                                    <div class="notif_container">
+                                        <div class="notif_title d-flex align-content-center justify-content-between">
+                                            <p><?php echo $notif["title"]; ?></p>
+                                            <p style="font-size: 18px"><?php echo $date; ?></p>
+                                        </div>
+                                        <div class="notif_message">
+                                            <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="notification_section">
-                            <a href="#">
-                                <div class="notif_container">
-                                    <div class="notif_title">
-                                        <p>Notification Title</p>
-                                    </div>
-                                    <div class="notif_message">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                        </p>
-
-                                    </div>
-                                    <div class="notif_details">
-                                        <p>Product name x 00</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                        <?php } ?>
                     </div>
                 </div>
 
@@ -305,74 +273,109 @@ include ("head.php");
     <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-1 p-3">
         <div class="row">
             <div id="graph" class="col-3 p-2 rounded">
-
                 <div id="pie_chart" class="rounded p-2 mb-2">
-                    <img class="rounded" src="img\pie_chart.png" alt="">
+                    <img class="rounded" src="img/pie_chart.png" alt="">
                 </div>
                 <div id="bar_graph" class="rounded p-2 mt-2">
-                    <img class="rounded" src="img\bar_graph.png" alt="">
+                    <img class="rounded" src="img/bar_graph.png" alt="">
                 </div>
             </div>
-
             <div class="col-9 rounded p-2">
                 <div id="report" class="w-100 rounded p-2">
                     <div id="timeline" class="w-100 p-2">
-                        <a class="rounded mx-1 p-2 " href="admin_sale_report.php">Week</a>
+                        <a class="rounded mx-1 p-2" href="admin_sale_report.php">Week</a>
                         <a class="rounded mx-1 p-2" href="admin_sale_report_month.php">Month</a>
                         <a class="rounded mx-1 p-2 active" href="admin_sale_report_year.php">Year</a>
                     </div>
-                    <div id="report_title" class=" my-3">
-                        <h5>Sale Summary this Year</h5>
+                    <div id="report_title" class="my-3 d-flex justify-content-center align-items-center gap-3">
+                        <h5 class="m-0">Sale Summary by Year</h5>
+                        <form method="GET" action="admin_sale_report_year.php" id="yearForm">
+                            <select name="year" id="year" class="form-select w-auto d-inline"
+                                onchange="document.getElementById('yearForm').submit();">
+                                <?php
+                                $current_year = date('Y');
+                                $selected_year = isset($_GET['year']) ? $_GET['year'] : $current_year;
+
+                                // Generate options for years, adjust the range as per your needs
+                                for ($y = $current_year - 5; $y <= $current_year + 5; $y++) {
+                                    $selected = $y == $selected_year ? 'selected' : '';
+                                    echo "<option value='$y' $selected>$y</option>";
+                                }
+                                ?>
+                            </select>
+                        </form>
                     </div>
+
                     <div id="table">
-                        <table id="table" class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Product ID</th>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Items Sold</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">00.00</th>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>₱ 00.00</td>
-                                    <td>00</td>
-                                    <td>₱ 00.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="total_sale" class="w-100 pe-2">
-                        <p class="m-0">Total Sales:</p>
-                        <h5 id="price" class="m-0">₱ 00.00</h5>
+                        <?php
+                        // Get the selected year or default to the current year
+                        $selected_year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+
+                        // Calculate start and end dates for the selected year
+                        $start_of_year = date('Y-01-01', strtotime("$selected_year-01-01"));
+                        $end_of_year = date('Y-12-t', strtotime("$selected_year-12-01"));
+
+                        $sales = mysqli_query($conn, "SELECT * FROM sales");
+                        $total_sales = 0;
+                        ?>
+
+                        <div class="rounded">
+                            <table id="table" class="table table-striped table-hover">
+                                <thead>
+                                    <tr class="tbl_header">
+                                        <th scope="col">Product ID</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Items Sold</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $total_sales = 0;
+
+                                    while ($sale = mysqli_fetch_assoc($sales)) {
+                                        $product_id = $sale['product_id'];
+
+                                        // SQL query to fetch order items where delivered_date is within the selected year
+                                        $solds = mysqli_query($conn, "SELECT * FROM order_items WHERE status = 'Delivered' AND product_id = '$product_id' AND delivered_date BETWEEN '$start_of_year' AND '$end_of_year'");
+
+                                        $item_sold = 0;
+                                        $price = 0;
+
+                                        // Calculate total items sold for the selected year
+                                        while ($sold = mysqli_fetch_assoc($solds)) {
+                                            $item_sold += $sold['quantity'];
+                                            $price += $sold['total_price'];
+                                        }
+
+                                        $total = $price;
+                                        $total_sales += $total;
+                                        ?>
+                                        <tr>
+                                            <th scope="row"><?php echo $sale['product_id']; ?></th>
+                                            <td><?php echo $sale['product_name']; ?></td>
+                                            <td>₱ <?php echo number_format($sale['price'], 2); ?></td>
+                                            <td><?php echo $item_sold; ?></td>
+                                            <td>₱ <?php echo number_format($total, 2); ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="total_sale" class="w-100 pe-2">
+                            <p class="m-0">Total Sales:</p>
+                            <h5 id="price" class="m-0">₱ <?php echo number_format($total_sales, 2); ?></h5>
+                        </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
-
-
     </div>
+
     <footer>
         <div class="footer_content flex-wrap">
             <div class="footer_logo">

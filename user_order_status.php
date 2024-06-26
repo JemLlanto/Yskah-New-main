@@ -191,7 +191,7 @@ include ("head.php");
                             <a class="nav-link text-dark " href="user_cart.php">Cart</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark active" href="user_landing_page.php">Orders</a>
+                            <a class="nav-link text-dark active" href="user_order.php">Orders</a>
                         </li>
 
                     </ul>
@@ -306,20 +306,148 @@ include ("head.php");
         </nav>
 
         <?php
+
+        // Retrieve parameters
         $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
         $status = isset($_GET['status']) ? $_GET['status'] : '';
         $order_number = isset($_GET['order_number']) ? $_GET['order_number'] : 0;
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
 
+        $items = [];
         if ($order_id && $status) {
-            $sql = "SELECT * FROM order_items WHERE user_id = ? AND order_number = ? AND status = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("iss", $user_id, $order_number, $status);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $items = $result->fetch_all(MYSQLI_ASSOC);
-        } ?>
-        <?php if ($items): ?>
+
+            $sql = "SELECT oi.*, 
+                   GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options
+            FROM order_items oi
+            LEFT JOIN variant_content vc ON FIND_IN_SET(vc.variant_content_id, oi.variant_content_ids)
+            WHERE oi.user_id = ? AND oi.order_number = ? AND oi.status = ?
+            GROUP BY oi.order_id";
+
+            if ($stmt = $conn->prepare($sql)) {
+                $stmt->bind_param("iss", $user_id, $order_number, $status);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $items = $result->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+            } else {
+                echo "Error: " . $conn->error;
+            }
+        }
+
+        if (isset($_POST['selected_items']) && !empty($_POST['selected_items'])) {
+            $selectedItems = json_decode($_POST['selected_items'], true);
+            $totalPrice = 0;
+
+            foreach ($selectedItems as $order_id) {
+                $sql = "SELECT o.*, 
+                       GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options
+                FROM order_table o
+                LEFT JOIN variant_content vc ON FIND_IN_SET(vc.variant_content_id, o.variant_content_ids)
+                WHERE o.user_id = ? AND o.order_id = ?
+                GROUP BY o.order_id";
+
+                if ($stmt = $conn->prepare($sql)) {
+                    $stmt->bind_param("ii", $user_id, $order_id);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($item = $result->fetch_assoc()) {
+                        $totalPrice += $item['price'] * $item['quantity'];
+                        ?>
+                        <div id="product_details" class="w-100 rounded border d-flex justify-content-between align-items-end mb-2 p-2">
+                            <div class="product_image d-flex justify-content-center align-items-center">
+                                <img src="product-images/<?php echo $item['image_file']; ?>" alt="" class="rounded me-2">
+                                <div class="m-0">
+                                    <h5><?php echo $item['product_name']; ?></h5>
+                                    <p>Variation: <?php echo $item['variant_options']; ?> x
+                                        <?php echo number_format($item['price'], 2); ?>
+                                    </p>
+                                </div>
+                            </div>
+                            <div id="product_description">
+                                <div class="container p-0">
+                                    <p id="price" class="me-2 mt-2 mb-0 text-end">₱
+                                        <?php echo number_format($item['price'] * $item['quantity'], 2); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    $stmt->close();
+                } else {
+                    echo "Error: " . $conn->error;
+                }
+            }
+            ?>
+
+            <div id="payment_details"
+                class="container rounded d-flex justify-content-start align-items-start flex-column mb-2 p-3">
+                <div class="mb-3">
+                    <h5>Payment Details</h5>
+                </div>
+                <div class="w-100 d-flex align-items-center justify-content-between">
+                    <p id="payment_details_text" class="m-0 ms-2">Merchandise Subtotal</p>
+                    <p id="payment_details_text" class="m-0 me-2">₱ <?php echo number_format($totalPrice, 2); ?></p>
+                </div>
+                <div class="w-100 d-flex align-items-center justify-content-between">
+                    <p id="payment_details_text" class="m-0 ms-2">Shipping Subtotal (Luzon/Visayas/Mindanao)</p>
+                    <p id="payment_details_text" class="m-0 me-2">₱ 00.00</p>
+                </div>
+                <div class="w-100 d-flex align-items-center justify-content-between mt-3">
+                    <h5 class="ms-2">Total Payment</h5>
+                    <h5 id="total_payment" class="me-2">₱ <?php echo number_format($totalPrice, 2); ?></h5>
+                </div>
+            </div>
+
+            <div id="place_order" class="w-100 rounded d-flex align-items-center justify-content-end">
+                <div>
+                    <p class="m-0">Total Payment</p>
+                    <h5 id="price" class="m-0">₱ <?php echo number_format($totalPrice, 2); ?></h5>
+                </div>
+                <button id="place_order_button" type="button" class="btn py-3 px-4 ms-2" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Place Order
+                </button>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Payment via GCASH</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="payment" class="d-flex flex-column align-items-center p-2">
+                                    <div>
+                                        <p>Scan the QR code to pay</p>
+                                    </div>
+                                    <div>
+                                        <img src="img/Gcash-BMA-QRcode-768x1024.jpg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="user-order-form.php" method="post">
+                                    <input type="hidden" name="totalPrice" value="<?php echo $totalPrice; ?>">
+                                    <input type="hidden" name="title" value="Order Placed">
+                                    <input type="hidden" name="selected_items" id="selected_items"
+                                        value='<?php echo json_encode($selectedItems); ?>'>
+                                    <input type="hidden" name="description"
+                                        value="Your Order has been placed successfully. Click for more details">
+                                    <input type="hidden" name="status" value="Unread">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button id="done_button" type="submit" class="btn btn-primary">Done</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+
+        // Check if there are items
+        if ($items): ?>
             <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-3 p-3">
                 <div id="shipping_information"
                     class="container rounded d-flex justify-content-start align-items-start flex-column mt-3 p-3">
@@ -348,19 +476,14 @@ include ("head.php");
                         </p>
                     </div>
                     <div class="w-100 d-flex align-items-center justify-content-between">
-                        <p id="payment_details_text" class="m-0 ms-2">Order ID</p>
-                        <p id="payment_details_text" class="m-0 me-2"><?php echo $items[0]['order_number']; ?></p>
-                    </div>
-                    <div class="w-100 d-flex align-items-center justify-content-between">
-                        <p id="payment_details_text" class="m-0 ms-2">Order Date</p>
-                        <p id="payment_details_text" class="m-0 me-2">
-                            <?php echo date('m/d/Y', strtotime($items[0]['order_date'])); ?>
+                        <p id="payment_details_text" class="m-0 ms-2">Order ID: <?php echo $order_number; ?></p>
+                        <p id="payment_details_text" class="m-0 me-2">Order Date:
+                            <?php echo date('F j, Y', strtotime($items[0]['order_date'])); ?>
                         </p>
                     </div>
                 </div>
 
-                <div id="address"
-                    class="container rounded d-flex justify-content-between align-items-start flex-column mb-2 p-2">
+                <div id="shipping_address" class="container rounded mt-3 p-3 bg-light">
                     <div id="address_head" class="w-100 d-flex align-items-center justify-content-between">
                         <div>
                             <h5 class="m-0">
@@ -389,8 +512,9 @@ include ("head.php");
                             <div class="product_image d-flex justify-content-center align-items-center">
                                 <img src="product-images/<?php echo $item['image_file']; ?>" alt="" class="rounded me-2">
                                 <div class="product_variation">
-                                    <h5><?php echo $item['product_name']; ?></h5>
+                                    <h5><?php echo $item['product_name'] . ' | ' . $item['variant_options']; ?></h5>
                                     <p>Quantity: <?php echo $item['quantity']; ?></p>
+                                    <p> <?php echo number_format($item['price'], 2); ?></p>
                                 </div>
                             </div>
                             <div id="product_description">
@@ -401,7 +525,12 @@ include ("head.php");
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
+
+                    <?php
+                    $shippingCost = 150;
+                    $totalPayment = $totalPrice + $shippingCost;
+                endforeach; ?>
+
 
                 <div id="payment_details"
                     class="container rounded d-flex justify-content-start align-items-start flex-column mt-3 mb-2 p-3">
@@ -413,12 +542,14 @@ include ("head.php");
                         <p id="payment_details_text" class="m-0 me-2">₱<?php echo number_format($totalPrice, 2); ?></p>
                     </div>
                     <div class="w-100 d-flex align-items-center justify-content-between">
-                        <p id="payment_details_text" class="m-0 ms-2">Shipping Subtotal (Luzon/Visayas/Mindanao)</p>
-                        <p id="payment_details_text" class="m-0 me-2">₱00.00</p>
+                        <p id="payment_details_text" class="m-0 ms-2">Shipping Subtotal (
+                            <b><?php echo $row['island_group']; ?></b> )
+                        </p>
+                        <p id="payment_details_text" class="m-0 me-2">₱ <?php echo number_format($shippingCost, 2); ?></p>
                     </div>
                     <div class="w-100 d-flex align-items-center justify-content-between mt-3">
                         <h5 class="ms-2">Total Payment</h5>
-                        <h5 id="total_payment" class="me-2">₱<?php echo number_format($totalPrice, 2); ?></h5>
+                        <h5 id="total_payment" class="me-2">₱<?php echo number_format($totalPayment, 2); ?></h5>
                     </div>
                 </div>
             </div>
@@ -430,8 +561,8 @@ include ("head.php");
             </div>
         <?php endif; ?>
     <?php }
-
     ?>
+
 
     <footer>
         <div class="footer_content flex-wrap">
