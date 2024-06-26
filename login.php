@@ -68,6 +68,6 @@ if ($result->num_rows > 0 && $result_chat->num_rows > 0 && $result_chatroom->num
 
 $stmt->close();
 $stmt2->close();
-stmt3->close();
+$stmt3->close();
 $conn->close();
 ?>
