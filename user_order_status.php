@@ -41,9 +41,6 @@ include ("head.php");
                         data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
                         data-bs-placement="bottom" title="Notifications">
                         <div class="orders">
-                            <div class="notif">
-                                <p>9+</p>
-                            </div>
                             <div class="order_button">
                                 <i class='bx bxs-bell'></i>
                             </div>
@@ -202,9 +199,6 @@ include ("head.php");
                         aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
                         title="Notifications">
                         <div class="orders">
-                            <div class="notif">
-                                <p>9+</p>
-                            </div>
                             <div class="order_button">
                                 <i class='bx bxs-bell'></i>
                             </div>
@@ -304,6 +298,24 @@ include ("head.php");
                 </div>
             </div>
         </nav>
+
+        <?php
+        $sql = "SELECT * FROM chatroom WHERE chat_name='" . $_SESSION['chat_name'] . "'";
+        $result = $conn->query($sql);
+
+        while ($row2 = $result->fetch_assoc()) {
+            ?>
+
+            <div class="chat">
+                <a href="chat_system/user/chatroom.php?id=<?php echo $row2['chatroomid']; ?>">
+                    <button value=" <?php echo $row2['chatroomid']; ?>" type="button" class="btn  border-0"
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                        <img src="img\chat_icon.png" />
+                    </button>
+                </a>
+            </div>
+
+        <?php } ?>
 
         <?php
 

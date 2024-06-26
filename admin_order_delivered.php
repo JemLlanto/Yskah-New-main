@@ -175,9 +175,7 @@ include ("head.php");
                     aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="Notifications">
                     <div class="orders">
-                        <div class="notif">
-                            <p>9+</p>
-                        </div>
+
                         <div class="order_button">
                             <i class='bx bxs-bell'></i>
                         </div>
@@ -263,6 +261,14 @@ include ("head.php");
         </div>
     </nav>
 
+    <div class="chat">
+        <a href="chat_system\admin\">
+            <button value=" <?php echo $row['chatroomid']; ?>" type="button" class="btn  border-0"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                <img src="img\chat_icon.png" />
+            </button>
+        </a>
+    </div>
 
     <?php
     $sql = "

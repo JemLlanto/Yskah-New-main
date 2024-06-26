@@ -33,9 +33,6 @@ include ("head.php");
                     aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="Notifications">
                     <div class="orders">
-                        <div class="notif">
-                            <p>9+</p>
-                        </div>
                         <div class="order_button">
                             <i class='bx bxs-bell'></i>
                         </div>
@@ -193,9 +190,6 @@ include ("head.php");
                     aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="Notifications">
                     <div class="orders">
-                        <div class="notif">
-                            <p>9+</p>
-                        </div>
                         <div class="order_button">
                             <i class='bx bxs-bell'></i>
                         </div>
@@ -299,6 +293,15 @@ include ("head.php");
             </div>
         </div>
     </nav>
+
+    <div class="chat">
+        <a href="chat_system/user/chatroom.php?id=<?php echo $row['chatroomid']; ?>">
+            <button value=" <?php echo $row['chatroomid']; ?>" type="button" class="btn  border-0"
+                data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                <img src="img\chat_icon.png" />
+            </button>
+        </a>
+    </div>
 
     <?php
     if (isset($_GET['product_id']) && isset($_GET['order_id'])) {
@@ -410,7 +413,8 @@ include ("head.php");
                                                                 <h5 class="m-0">Update Cart</h5>
                                                             </div>
                                                             <div class="m-0" id="totalPrice">Php
-                                                                <?php echo number_format($order['price'], 2) ?></div>
+                                                                <?php echo number_format($order['price'], 2) ?>
+                                                            </div>
                                                         </div>
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"

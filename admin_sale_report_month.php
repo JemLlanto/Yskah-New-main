@@ -42,9 +42,7 @@ include ("head.php");
                     data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="Notifications">
                     <div class="orders">
-                        <div class="notif">
-                            <p>9+</p>
-                        </div>
+
                         <div class="order_button">
                             <i class='bx bxs-bell'></i>
                         </div>
@@ -183,9 +181,7 @@ include ("head.php");
                     aria-controls="offcanvasRightLarge" data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="Notifications">
                     <div class="orders">
-                        <div class="notif">
-                            <p>9+</p>
-                        </div>
+
                         <div class="order_button">
                             <i class='bx bxs-bell'></i>
                         </div>
