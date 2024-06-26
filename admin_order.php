@@ -11,11 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
     $description = ($_POST['description']);
     $status = ($_POST['status']);
 
-    $description_with_order_number = $description . " Order Number: " . $order_number;
+    // $description_with_order_number = $description . " Order Number: " . $order_number;
 
     // Insert notification with order number
-    $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status) VALUES (?, ?, ?, ?)");
-    $stmt1->bind_param("isss", $user_id, $title, $description_with_order_number, $status);
+    $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status, order_number) VALUES (?, ?, ?, ?, ?)");
+    $stmt1->bind_param("issss", $user_id, $title, $description, $status, $order_number);
     $stmt1->execute();
     $stmt1->close();
 
@@ -84,30 +84,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                         </div>
                         <div class="offcanvas-body">
                             <?php
-                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE  to_admin = '1' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
                                 $date = date("F j, Y, g:i a", strtotime($notif["date"]));
-                                $notification_id = $notif["notification_id"];
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
                                 $title = $notif["title"];
 
-                                // Determine the URL based on the title
-                                $url = "#";
-                                if ($title == "Order Placed") {
-                                    $url = "user_order.php";
-                                } elseif ($title == "Order Confirm") {
-                                    $url = "user_order_to_ship.php";
-                                } elseif ($title == "Order Delivered") {
-                                    $url = "user_order_delivered.php";
-                                }
                                 ?>
-                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <a href="user_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
-                                                <p><?php echo $notif["title"]; ?></p>
-                                                <p style="font-size: 18px"><?php echo $date; ?></p>
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
                                                 <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
@@ -223,30 +215,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                         </div>
                         <div class="offcanvas-body">
                             <?php
-                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE  to_admin = '1' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
                                 $date = date("F j, Y, g:i a", strtotime($notif["date"]));
-                                $notification_id = $notif["notification_id"];
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
                                 $title = $notif["title"];
 
-                                // Determine the URL based on the title
-                                $url = "#";
-                                if ($title == "Order Placed") {
-                                    $url = "user_order.php";
-                                } elseif ($title == "Order Confirm") {
-                                    $url = "user_order_to_ship.php";
-                                } elseif ($title == "Order Delivered") {
-                                    $url = "user_order_delivered.php";
-                                }
                                 ?>
-                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <a href="user_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
-                                                <p><?php echo $notif["title"]; ?></p>
-                                                <p style="font-size: 18px"><?php echo $date; ?></p>
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
                                                 <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
@@ -272,11 +256,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                             <li>
                                 <div class="drop_items ">
                                     <a class="me-2" href="admin_setting.php">Account</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="drop_items ">
-                                    <a class="w-100 me-2 text-end" href="add_admin_form.php">Add Admin</a>
                                 </div>
                             </li>
                             <li>
@@ -306,14 +285,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
 
     <?php
 
+    //     $sql = "
+// SELECT o.*, 
+//        GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options
+// FROM order_items o
+// LEFT JOIN variant_content vc ON FIND_IN_SET(vc.variant_content_id, o.variant_content_ids)
+// WHERE o.status = 'Pending'
+// GROUP BY o.order_id
+// ";
     $sql = "
-SELECT o.*, 
-       GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options
-FROM order_items o
-LEFT JOIN variant_content vc ON FIND_IN_SET(vc.variant_content_id, o.variant_content_ids)
-WHERE o.status = 'Pending'
-GROUP BY o.order_id
-";
+    SELECT o.*, 
+           GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options
+    FROM order_items o
+    LEFT JOIN variant_content vc ON FIND_IN_SET(vc.variant_content_id, o.variant_content_ids)
+    WHERE o.status = 'Pending'
+    GROUP BY o.order_number
+    ORDER BY o.order_date DESC";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -357,7 +344,12 @@ GROUP BY o.order_id
 
                                 <!-- Cancel Order Form -->
                                 <form method="post" action="admin-delete-from-cart.php" style="display: inline;">
-                                    <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+                                    <input type="hidden" name="order_number" value="<?php echo $order['order_number']; ?>">
+                                    <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
+                                    <input type="hidden" name="title" value="Order Cancelled">
+                                    <input type="hidden" name="description"
+                                        value="Your Order has been Cancelled by the Seller. Click for more details">
+
                                     <button type="submit" class="btn btn-danger" name="cancel_order">Cancel</button>
                                 </form>
                             </div>

@@ -3,10 +3,10 @@
 		<span style="font-size:18px; margin-left:10px; position:relative; top:13px; "><strong>Chat
 				Room:
 				<?php echo $chatrow['chat_name']; ?></strong></span>
-		<div class="pull-right" style="margin-right:10px; margin-top:7px;">
+		<!-- <div class="pull-right" style="margin-right:10px; margin-top:7px;">
 			<a href="#delete_room" data-toggle="modal" class="btn btn-danger">Delete Room</a>
 			<a href="index.php" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
-		</div>
+		</div> -->
 		<div class="showme hidden" style="position: absolute; left:570px; top:20px;">
 			<div class="well">
 				<strong>Room Member/s:</strong>
@@ -50,13 +50,14 @@
 		<div class="input-group">
 			<input type="text" class="form-control" placeholder="Type message..." id="chat_msg" style="height:50px;">
 			<span class="input-group-btn">
-				<input type="file" id="chat_image" style="display:none;">
-				<button class="btn btn-info" type="button" id="upload_image" style="height:50px;">
+				<input type="file" id="chat_image" style="display:none;  ">
+				<button class="btn" type="button" id="upload_image"
+					style="height:50px; background-color: rgb(255, 72, 40); color: white;">
 					<span class="glyphicon glyphicon-picture"></span> Image
 				</button>
-				<button class="btn btn-success" type="submit" id="send_msg" value="<?php echo $id; ?>"
-					style="height:50px;">
-					<span class="glyphicon glyphicon-comment"></span> Send
+				<button class="btn btn-success " type="submit" id="send_msg" value="<?php echo $id; ?>"
+					style="height:50px; background-color: rgb(248, 244, 0); border: none; color: black;">
+					<span class="glyphicon glyphicon-comment "></span> Send
 				</button>
 			</span>
 		</div>

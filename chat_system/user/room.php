@@ -1,5 +1,5 @@
 <div class="col-lg-8" style="float:none;margin:auto;">
-	<div class="panel panel-default" style="height:50px; margin-bottom: 0px">
+	<div class="panel panel-default" style="height:50px; margin-bottom: 0px; background-color: rgb(248, 244, 0);">
 		<span style="font-size:18px; margin-left:10px; position:relative; top:13px;"><strong><span
 					id="user_details"><span class="glyphicon glyphicon-user"></span>
 					Yskah</strong></span>
@@ -61,11 +61,12 @@
 			<input type="text" class="form-control" placeholder="Type message..." id="chat_msg" style="height:50px;">
 			<span class="input-group-btn">
 				<input type="file" id="chat_image" style="display:none;">
-				<button class="btn btn-info" type="button" id="upload_image" style="height:50px;">
+				<button class="btn btn-info" type="button" id="upload_image"
+					style="height:50px; background-color: rgb(255, 72, 40);">
 					<span class="glyphicon glyphicon-picture"></span> Image
 				</button>
-				<button class="btn btn-success" type="submit" id="send_msg" value="<?php echo $id; ?>"
-					style="height:50px;">
+				<button class="btn" type="submit" id="send_msg" value="<?php echo $id; ?>"
+					style="height:50px; background-color: rgb(248, 244, 0);">
 					<span class="glyphicon glyphicon-comment"></span> Send
 				</button>
 			</span>

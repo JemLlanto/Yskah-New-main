@@ -25,12 +25,14 @@
                             id="name<?php echo $row['chatroomid']; ?>"
                             value="<?php echo $row['chat_name']; ?>"><?php echo $row['chat_name']; ?></td>
                     <td><?php echo date('M d, Y - h:i A', strtotime($row['date_created'])); ?></td>
-                    <td><a href="chatroom.php?id=<?php echo $row['chatroomid']; ?>" class="btn btn-info"><span
-                                class="glyphicon glyphicon-comment"></span> Join</a> ||
-                        <button class="btn btn-warning edit" value="<?php echo $row['chatroomid']; ?>"><span
+                    <td><a href="chatroom.php?id=<?php echo $row['chatroomid']; ?>" class=" btn "
+                            style="background-color: rgb(248, 244, 0); color: black; width: 100%;"><span
+                                class="glyphicon glyphicon-comment"></span>
+                            Join</a>
+                        <!-- <button class="btn btn-warning edit" value="<?php echo $row['chatroomid']; ?>"><span
                                 class="glyphicon glyphicon-pencil"></span> Edit</button> ||
                         <button class="btn btn-danger delete" value="<?php echo $row['chatroomid']; ?>"><span
-                                class="glyphicon glyphicon-trash"></span> Delete</button>
+                                class="glyphicon glyphicon-trash"></span> Delete</button> -->
                     </td>
                 </tr>
                 <?php

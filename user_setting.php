@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Setting</title>
     <link rel="stylesheet" href="css\user_settings8.css" />
+    <style>
+        #profile {
+            border: 5px solid gray;
+        }
+
+        #user_image {}
+    </style>
 </head>
 
 <body>
@@ -100,6 +107,7 @@
                         data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
                         data-bs-placement="bottom" title="Notifications">
                         <div class="orders">
+
                             <div class="order_button">
                                 <i class='bx bxs-bell'></i>
                             </div>
@@ -115,7 +123,7 @@
                         </div>
                         <div class="offcanvas-body">
                             <?php
-                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ORDER BY date desc");
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' AND to_admin = '0' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
                                 $date = date("F j, Y, g:i a", strtotime($notif["date"]));
                                 $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
@@ -125,8 +133,12 @@
                                 $url = "#";
                                 if ($title == "Order Placed") {
                                     $url = "user_order.php";
+                                } elseif ($title == "Order Cancelled") {
+                                    $url = "user_order.php";
                                 } elseif ($title == "Order Confirm") {
                                     $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Shipped") {
+                                    $url = "user_order_shipped.php";
                                 } elseif ($title == "Order Delivered") {
                                     $url = "user_order_delivered.php";
                                 }
@@ -135,10 +147,11 @@
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
-                                                <p><?php echo $notif["title"]; ?></p>
-                                                <p style="font-size: 18px"><?php echo $date; ?></p>
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
                                                 <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
@@ -192,11 +205,14 @@
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav nav-fill gap-2 p-0">
-                        <li class="nav-item ps-3">
+                        <li class="nav-item ps-3 ">
                             <a class="nav-link text-dark text-start" href="user_landing_page.php">Home</a>
                         </li>
-                        <li class="nav-item ps-3">
+                        <li class="nav-item ps-3 ">
                             <a class="nav-link text-dark text-start" href="user_products.php">Product</a>
+                        </li>
+                        <li class="nav-item ps-3 ">
+                            <a class="nav-link text-dark text-start" href="user_cart.php">Cart</a>
                         </li>
                         <li class="nav-item ps-3">
                             <a class="nav-link text-dark text-start" href="user_order.php">Orders</a>
@@ -215,14 +231,18 @@
                 <div class="container navbar-collapse d-flex d-md-none" id="navbarNav">
                     <ul class="navbar-nav nav-fill gap-2 p-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="user_landing_page.php">Home</a>
+                            <a class="nav-link text-dark " href="user_landing_page.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="user_products.php">Product</a>
+                            <a class="nav-link text-dark " href="user_products.php">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark " href="user_cart.php">Cart</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="user_order.php">Orders</a>
                         </li>
+
                     </ul>
                 </div>
 
@@ -246,7 +266,7 @@
                         </div>
                         <div class="offcanvas-body">
                             <?php
-                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' ORDER BY date desc");
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' AND to_admin = '0' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
                                 $date = date("F j, Y, g:i a", strtotime($notif["date"]));
                                 $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
@@ -256,8 +276,12 @@
                                 $url = "#";
                                 if ($title == "Order Placed") {
                                     $url = "user_order.php";
+                                } elseif ($title == "Order Cancelled") {
+                                    $url = "user_order.php";
                                 } elseif ($title == "Order Confirm") {
                                     $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Shipped") {
+                                    $url = "user_order_shipped.php";
                                 } elseif ($title == "Order Delivered") {
                                     $url = "user_order_delivered.php";
                                 }
@@ -266,10 +290,11 @@
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
-                                                <p><?php echo $notif["title"]; ?></p>
-                                                <p style="font-size: 18px"><?php echo $date; ?></p>
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
                                                 <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
@@ -322,12 +347,17 @@
 
                 <div class="row g-0 p-2 mb-2 border-bottom border-2">
                     <div id="user_image"
-                        class="col-md-4 d-flex flex-column align-items-center justify-content-center pt-3 pb-3 px-2 ">
-                        <div class="profile_image m-0 p-0">
-                            <img class="w-100 m-0" src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
-                            <button type="button" class="btn btn-primary p-0" data-bs-toggle="modal"
-                                data-bs-target="#change_profile">
-                                <h1 class="mt-2">+</h1>
+                        class="col-md-4 d-flex flex-column align-items-center justify-content-center pt-3 pb-3 px-2 "
+                        style="">
+                        <div class="profile m-0 p-0 position-relative">
+                            <div class="w-100" style="border-radius: 50%; overflow: hidden; border: 3px solid gray;">
+                                <img class="w-100 m-0" src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
+
+                            </div>
+                            <button type="button" class="btn btn-primary p-0 position-absolute" data-bs-toggle="modal"
+                                data-bs-target="#change_profile"
+                                style="border-radius:50%; width: 50px; height: 50px; right: 10px; bottom: 20px; border: 2px solid white;">
+                                <h1 class="m-0">+</h1>
                         </div>
 
                     </div>

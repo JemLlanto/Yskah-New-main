@@ -326,14 +326,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
         </nav>
 
 
-        <div class="chat">
-            <a href="chat_system\admin\">
-                <button value=" <?php echo $row['chatroomid']; ?>" type="button" class="btn  border-0"
-                    data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
-                    <img src="img\chat_icon.png" />
-                </button>
-            </a>
-        </div>
+
 
         <?php
         $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
@@ -342,7 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
         $order_number = isset($_GET['order_number']) ? $_GET['order_number'] : 0;
 
         if ($order_id && $status) {
-            $sql = "SELECT oi.*, u.first_name, u.last_name, u.phone, u.blockLot, u.subdivision, u.barangay, u.province, u.city, u.zip,
+            $sql = "SELECT oi.*, u.first_name, u.last_name, u.phone, u.blockLot, u.subdivision, u.barangay, u.island_group, u.province, u.city, u.zip,
                            GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options
                     FROM order_items oi
                     LEFT JOIN user_table u ON oi.user_id = u.user_id
@@ -466,7 +459,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                             </div>
                             <div class="w-100 d-flex align-items-center justify-content-between">
                                 <p id="payment_details_text" class="m-0 ms-2">Shipping Subtotal (
-                                    <b><?php echo $row['island_group']; ?></b> )
+                                    <b><?php echo $item['island_group']; ?></b> )
                                 </p>
                                 <p id="payment_details_text" class="m-0 me-2">₱ <?php echo number_format($shippingCost, 2); ?>
                                 </p>
@@ -477,13 +470,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                             </div>
                         </div>
 
-                        <?php if ($items[0]['status'] !== 'Delivered'): ?>
-                            <div id="confirm_button" class="">
-                                <input type="hidden" name="user_id" value="<?php echo $user_id ?>">
-                                <input type="hidden" name="order_number" value="<?php echo $order_number ?>">
-                                <button type="submit" class="p-3 px-5 rounded" name="confirm_order">Confirm</button>
-                            </div>
-                        <?php endif; ?>
+
                     </div>
                 </form>
             <?php else: ?>

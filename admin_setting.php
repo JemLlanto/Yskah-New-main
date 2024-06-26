@@ -115,30 +115,22 @@
                         </div>
                         <div class="offcanvas-body">
                             <?php
-                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE  to_admin = '1' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
                                 $date = date("F j, Y, g:i a", strtotime($notif["date"]));
-                                $notification_id = $notif["notification_id"];
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
                                 $title = $notif["title"];
 
-                                // Determine the URL based on the title
-                                $url = "#";
-                                if ($title == "Order Placed") {
-                                    $url = "user_order.php";
-                                } elseif ($title == "Order Confirm") {
-                                    $url = "user_order_to_ship.php";
-                                } elseif ($title == "Order Delivered") {
-                                    $url = "user_order_delivered.php";
-                                }
                                 ?>
-                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <a href="user_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
-                                                <p><?php echo $notif["title"]; ?></p>
-                                                <p style="font-size: 18px"><?php echo $date; ?></p>
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
                                                 <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
@@ -254,30 +246,22 @@
                         </div>
                         <div class="offcanvas-body">
                             <?php
-                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table ORDER BY date DESC");
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE  to_admin = '1' ORDER BY date desc");
                             while ($notif = mysqli_fetch_assoc($notifs)) {
                                 $date = date("F j, Y, g:i a", strtotime($notif["date"]));
-                                $notification_id = $notif["notification_id"];
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
                                 $title = $notif["title"];
 
-                                // Determine the URL based on the title
-                                $url = "#";
-                                if ($title == "Order Placed") {
-                                    $url = "user_order.php";
-                                } elseif ($title == "Order Confirm") {
-                                    $url = "user_order_to_ship.php";
-                                } elseif ($title == "Order Delivered") {
-                                    $url = "user_order_delivered.php";
-                                }
                                 ?>
-                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                <a href="user_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
-                                                <p><?php echo $notif["title"]; ?></p>
-                                                <p style="font-size: 18px"><?php echo $date; ?></p>
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
                                             </div>
                                             <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
                                                 <p class="ms-2"><?php echo $notif["description"]; ?></p>
                                             </div>
                                         </div>
@@ -329,14 +313,17 @@
 
                 <div class="row g-0 p-2 mb-2 border-bottom border-2">
                     <div id="user_image"
-                        class="col-md-4 d-flex flex-column align-items-center justify-content-center pt-3 pb-3 px-2 ">
-                        <div class="profile_image m-0 p-0">
-                            <div>
+                        class="col-md-4 d-flex flex-column align-items-center justify-content-center pt-3 pb-3 px-2 "
+                        style="">
+                        <div class="profile m-0 p-0 position-relative">
+                            <div class="w-100" style="border-radius: 50%; overflow: hidden; border: 3px solid gray;">
                                 <img class="w-100 m-0" src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
+
                             </div>
-                            <button type="button" class="btn btn-primary p-0" data-bs-toggle="modal"
-                                data-bs-target="#change_profile">
-                                <h1 class="mt-2">+</h1>
+                            <button type="button" class="btn btn-primary p-0 position-absolute" data-bs-toggle="modal"
+                                data-bs-target="#change_profile"
+                                style="border-radius:50%; width: 50px; height: 50px; right: 10px; bottom: 20px; border: 2px solid white;">
+                                <h1 class="m-0">+</h1>
                         </div>
 
                     </div>

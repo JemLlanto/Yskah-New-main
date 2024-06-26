@@ -41,6 +41,7 @@ include ("head.php");
                         data-bs-target="#offcanvasRightSmall" aria-controls="offcanvasRightSmall" data-bs-toggle="tooltip"
                         data-bs-placement="bottom" title="Notifications">
                         <div class="orders">
+
                             <div class="order_button">
                                 <i class='bx bxs-bell'></i>
                             </div>
@@ -55,57 +56,42 @@ include ("head.php");
                                 aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
+                            <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' AND to_admin = '0' ORDER BY date desc");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
+                                $title = $notif["title"];
 
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
+                                // Determine the URL based on the title
+                                $url = "#";
+                                if ($title == "Order Placed") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Cancelled") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Confirm") {
+                                    $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Shipped") {
+                                    $url = "user_order_shipped.php";
+                                } elseif ($title == "Order Delivered") {
+                                    $url = "user_order_delivered.php";
+                                }
+                                ?>
+                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                    <div class="notification_section">
+                                        <div class="notif_container">
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
+                                            </div>
+                                            <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                            <?php } ?>
                         </div>
 
                     </div>
@@ -123,7 +109,7 @@ include ("head.php");
                                 aria-expanded="false">
                                 <div class="user-off">
                                     <div class="photo ms-2 me-1">
-                                        <img src="img/default-profile.jpg" alt="">
+                                        <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                                     </div>
                                     <div class="name ms-1 mt-1">
                                         <p><?php echo $_SESSION['username'] ?></p>
@@ -213,57 +199,42 @@ include ("head.php");
                                 aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
+                            <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE user_id = '" . $_SESSION["user_id"] . "' AND to_admin = '0' ORDER BY date desc");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
+                                $title = $notif["title"];
 
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
+                                // Determine the URL based on the title
+                                $url = "#";
+                                if ($title == "Order Placed") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Cancelled") {
+                                    $url = "user_order.php";
+                                } elseif ($title == "Order Confirm") {
+                                    $url = "user_order_to_ship.php";
+                                } elseif ($title == "Order Shipped") {
+                                    $url = "user_order_shipped.php";
+                                } elseif ($title == "Order Delivered") {
+                                    $url = "user_order_delivered.php";
+                                }
+                                ?>
+                                <a href="<?php echo $url; ?>" style="text-decoration: none;">
+                                    <div class="notification_section">
+                                        <div class="notif_container">
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
+                                            </div>
+                                            <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
 
@@ -275,7 +246,7 @@ include ("head.php");
                                     <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
                                 </div>
                                 <div class="photo">
-                                    <img src="img/default-profile.jpg" alt="">
+                                    <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                                 </div>
                             </div>
                         </button>
@@ -299,23 +270,6 @@ include ("head.php");
             </div>
         </nav>
 
-        <?php
-        $sql = "SELECT * FROM chatroom WHERE chat_name='" . $_SESSION['chat_name'] . "'";
-        $result = $conn->query($sql);
-
-        while ($row2 = $result->fetch_assoc()) {
-            ?>
-
-            <div class="chat">
-                <a href="chat_system/user/chatroom.php?id=<?php echo $row2['chatroomid']; ?>">
-                    <button value=" <?php echo $row2['chatroomid']; ?>" type="button" class="btn  border-0"
-                        data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
-                        <img src="img\chat_icon.png" />
-                    </button>
-                </a>
-            </div>
-
-        <?php } ?>
 
         <?php
 
@@ -488,9 +442,15 @@ include ("head.php");
                         </p>
                     </div>
                     <div class="w-100 d-flex align-items-center justify-content-between">
-                        <p id="payment_details_text" class="m-0 ms-2">Order ID: <?php echo $order_number; ?></p>
-                        <p id="payment_details_text" class="m-0 me-2">Order Date:
-                            <?php echo date('F j, Y', strtotime($items[0]['order_date'])); ?>
+                        <p id="payment_details_text" class="m-0 ms-2">Order ID</p>
+                        <p id="payment_details_text" class="m-0 me-2">
+                            <?php echo htmlspecialchars($items[0]['order_number']); ?>
+                        </p>
+                    </div>
+                    <div class="w-100 d-flex align-items-center justify-content-between">
+                        <p id="payment_details_text" class="m-0 ms-2">Order Time</p>
+                        <p id="payment_details_text" class="m-0 me-2">
+                            <?php echo date('m/d/Y H:i:s', strtotime($items[0]['order_date'])); ?>
                         </p>
                     </div>
                 </div>

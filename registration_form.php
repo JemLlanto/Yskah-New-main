@@ -16,7 +16,7 @@ include ("connection.php");
     <div class="container-fluid d-flex justify-content-center align-items-center p-3 p-md-5">
         <div class="wrapper bg-light">
             <h2 class="mb-4 mt-2 ms-1">Sign up</h2>
-            <form action="registration.php" method="POST">
+            <form action="registration.php" method="POST" autocomplete="off">
                 <div class="d-flex gap-1">
                     <div class="form-floating mb-3 w-50 ">
                         <input type="text" class="form-control" id="firstName" name="first_name" placeholder="John"

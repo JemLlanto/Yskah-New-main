@@ -9,6 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $status = $_POST['status'];
+    $to_user = 0;
+
+    $a_title = $_POST['a_title'];
+    $a_description = $_POST['a_description'];
+    $to_admin = $_POST['to_admin'];
 
     $selected_items = isset($_POST['selected_items']) ? json_decode($_POST['selected_items'], true) : [];
 
@@ -27,13 +32,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $order_number = mt_rand(1000000, 9999999);
 
         // Add order number to the notification description
-        $description_with_order_number = $description . " Order Number: " . $order_number;
+        // $description_with_order_number = $description . " Order Number: " . $order_number;
 
         // Insert notification with order number
-        $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status) VALUES (?, ?, ?, ?)");
-        $stmt1->bind_param("isss", $user_id, $title, $description_with_order_number, $status);
+        $stmt1 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, status, order_number, to_admin) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt1->bind_param("issssi", $user_id, $title, $description, $status, $order_number, $to_user);
         $stmt1->execute();
         $stmt1->close();
+
+        $stmt2 = $conn->prepare("INSERT INTO notification_table (user_id, title, description, to_admin, order_number) VALUES (?, ?, ?, ?, ?)");
+        $stmt2->bind_param("issss", $user_id, $a_title, $a_description, $to_admin, $order_number);
+        $stmt2->execute();
+        $stmt2->close();
 
         foreach ($selected_items as $order_id) {
             $sql = "SELECT * FROM order_table WHERE order_id = ? AND user_id = ?";
