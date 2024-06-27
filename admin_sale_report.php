@@ -256,17 +256,10 @@ include ("head.php");
 
     <?php } ?>
 
-    <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-1 p-3">
+    <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-1 p-3 mb-5">
         <div class="row">
-            <div id="graph" class="col-3 p-2 rounded">
-                <div id="pie_chart" class="rounded p-2 mb-2">
-                    <img class="rounded" src="img/pie_chart.png" alt="">
-                </div>
-                <div id="bar_graph" class="rounded p-2 mt-2">
-                    <img class="rounded" src="img/bar_graph.png" alt="">
-                </div>
-            </div>
-            <div class="col-9 rounded p-2">
+
+            <div class="col-12 rounded p-2">
                 <div id="report" class="w-100 rounded p-2">
                     <div id="timeline" class="w-100 p-2">
                         <a class="rounded mx-1 p-2 active" href="admin_sale_report_week.php">Week</a>

@@ -388,8 +388,9 @@ include ("head.php");
                             <h5 id="price" class="ms-2 m-0">₱ <?php echo number_format($order['total'], 2); ?></h5>
                         </div>
                     </div>
-            </a>
-        <?php endwhile; ?>
+
+                <?php endwhile; ?>
+        </a>
     <?php else: ?>
         <div class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-3 text-center"
             style="height: 550px;">
