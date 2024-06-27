@@ -12,6 +12,11 @@ include ("head.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css\landing_page9.css">
+    <style>
+        body {
+            background-color: lightgray;
+        }
+    </style>
 </head>
 
 <body>
@@ -263,12 +268,12 @@ include ("head.php");
         id="Intro">
         <div class="d-flex flex-column align-items-end text-end">
             <h1>Introduction</h1>
-            <h5 id="introText" class="w-50">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus eveniet
-                dolore
-                excepturi
-                incidunt,
-                amet
-                quasi fugit animi perspiciatis quisquam molestias.</h5>
+            <h5 id="introText" class="w-50">Hello! Welcome to Yskah Creations, we offer customized Glass Art Painting,
+                Phone
+                Case Painting, and Keychain Painting, you can choose from faceless vector art, pets, or anime art
+                styles, we've got you covered in handmade art with love that you will cherish.
+
+                Thank you for choosing Yskah Creation. We look forward to creating something special just for you!</h5>
         </div>
         <a href="index-products.php"><button type="button" class="btn btn-lg btn-light p-3 w-100">Order Now</button></a>
     </div>
@@ -291,29 +296,106 @@ include ("head.php");
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <h3 class="pt-4 ps-4">Hot Products</h3>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 m-1 mt-4 mb-4">
+    <div class="container-fluid my-5" style="">
+        <div class=" d-flex justify-content-center">
+            <h3 class=" pt-4 ps-4 ">Products</h3>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 m-1 mt-4 mb-4 d-flex justify-content-center">
             <?php
             $res = mysqli_query($conn, "SELECT * FROM products");
             while ($row = mysqli_fetch_assoc($res)) {
                 ?>
                 <div class="col">
-                    <div class="card w-100">
+                    <div class="card w-100 mb-2">
                         <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $row['product_name'] ?></h5>
                             <p class="card-text">
                             <p>Php <?php echo $row['price'] ?>.00</p>
                             </p>
-                            <a href="admin_product_preview.php?product_id=<?php echo $row['product_id']; ?>"
-                                class="btn btn-primary">View
+                            <a href="user_product_preview.php?product_id=<?php echo $row['product_id']; ?>"
+                                class="w-100 btn btn-primary py-1">View
                                 Product</a>
                         </div>
                     </div>
                 </div>
             <?php } ?>
         </div>
+    </div>
+    <?php
+    $sql = "
+    SELECT o.*,
+    GROUP_CONCAT(vc.option SEPARATOR ', ') AS variant_options
+    FROM order_items o
+    LEFT JOIN variant_content vc ON FIND_IN_SET(vc.variant_content_id, o.variant_content_ids)
+    WHERE o.status = 'Pending'
+    GROUP BY o.order_number
+    ORDER BY o.order_date DESC";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+
+    ?>
+    <a href="admin_order.php" style="text-decoration: none; color: black;">
+        <div id="" class="container py-3 rounded d-flex justify-content-center" style="background-color: white;">
+            <h5 class="m-0 " href="admin_order.php">New Orders</h5>
+        </div>
+        <div id="container" class="container-fluid-sm container-md rounded mb-3 mt-3 " style="background-color: white;">
+            <?php if ($result->num_rows > 0): ?>
+                <?php while ($order = $result->fetch_assoc()): ?>
+
+
+                    <!-- Display order details -->
+
+
+                    <div id="order_item" class="rounded mt-3 p-2">
+
+                        <div id="order_head" class="container w-100 mb-2 p-2 me-0">
+                            <h5 class="m-0">Order ID: <?php echo $order['order_number']; ?></h5>
+                            <input type="hidden" name="user_id" value="<?php echo $order['user_id']; ?>">
+                            <input type="hidden" name="order_id" value="<?php echo $order['order_id']; ?>">
+
+                        </div>
+
+                        <!-- Display product details -->
+                        <div id="product_details"
+                            class="w-100 rounded border d-flex justify-content-between align-items-center p-2">
+                            <div class="product_image d-flex justify-content-center align-items-center">
+                                <img src="product-images/<?php echo $order['image_file']; ?>" alt="" class="rounded me-2"
+                                    style="width: 100px;">
+                                <div class="product_variation">
+                                    <h5><?php echo $order['product_name'] . ' | ' . $order['variant_options']; ?></h5>
+                                    <div class="product_variation">
+                                        <p>Quantity: <?php echo $order['quantity']; ?></p>
+                                        <p>Price: ₱ <?php echo number_format($order['price'], 2); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="product_description">
+                                <div class="container d-flex align-items-center justify-content-center p-0">
+                                    <p id="price" class="me-2 mt-2 mb-0">₱
+                                        <?php echo number_format($order['price'] * $order['quantity'], 2); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Display total price -->
+                        <div class="container d-flex align-items-center justify-content-end p-2 pt-3 pe-3">
+                            <p class="m-0">Total: </p>
+                            <h5 id="price" class="ms-2 m-0">₱ <?php echo number_format($order['total'], 2); ?></h5>
+                        </div>
+                    </div>
+            </a>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <div class="container rounded d-flex align-items-center justify-content-center p-2 bg-light mt-3 text-center"
+            style="height: 550px;">
+            <h5>Empty Order.</h5>
+        </div>
+    <?php endif; ?>
     </div>
 
     <footer>

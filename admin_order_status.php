@@ -80,57 +80,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
+                            <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE  to_admin = '1' ORDER BY date desc");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
+                                $title = $notif["title"];
 
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
+                                ?>
+                                <a href="user_order.php" style="text-decoration: none;">
+                                    <div class="notification_section">
+                                        <div class="notif_container">
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
+                                            </div>
+                                            <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                            <?php } ?>
                         </div>
 
                     </div>
@@ -148,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 aria-expanded="false">
                                 <div class="user-off">
                                     <div class="photo ms-2 me-1">
-                                        <img src="img/default-profile.jpg" alt="">
+                                        <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                                     </div>
                                     <div class="name ms-1 mt-1">
                                         <p><?php echo $_SESSION['username'] ?></p>
@@ -239,57 +211,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
+                            <?php
+                            $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE  to_admin = '1' ORDER BY date desc");
+                            while ($notif = mysqli_fetch_assoc($notifs)) {
+                                $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
+                                $title = $notif["title"];
 
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
+                                ?>
+                                <a href="user_order.php" style="text-decoration: none;">
+                                    <div class="notification_section">
+                                        <div class="notif_container">
+                                            <div class="notif_title d-flex align-content-center justify-content-between">
+                                                <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                <p class="m-0 mt-1" style="font-size: 15px"><?php echo $date; ?></p>
+                                            </div>
+                                            <div class="notif_message">
+                                                <p class="m-0 ms-2">Order #: <?php echo $notif['order_number']; ?></p>
+                                                <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="notification_section">
-                                <a href="#">
-                                    <div class="notif_container">
-                                        <div class="notif_title">
-                                            <p>Notification Title</p>
-                                        </div>
-                                        <div class="notif_message">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, sequi.
-                                            </p>
-
-                                        </div>
-                                        <div class="notif_details">
-                                            <p>Product name x 00</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
 
@@ -301,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                     <p class="text-end mt-1"><?php echo $_SESSION['username'] ?></p>
                                 </div>
                                 <div class="photo">
-                                    <img src="img/default-profile.jpg" alt="">
+                                    <img src="profile_picture/<?php echo $row['image_file'] ?>" alt="">
                                 </div>
                             </div>
                         </button>
