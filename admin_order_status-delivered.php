@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
@@ -219,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">

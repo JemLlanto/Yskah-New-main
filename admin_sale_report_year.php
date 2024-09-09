@@ -18,6 +18,24 @@ include ("head.php");
             background-color: var(--ter_color);
             color: white;
         }
+
+        @media only screen and (max-width: 425px) and (min-width: 320px) {
+            #table {
+                font-size: 12px;
+            }
+
+            th {
+                font-size: 10px;
+            }
+
+            #report_title>h5 {
+                font-size: 14px;
+            }
+
+            #timeline {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 
@@ -71,7 +89,7 @@ include ("head.php");
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
@@ -202,7 +220,7 @@ include ("head.php");
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">

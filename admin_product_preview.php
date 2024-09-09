@@ -11,7 +11,14 @@ include ("head.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css\admin_product_preview6.css" />
-
+    <style>
+        .product_description {
+            height: 350px;
+            overflow: scroll;
+            overflow-x: hidden;
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 
 <body>
@@ -193,7 +200,7 @@ include ("head.php");
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
@@ -310,7 +317,7 @@ include ("head.php");
                                 <h1><?php echo $row['product_name'] ?></h1>
                                 <h3>Php <?php echo $row['price'] ?>.00</h3>
                             </div>
-                            <div class="product_description w-100 h-auto">
+                            <div class="product_description w-100 mt-2">
                                 <p>
                                     <?php echo $row['description'] ?>
                                 </p>

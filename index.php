@@ -54,9 +54,7 @@ include ("head.php");
                         <a class="nav-link text-dark text-start ms-2" aria-current="page"
                             href="index-products.php">Product</a>
                     </li>
-                    <li class="nav-item w-100">
-                        <a class="nav-link text-dark text-start ms-2" href="#">About Us</a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -75,9 +73,6 @@ include ("head.php");
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="index-products.php">Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">About Us</a>
                     </li>
                 </ul>
             </div>
@@ -102,11 +97,10 @@ include ("head.php");
         id="Intro">
         <div class="d-flex flex-column align-items-end text-end">
             <h1>Introduction</h1>
-            <h5 id="introText" class="">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus eveniet dolore
-                excepturi
-                incidunt,
-                amet
-                quasi fugit animi perspiciatis quisquam molestias.</h5>
+            <h5 id="introText" class="">Hello! Welcome to Yskah Creations, we offer customized Glass Art Painting, Phone
+                Case Painting, and Keychain Painting, you can choose from faceless vector art, pets, or anime art
+                styles, we've got you covered in handmade art with love that you will cherish. Thank you for choosing
+                Yskah Creation. We look forward to creating something special just for you!</h5>
         </div>
         <a href="index-products.php"><button type="button" class="btn btn-lg btn-light p-3 w-100">Order Now</button></a>
     </div>
@@ -130,15 +124,17 @@ include ("head.php");
         </div>
     </div>
 
-    <div class="container-fluid">
-        <h3 class="pt-4 ps-4">Hot Products</h3>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 m-1 mt-4 mb-4">
+    <div class="container-fluid my-5" style="">
+        <div class=" d-flex justify-content-center">
+            <h3 class=" pt-4 ps-4 ">Products</h3>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 m-1 mt-4 mb-4 d-flex justify-content-center">
             <?php
             $res = mysqli_query($conn, "SELECT * FROM products");
             while ($row = mysqli_fetch_assoc($res)) {
                 ?>
                 <div class="col">
-                    <div class="card w-100">
+                    <div class="card w-100 mb-2">
                         <img src="product-images/<?php echo $row['image_file'] ?>" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $row['product_name'] ?></h5>
@@ -146,7 +142,7 @@ include ("head.php");
                             <p>Php <?php echo $row['price'] ?>.00</p>
                             </p>
                             <a href="index_product_preview.php?product_id=<?php echo $row['product_id']; ?>"
-                                class="btn btn-primary">View
+                                class="w-100 btn btn-primary py-1">View
                                 Product</a>
                         </div>
                     </div>

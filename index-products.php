@@ -56,9 +56,7 @@ include ("head.php");
                         <a class="nav-link text-dark text-start ms-2" aria-current="page"
                             href="index-products.php">Product</a>
                     </li>
-                    <li class="nav-item w-100">
-                        <a class="nav-link text-dark text-start ms-2" href="#">About Us</a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -78,9 +76,7 @@ include ("head.php");
                     <li class="nav-item">
                         <a class="nav-link text-dark active" aria-current="page" href="index-products.php">Product</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">About Us</a>
-                    </li>
+
                 </ul>
             </div>
 

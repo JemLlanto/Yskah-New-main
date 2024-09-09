@@ -13,6 +13,15 @@ include ("head.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css\landing_page8.css">
+
+    <style>
+        @media only screen and (max-width: 425px) and (min-width: 320px) {
+            #introText {
+                width: 100%;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -296,13 +305,13 @@ include ("head.php");
         id="Intro">
         <div class="d-flex flex-column align-items-end text-end">
             <h1>Introduction</h1>
-            <h5 id="introText" class="">Hello! Welcome to Yskah Creations, we offer customized Glass Art Painting, Phone
+            <p id="introText" class="">Hello! Welcome to Yskah Creations, we offer customized Glass Art Painting, Phone
                 Case Painting, and Keychain Painting, you can choose from faceless vector art, pets, or anime art
                 styles, we've got you covered in handmade art with love that you will cherish.
 
-                Thank you for choosing Yskah Creation. We look forward to creating something special just for you!</h5>
+                Thank you for choosing Yskah Creation. We look forward to creating something special just for you!</p>
         </div>
-        <a href="index-products.php"><button type="button" class="btn btn-lg btn-light p-3 w-100">Order Now</button></a>
+        <a href="user_products.php"><button type="button" class="btn btn-lg btn-light p-3 w-100">Order Now</button></a>
     </div>
 
     <div class="overflow-hidden d-flex justify-content-center" style=" height: 60dvh">

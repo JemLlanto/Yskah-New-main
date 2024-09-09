@@ -110,6 +110,11 @@ include ("head.php");
                                     </div>
                                 </li>
                                 <li>
+                                    <div class="drop_items ">
+                                        <a class="ms-2 mt-3" href="add_admin_form.php">Add Admin</a>
+                                    </div>
+                                </li>
+                                <li>
                                     <div id="log_out" class="drop_items">
                                         <form action="logout.php" method="post">
                                             <button id="log_out_button" type="submit" name="logout"
@@ -194,7 +199,7 @@ include ("head.php");
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
@@ -228,6 +233,11 @@ include ("head.php");
                             <li>
                                 <div class="drop_items ">
                                     <a class="me-2" href="admin_setting.php">Account</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="drop_items ">
+                                    <a class="w-100 me-2 text-end" href="add_admin_form.php">Add Admin</a>
                                 </div>
                             </li>
                             <li>
@@ -293,27 +303,33 @@ include ("head.php");
                                             <div class="modal-body">
                                                 <div class="d-flex justify-content-start flex-wrap">
                                                     <?php
-                                                    $product_id = $row['product_id'];
-                                                    $samples = mysqli_query($conn, "SELECT * FROM product_samples WHERE product_id = $product_id");
-                                                    while ($sample = mysqli_fetch_assoc($samples)) {
-                                                        ?>
-                                                        <div class="rounded me-1 mb-1 position-relative"
-                                                            style="width: 112px; height: 112px; overflow: hidden; background-color: lightgray;">
-                                                            <form action="admin_delete_sample.php" method="POST"
-                                                                onsubmit="return confirm('Are you sure you want to remove this sample?');">
-                                                                <input type="hidden" name="sample_id"
-                                                                    value="<?php echo $sample['sample_id']; ?>">
-                                                                <button type="submit"
-                                                                    class="btn btn-danger px-2 mt-1 mx-2 position-absolute"
-                                                                    style=" right:0; color:white; font-size:12px;"
-                                                                    name="removesample">x</button>
-                                                            </form>
-                                                            <img src="product-images/product_samples/<?php echo $sample['image_file'] ?>"
-                                                                style="width: 100%; ">
+                                                    $notifs = mysqli_query($conn, "SELECT * FROM notification_table WHERE  to_admin = '1' ORDER BY date desc");
+                                                    while ($notif = mysqli_fetch_assoc($notifs)) {
+                                                        $date = date("F j, Y, g:i a", strtotime($notif["date"]));
+                                                        $user_id = $notif["user_id"]; // Assuming you have an order_id field in the notification_table
+                                                        $title = $notif["title"];
 
-                                                        </div>
-                                                    <?php }
-                                                    ?>
+                                                        ?>
+                                                        <a href="admin_order.php" style="text-decoration: none;">
+                                                            <div class="notification_section">
+                                                                <div class="notif_container">
+                                                                    <div
+                                                                        class="notif_title d-flex align-content-center justify-content-between">
+                                                                        <p class="m-0"><?php echo $notif["title"]; ?></p>
+                                                                        <p class="m-0 mt-1" style="font-size: 15px">
+                                                                            <?php echo $date; ?>
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="notif_message">
+                                                                        <p class="m-0 ms-2">Order #:
+                                                                            <?php echo $notif['order_number']; ?>
+                                                                        </p>
+                                                                        <p class="ms-2"><?php echo $notif["description"]; ?></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    <?php } ?>
                                                 </div>
 
                                                 <div class="add-product ">

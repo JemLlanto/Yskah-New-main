@@ -16,6 +16,13 @@ include ("head.php");
         body {
             background-color: lightgray;
         }
+
+        @media only screen and (max-width: 425px) and (min-width: 320px) {
+            #introText {
+                width: 100%;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 
@@ -68,7 +75,7 @@ include ("head.php");
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
@@ -114,6 +121,11 @@ include ("head.php");
                                     </div>
                                 </li>
                                 <li>
+                                    <div class="drop_items ">
+                                        <a class="ms-2 mt-3" href="add_admin_form.php">Add Admin</a>
+                                    </div>
+                                </li>
+                                <li>
                                     <div id="log_out" class="drop_items">
                                         <form action="logout.php" method="post">
                                             <button id="log_out_button" type="submit" name="logout"
@@ -134,7 +146,7 @@ include ("head.php");
                             <a class="nav-link text-dark text-start" href="admin.php">Home</a>
                         </li>
                         <li class="nav-item ps-3">
-                            <a class="nav-link text-dark text-start" href="admin_products.php">Product</a>
+                            <a class="nav-link text-dark text-start" href="admin-products.php">Product</a>
                         </li>
                         <li class="nav-item ps-3">
                             <a class="nav-link text-dark text-start" href="admin_order.php">Orders</a>
@@ -198,7 +210,7 @@ include ("head.php");
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
@@ -268,12 +280,12 @@ include ("head.php");
         id="Intro">
         <div class="d-flex flex-column align-items-end text-end">
             <h1>Introduction</h1>
-            <h5 id="introText" class="w-50">Hello! Welcome to Yskah Creations, we offer customized Glass Art Painting,
+            <p id="introText" class="w-75">Hello! Welcome to Yskah Creations, we offer customized Glass Art Painting,
                 Phone
                 Case Painting, and Keychain Painting, you can choose from faceless vector art, pets, or anime art
                 styles, we've got you covered in handmade art with love that you will cherish.
 
-                Thank you for choosing Yskah Creation. We look forward to creating something special just for you!</h5>
+                Thank you for choosing Yskah Creation. We look forward to creating something special just for you!</p>
         </div>
         <a href="index-products.php"><button type="button" class="btn btn-lg btn-light p-3 w-100">Order Now</button></a>
     </div>

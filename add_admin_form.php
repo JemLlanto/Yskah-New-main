@@ -57,6 +57,7 @@ include ("connection.php");
                 <div
                     class="d-flex flex-row flex-wrap justify-content-center justify-content-md-between align-items-center">
                     <div class="w-100">
+                        <input type="hidden" name="chat_name" id="chat_name">
                         <button type="submit" class="w-100 btn btn-primary px-3 py-2">Sign up</button>
                     </div>
 

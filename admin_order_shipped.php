@@ -48,6 +48,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css\order7.css" />
+
+    <style>
+        @media only screen and (max-width: 425px) and (min-width: 320px) {
+            #order_nav {
+                width: 100%;
+                font-size: 10px;
+                text-align: center;
+            }
+
+            #order_head>h5 {
+                font-size: 12px;
+            }
+
+            #order_head>div {
+                width: 50%;
+                display: flex;
+                justify-content: end;
+                gap: 5px;
+            }
+
+            #order_head>button {
+                font-size: 12px;
+                display: flex;
+                justify-content: end;
+            }
+
+            #product_details {
+                font-size: 14px;
+            }
+
+            #product_details>div.product_image.d-flex.justify-content-center.align-items-center>div>h5 {
+                font-size: 12px;
+            }
+
+            #product_details>div.product_image.d-flex.justify-content-center.align-items-center>img {
+                width: 50px;
+            }
+
+            #product_details>div.product_image.d-flex.justify-content-center.align-items-center>div>div {
+                font-size: 10px;
+            }
+
+            #price {
+                font-size: 12px;
+                margin: 0px;
+
+            }
+
+            #product_details>div.product_image.d-flex.justify-content-center.align-items-center>div>div>p:nth-child(1) {
+                margin: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -100,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
@@ -143,6 +196,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 <li>
                                     <div class="drop_items ">
                                         <a class="ms-2 mt-3" href="admin_setting.php">Account</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="drop_items ">
+                                        <a class="ms-2 mt-3" href="add_admin_form.php">Add Admin</a>
                                     </div>
                                 </li>
                                 <li>
@@ -231,7 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                                 $title = $notif["title"];
 
                                 ?>
-                                <a href="user_order.php" style="text-decoration: none;">
+                                <a href="admin_order.php" style="text-decoration: none;">
                                     <div class="notification_section">
                                         <div class="notif_container">
                                             <div class="notif_title d-flex align-content-center justify-content-between">
@@ -265,6 +323,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_order'])) {
                             <li>
                                 <div class="drop_items ">
                                     <a class="me-2" href="admin_setting.php">Account</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="drop_items ">
+                                    <a class="w-100 me-2 text-end" href="add_admin_form.php">Add Admin</a>
                                 </div>
                             </li>
                             <li>
